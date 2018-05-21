@@ -4,18 +4,17 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app"
   },
   "dependencies": {
-    "express": "*",
-    "mongoose": "*",
-    "bcryptjs": "*",
-    "cors": "*",
-    "jsonwebtoken": "*",
-    "body-parser": "*",
-    "passport": "*",
-    "passport-jwt": "*"
+    "express": "4.16.3",
+    "mongoose": "5.1.1",
+    "bcryptjs": "2.4.3",
+    "cors": "2.8.4",
+    "jsonwebtoken": "8.2.1",
+    "body-parser": "1.18.3",
+    "passport": "0.4.0",
+    "passport-jwt": "4.0.0"
   },
   "repository": {
     "type": "git",
