@@ -16,11 +16,11 @@ export class AuthService {
   ) { }
 
   registerUser(user) {
-    return this.http.post(`${environment.apiUrl}users/register`, user);
+    return this.http.post('users/register', user);
   }
 
   authenticateUser(user) {
-    return this.http.post(`${environment.apiUrl}users/authenticate`, user);
+    return this.http.post('users/authenticate', user);
   }
 
   getProfile() {
@@ -29,7 +29,7 @@ export class AuthService {
       'Content-Type': 'application/json',
       'Authorization': this.authToken
     });
-    return this.http.get(`${environment.apiUrl}users/profile`, { headers: headers });
+    return this.http.get('users/profile', { headers: headers });
   }
 
   loadToken() {
