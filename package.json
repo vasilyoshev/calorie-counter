@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "postinstall": "ng build --aot -prod"
   },
   "dependencies": {
     "express": "4.16.3",
@@ -14,7 +15,8 @@
     "jsonwebtoken": "8.2.1",
     "body-parser": "1.18.3",
     "passport": "0.4.0",
-    "passport-jwt": "4.0.0"
+    "passport-jwt": "4.0.0",
+    "@angular/cli": "~1.7.4"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,10 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/draawn/macros/issues"
+  },
+  "engines": {
+    "node": "9.10.1",
+    "npm": "5.6.0"
   },
   "homepage": "https://github.com/draawn/macros#readme"
 }
