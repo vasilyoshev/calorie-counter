@@ -6,7 +6,6 @@
   "scripts": {
     "deploy": "git push origin master && git push heroku master",
     "start": "node app",
-    
     "ng": "ng",
     "build": "ng build --prod",
     "test": "ng test",
@@ -23,7 +22,6 @@
     "body-parser": "1.18.3",
     "passport": "0.4.0",
     "passport-jwt": "4.0.0",
-
     "@angular/cli": "~1.7.4",
     "@angular/animations": "^5.2.0",
     "@angular/common": "^5.2.0",
