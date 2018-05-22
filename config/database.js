@@ -1,4 +1,4 @@
 module.exports = {
-    database: 'mongodb://drawn:drawn@ds129780.mlab.com:29780/macros',
+    database: process.env.DB || 'mongodb://drawn:drawn@ds255329.mlab.com:55329/macros-dev',
     secret: 'mysecret'
 }
