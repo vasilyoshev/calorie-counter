@@ -29,7 +29,7 @@ mongoose.connection.on('error', (err) => {
     console.log('Database error: ' + err);
 });
 
-// Set static folder
+// Serves static files from FE build
 app.use(express.static(path.join(__dirname, 'client')));
 
 // Passport middleware
@@ -37,12 +37,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./config/passport')(passport);
-
-
-// Index route
-app.get('/', (req, res) => {
-    res.send('Invalid Endpoint');
-});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client/index.html'));
