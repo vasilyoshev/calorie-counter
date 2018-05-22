@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
-  "scripts": {
-    "start": "node app",
-    "postinstall": "ng build --aot -prod"
-  },
   "dependencies": {
     "express": "4.16.3",
     "mongoose": "5.1.1",
@@ -15,8 +11,7 @@
     "jsonwebtoken": "8.2.1",
     "body-parser": "1.18.3",
     "passport": "0.4.0",
-    "passport-jwt": "4.0.0",
-    "@angular/cli": "~1.7.4"
+    "passport-jwt": "4.0.0"
   },
   "repository": {
     "type": "git",
