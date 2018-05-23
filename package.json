@@ -5,7 +5,7 @@
   "main": "server/app.js",
   "scripts": {
     "deploy": "git push origin master && git push heroku master",
-    "start": "node app",
+    "start": "node server/app",
     "ng": "ng",
     "build": "ng build --prod",
     "test": "ng test",
