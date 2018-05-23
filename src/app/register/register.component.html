@@ -34,13 +34,9 @@
       Password is required
     </div>
   </div>
-  <div class="form-group" [class.has-error]="registerForm.hasError('notsame')
-      || registerForm.get('confirmPassword').errors && !this.isValid">
+  <div class="form-group" [class.has-error]="registerForm.hasError('notsame')">
     <label class="control-label" for="confirmPassword">Confirm password</label>
     <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
-    <div *ngIf="registerForm.get('confirmPassword').hasError('required') && !this.isValid">
-      Password confirmation is required
-    </div>
     <div *ngIf="registerForm.hasError('notsame') && !this.isValid">
       Passwords do not match
     </div>
