@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const mongoose = require('mongoose');
-const configDb = require('./server/config/database');
+const configDb = require('./config/database');
 
 const app = express();
 const port = process.env.PORT || 8080;
-const users = require('./server/routes/users');
+const users = require('./routes/users');
 
 // CORS middleware
 app.use(cors());
@@ -30,16 +30,16 @@ mongoose.connection.on('error', (err) => {
 });
 
 // Serves static files from FE build
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-require('./server/config/passport')(passport);
+require('./config/passport')(passport);
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/index.html'));
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 // Start server

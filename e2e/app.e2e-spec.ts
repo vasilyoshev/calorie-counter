@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('macros-client App', () => {
+describe('calorie-counter App', () => {
   let page: AppPage;
 
   beforeEach(() => {

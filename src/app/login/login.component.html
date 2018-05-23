@@ -1,12 +1,12 @@
 <h2 class="page-header">Login</h2>
-<form (submit)="onSubmit()">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
   <div class="form-group">
     <label>Username</label>
-    <input class="form-control" [(ngModel)]="username" name="username">
+    <input formControlName="username" class="form-control">
   </div>
   <div class="form-group">
     <label>Password</label>
-    <input type="password" class="form-control" [(ngModel)]="password" name="password">
+    <input formControlName="password" type="password" class="form-control">
   </div>
   <input type="submit" class="btn btn-primary" value="Login">
 </form>

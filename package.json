@@ -1,8 +1,8 @@
 {
-  "name": "macros",
+  "name": "calorie-counter",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server/app.js",
   "scripts": {
     "deploy": "git push origin master && git push heroku master",
     "start": "node app",
@@ -58,16 +58,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/draawn/macros.git"
+    "url": "git+https://github.com/draawn/calorie-counter.git"
   },
   "author": "Vasil Yoshev",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/draawn/macros/issues"
+    "url": "https://github.com/draawn/calorie-counter/issues"
   },
   "engines": {
     "node": "9.10.1",
     "npm": "5.6.0"
   },
-  "homepage": "https://github.com/draawn/macros#readme"
+  "homepage": "https://github.com/draawn/calorie-counter#readme"
 }

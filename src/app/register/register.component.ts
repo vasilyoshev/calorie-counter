@@ -1,66 +1,57 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
-import { AuthService } from './../auth.service';
+import { RegisterService } from './register.service';
+import { User } from '../shared/entities/user';
+import { ValidatePassMatch } from '../shared/validators/pass-match.validator';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
-  name: string;
-  username: string;
-  email: string;
-  password: string;
+  registerForm: FormGroup;
+  isValid: boolean;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
-  ) { }
+    private registerService: RegisterService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.isValid = true;
+   }
 
-  onSubmit() {
-    const user = {
-      name: this.name,
-      username: this.username,
-      email: this.email,
-      password: this.password
-    };
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required, Validators.minLength(2)]],
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+    }, { validator: ValidatePassMatch });
+  }
 
-    if (!this.validateRegister(user)) {
-      alert('Please fill in all fields.');
+  onSubmit(form: FormGroup) {
+    if (!form.valid) {
+      this.isValid = false;
       return;
     }
+    const user = new User();
+    user.name = form.value.name;
+    user.username = form.value.username;
+    user.email = form.value.email;
+    user.password = form.value.password;
 
-    if (!this.validateEmail(user.email)) {
-      alert('Please use a valid email.');
-      return;
-    }
-
-    this.authService.registerUser(user).subscribe((data: any) => {
+    this.registerService.registerUser(user).subscribe((data: any) => {
       if (data.success) {
         alert('You are now registered and can log in.');
         this.router.navigate(['/login']);
       } else {
         alert('Something went wrong.');
-        this.router.navigate(['/register']);
       }
     });
-  }
-
-  private validateRegister(user: any) {
-    if (user.name === undefined || user.username === undefined
-    || user.email === undefined || user.password === undefined) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  private validateEmail(email: string) {
-    const re = new RegExp (['^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]',
-    '{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'].join(''));
-    return true; // re.test(email.toLowerCase());
   }
 }

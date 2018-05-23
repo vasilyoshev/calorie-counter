@@ -15,25 +15,12 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  registerUser(user) {
-    return this.http.post('users/register', user);
-  }
-
-  authenticateUser(user) {
-    return this.http.post('users/authenticate', user);
-  }
-
   getProfile() {
-    this.loadToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': this.authToken
+      'Authorization': localStorage.getItem('id_token')
     });
     return this.http.get('users/profile', { headers: headers });
-  }
-
-  loadToken() {
-    this.authToken = localStorage.getItem('id_token');
   }
 
   storeUserData(token, user) {
