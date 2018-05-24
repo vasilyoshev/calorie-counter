@@ -3,43 +3,43 @@
   <div class="form-group" [class.has-error]="registerForm.get('name').errors && !this.isValid">
     <label class="control-label" for="name">Name</label>
     <input autofocus formControlName="name" class="form-control" id="name">
-    <div *ngIf="registerForm.get('name').hasError('required') && !this.isValid">
-      This field is required
-    </div>
-    <div *ngIf="registerForm.get('name').hasError('minlength') && !this.isValid">
-      Name must be at least 2 characters
-    </div>
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('name').hasError('required') && !this.isValid">
+    This field is required.
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('name').hasError('minlength') && !this.isValid">
+    Name must be at least 2 characters.
   </div>
   <div class="form-group" [class.has-error]="registerForm.get('username').errors && !this.isValid">
     <label class="control-label" for="username">Username</label>
     <input formControlName="username" class="form-control" id="username">
-    <div *ngIf="registerForm.get('username').hasError('required') && !this.isValid">
-      This field is required
-    </div>
-    <div *ngIf="registerForm.get('username').hasError('minlength') && !this.isValid">
-      Username must be at least 3 characters
-    </div>
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('username').hasError('required') && !this.isValid">
+    This field is required.
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('username').hasError('minlength') && !this.isValid">
+    Username must be at least 3 characters.
   </div>
   <div class="form-group" [class.has-error]="registerForm.get('email').errors && !this.isValid">
     <label class="control-label" for="email">Email</label>
     <input formControlName="email" class="form-control" id="email">
-    <div *ngIf="registerForm.get('email').hasError('email') && !this.isValid">
-      Please enter a valid email
-    </div>
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('email').hasError('email') && !this.isValid">
+    Please enter a valid email.
   </div>
   <div class="form-group" [class.has-error]="registerForm.get('password').errors && !this.isValid">
     <label class="control-label" for="password">Password</label>
     <input formControlName="password" type="password" class="form-control" id="password">
-    <div *ngIf="registerForm.get('password').hasError('required') && !this.isValid">
-      Password is required
-    </div>
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.get('password').hasError('required') && !this.isValid">
+    Password is required.
   </div>
   <div class="form-group" [class.has-error]="registerForm.hasError('notsame')">
     <label class="control-label" for="confirmPassword">Confirm password</label>
     <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
-    <div *ngIf="registerForm.hasError('notsame') && !this.isValid">
-      Passwords do not match
-    </div>
+  </div>
+  <div class="alert alert-dismissible alert-danger" *ngIf="registerForm.hasError('notsame') && !this.isValid">
+    Passwords do not match.
   </div>
   <button class="btn btn-primary">Submit</button>
 </form>

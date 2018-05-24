@@ -14,24 +14,15 @@ import { ValidatePassMatch } from '../shared/validators/pass-match.validator';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  isValid: boolean;
+  isValid = true;
 
   constructor(
     private registerService: RegisterService,
-    private router: Router,
-    private fb: FormBuilder
-  ) {
-    this.isValid = true;
-   }
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-    }, { validator: ValidatePassMatch });
+    this.registerForm = this.registerService.getFormGroup();
   }
 
   onSubmit(form: FormGroup) {
