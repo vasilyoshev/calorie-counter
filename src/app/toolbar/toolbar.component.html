@@ -1,11 +1,9 @@
 <mat-toolbar color="primary">
-  <span [routerLink]="['/']">Calorie Counter</span>
+  <span class="logo" [routerLink]="['/']">Calorie Counter</span>
 
   <span class="spacer"></span>
 
-  <mat-button-toggle-group>
-    <mat-button-toggle [routerLink]="['/profile']">Profile</mat-button-toggle>
-    <mat-button-toggle [routerLink]="['/login']">Log In</mat-button-toggle>
-    <mat-button-toggle [routerLink]="['/register']">Register</mat-button-toggle>
-  </mat-button-toggle-group>
+  <button mat-button [routerLink]="['/profile']">Profile</button>
+  <button mat-button [routerLink]="['/login']">Log In</button>
+  <button mat-button [routerLink]="['/register']">Register</button>
 </mat-toolbar>

@@ -1,0 +1,20 @@
+.register {
+    width: 400px;
+    max-width: 80%;
+    margin: 25px auto;
+}
+
+mat-form-field, button {
+    width: 100%;
+}
+
+.login-link {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.footer {
+    font-size: 14px;
+    margin: 0;
+    text-align: end;
+}

@@ -14,7 +14,6 @@ import { ValidatePassMatch } from '../shared/validators/pass-match.validator';
 export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
-  isValid = true;
 
   constructor(
     private registerService: RegisterService,
@@ -27,7 +26,6 @@ export class RegisterComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (!form.valid) {
-      this.isValid = false;
       return;
     }
     const user = new User();

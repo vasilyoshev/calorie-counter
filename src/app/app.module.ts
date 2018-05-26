@@ -3,7 +3,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatButtonToggleModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,8 @@ const appRoutes: Routes = [
     RegisterComponent,
     HomeComponent,
     DashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,9 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MatToolbarModule,
     MatButtonModule,
-    MatButtonToggleModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     AuthService,

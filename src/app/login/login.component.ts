@@ -14,7 +14,6 @@ import { User } from '../shared/entities/user';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  isValid = true;
   wrongCredentials = false;
 
   constructor(
@@ -33,7 +32,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     if (!form.valid) {
-      this.isValid = false;
       return;
     }
     const user = new User();
@@ -42,7 +40,6 @@ export class LoginComponent implements OnInit {
 
     this.loginService.authenticateUser(user).subscribe((data: any) => {
       if (data.success) {
-        alert(data.msg);
         this.authService.storeUserData(data.token, data.user);
         this.router.navigate(['dashboard']);
       } else {

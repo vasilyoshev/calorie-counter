@@ -1,21 +1,26 @@
-<h2 class="page-header">Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
-  <div class="alert alert-dismissible alert-danger" *ngIf="this.wrongCredentials">
-    Username or password is incorrect.
-  </div>
-  <div class="form-group" [class.has-error]="loginForm.get('username').errors && !this.isValid">
-    <label class="control-label" for="username">Username</label>
-    <input formControlName="username" class="form-control">
-  </div>
-  <div class="alert alert-dismissible alert-danger" *ngIf="loginForm.get('username').hasError('required') && !this.isValid">
-    Username is required.
-  </div>
-  <div class="form-group" [class.has-error]="loginForm.get('password').errors && !this.isValid">
-    <label class="control-label" for="password">Password</label>
-    <input formControlName="password" type="password" class="form-control">
-  </div>
-  <div class="alert alert-dismissible alert-danger" *ngIf="loginForm.get('password').hasError('required') && !this.isValid">
-    Password is required.
-  </div>
-  <button type="submit" class="btn btn-primary">Login</button>
-</form>
+<mat-card class="login">
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+      <app-alert *ngIf="this.wrongCredentials">Username or password is incorrect.</app-alert>
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput formControlName="username" required>
+        <mat-error *ngIf="loginForm.get('username').hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" required>
+        <mat-error *ngIf="loginForm.get('password').hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">Log In</button>
+    </form>
+  </mat-card-content>
+  <mat-card-footer class="footer">
+    Don't have an account?
+    <span class="reg-link" [routerLink]="['/register']">Register</span>.
+  </mat-card-footer>
+</mat-card>
