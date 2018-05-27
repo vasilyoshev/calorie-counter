@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       } else {
         this.loginService.loggedIn = false;
+        this.wrongCredentials = true;
       }
     });
   }
