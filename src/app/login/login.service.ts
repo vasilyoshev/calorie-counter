@@ -1,29 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { User } from './../shared/entities/user';
 
 @Injectable()
 export class LoginService {
 
-    isLoggedIn: boolean;
+    loggedIn: boolean;
 
     constructor(private http: HttpClient) {
-        this.isLoggedIn = !!localStorage.getItem('id_token');
+        this.loggedIn = false;
     }
 
-    authenticateUser(user: User): Observable<any> {
-        return this.http.post('user/authenticate', user);
+    login(user: User): Observable<any> {
+        return this.http.post('user/login', user, { withCredentials: true });
     }
 
-    setToken(token: string) {
-        localStorage.setItem('id_token', token);
+    logout(): Observable<any> {
+        return this.http.post('user/logout', {}, { withCredentials: true });
     }
 
-    logoutUser(): void {
-        localStorage.clear();
-        this.isLoggedIn = false;
+    isLoggedIn(): Observable<any> {
+        return this.http.get('user/login', { withCredentials: true });
     }
 }

@@ -17,7 +17,9 @@ export class ToolbarComponent {
   ) { }
 
   onLogout() {
-    this.loginService.logoutUser();
-    this.router.navigate(['']);
+    this.loginService.logout().subscribe(() => {
+      this.loginService.loggedIn = false;
+      this.router.navigate(['']);
+    });
   }
 }

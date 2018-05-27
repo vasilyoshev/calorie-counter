@@ -17,7 +17,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/logged-out.guard';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { SessionInterceptor } from './interceptors/session.interceptor';
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
 import { AlertComponent } from './shared/alert/alert.component';
@@ -55,7 +55,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
     AuthGuard,
     LoggedOutGuard,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

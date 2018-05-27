@@ -1,11 +1,10 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const passport = require('passport');
 const mongoose = require('mongoose');
 const configDb = require('./config/database');
+const session = require('express-session')
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -19,8 +18,14 @@ let corsOptions = {
 }
 app.use(cors(corsOptions));
 
-// Cookie middleware
-app.use(cookieParser());
+// Session middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+    rolling: true,
+    cookie: { maxAge: 5000 }
+}));
 
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
 app.use(bodyParser.json());
@@ -40,11 +45,6 @@ mongoose.connection.on('error', (err) => {
 
 // Serves static files from FE build
 app.use(express.static(path.join(__dirname, '../dist')));
-
-// Passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport')(passport);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));

@@ -1,10 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const config = require('../config/database');
-
 const User = require('../models/user');
+
+/**
+ * Checks if user is logged in, by checking if user is stored in session.
+ */
+const authMiddleware = (req, res, next) => {
+    if (req.session && req.session.user) {
+        next();
+    } else {
+        res.status(403).json({
+            success: false,
+            message: 'You must be logged in.'
+        });
+    }
+};
 
 router.post('/register', (req, res, next) => {
     let newUser = new User({
@@ -17,20 +28,24 @@ router.post('/register', (req, res, next) => {
 
     User.addUser(newUser, (err, user) => {
         if (err) {
-            res.json({
+            res.status(400).json({
                 success: false,
-                msg: 'Failed to register user'
+                message: 'Failed to register user'
             });
         } else {
             res.json({
                 success: true,
-                msg: 'User registered'
+                message: 'User registered'
             });
         }
     });
 });
 
-router.post('/authenticate', (req, res, next) => {
+router.get('/login', (req, res) => {
+    req.session.user ? res.status(200).send({ loggedIn: true }) : res.status(200).send({ loggedIn: false });
+});
+
+router.post('/login', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -40,9 +55,9 @@ router.post('/authenticate', (req, res, next) => {
         }
 
         if (!user) {
-            return res.json({
+            return res.status(400).json({
                 success: false,
-                msg: 'Authentication failed.'
+                message: 'Authentication failed.'
             });
         }
 
@@ -52,35 +67,39 @@ router.post('/authenticate', (req, res, next) => {
             }
 
             if (isMatch) {
-                var claims = {
-                    sub: user._id,
-                    permissions: user.role
-                };
-
-                const token = jwt.sign(claims, config.secret, {
-                    expiresIn: 600 // 15 minutes
-                });
-
-                res.json({
+                const userWithoutPassword = { ...user };
+                req.session.user = userWithoutPassword;
+                res.status(200).send({
                     success: true,
-                    token: 'JWT ' + token,
-                    user: {
-                        name: user.name,
-                        email: user.email
-                    }
+                    user: userWithoutPassword
                 });
             } else {
-                return res.json({
+                return res.status(400).json({
                     success: false,
-                    msg: 'Authentication failed.'
+                    message: 'Authentication failed.'
                 });
             }
         });
     });
 });
 
-router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.json({ user: req.user });
+router.post('/logout', authMiddleware, (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.status(500).json({
+                success: false,
+                message: 'Could not log out.'
+            });
+        } else {
+            res.status(200).json({
+                success: true
+            });
+        }
+    });
+});
+
+router.get('/profile', authMiddleware, (req, res) => {
+    res.json({ user: req.session.user });
 });
 
 module.exports = router;

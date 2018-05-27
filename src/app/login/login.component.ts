@@ -36,13 +36,12 @@ export class LoginComponent implements OnInit {
     user.username = form.value.username;
     user.password = form.value.password;
 
-    this.loginService.authenticateUser(user).subscribe((data: any) => {
+    this.loginService.login(user).subscribe((data: any) => {
       if (data.success) {
-        this.loginService.isLoggedIn = true;
-        this.loginService.setToken(data.token);
+        this.loginService.loggedIn = true;
         this.router.navigate(['']);
       } else {
-        this.wrongCredentials = true;
+        this.loginService.loggedIn = false;
       }
     });
   }
