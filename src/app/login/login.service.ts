@@ -15,7 +15,7 @@ export class LoginService {
     }
 
     authenticateUser(user: User): Observable<any> {
-        return this.http.post('user/authenticate', user, { withCredentials: true });
+        return this.http.post('user/authenticate', user);
     }
 
     logoutUser(): Observable<any> {
