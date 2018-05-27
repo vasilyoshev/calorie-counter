@@ -15,7 +15,7 @@ export class RegisterService {
     ) { }
 
     registerUser(user: User): Observable<any> {
-        return this.http.post('users/register', user);
+        return this.http.post('user/register', user);
     }
 
     getFormGroup() {

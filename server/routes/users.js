@@ -6,7 +6,6 @@ const config = require('../config/database');
 
 const User = require('../models/user');
 
-// Register
 router.post('/register', (req, res, next) => {
     let newUser = new User({
         name: req.body.name,
@@ -31,7 +30,6 @@ router.post('/register', (req, res, next) => {
     });
 });
 
-// Authenticate
 router.post('/authenticate', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -57,22 +55,16 @@ router.post('/authenticate', (req, res, next) => {
                 var claims = {
                     sub: user._id,
                     permissions: user.role
-                  };
+                };
 
                 const token = jwt.sign(claims, config.secret, {
-                    expiresIn: 600 // 15 minutes
+                    expiresIn: 6000000 // 15 minutes
                 });
+                res.cookie('jwt', token);
 
-                res.cookie('jwt', token, { maxAge: 600, httpOnly: true });
                 res.json({
                     success: true,
                     token: 'JWT ' + token
-                    // user: {
-                    //     id: user._id,
-                    //     name: user.name,
-                    //     username: user.username,
-                    //     email: user.email
-                    // }
                 });
             } else {
                 return res.json({
@@ -84,9 +76,13 @@ router.post('/authenticate', (req, res, next) => {
     });
 });
 
-// Profile
-router.get('/profile', passport.authenticate('jwt', {session: false}), (req, res, next) => {
-    res.json({user: req.user});
+router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({ user: req.user });
 });
+
+router.get('/logout', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.cookie('jwt', '', { maxAge: 0 });
+    res.json('success');
+})
 
 module.exports = router;

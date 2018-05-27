@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth.service';
+import { LoginService } from './../login/login.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -11,15 +12,14 @@ import { AuthService } from '../auth.service';
 export class ToolbarComponent {
 
   constructor(
-    public authService: AuthService,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService
   ) { }
 
-  onLogoutClick() {
-    this.authService.logout();
-    alert('You have been logged out.');
-    this.router.navigate(['/login']);
-    return false;
+  onLogout() {
+    this.loginService.logoutUser().subscribe((res) => {
+      this.loginService.isLoggedIn = false;
+      this.router.navigate(['']);
+    });
   }
-
 }

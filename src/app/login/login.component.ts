@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { LoginService } from './login.service';
-import { AuthService } from './../auth.service';
 import { User } from '../shared/entities/user';
 
 @Component({
@@ -18,7 +17,6 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,
     private router: Router,
     private fb: FormBuilder
   ) { }
@@ -40,12 +38,11 @@ export class LoginComponent implements OnInit {
 
     this.loginService.authenticateUser(user).subscribe((data: any) => {
       if (data.success) {
-        this.authService.storeUserData(data.token, data.user);
-        this.router.navigate(['dashboard']);
+        this.loginService.isLoggedIn = true;
+        this.router.navigate(['']);
       } else {
         this.wrongCredentials = true;
       }
     });
   }
-
 }

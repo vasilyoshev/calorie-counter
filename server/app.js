@@ -12,11 +12,12 @@ const port = process.env.PORT || 8080;
 const users = require('./routes/users');
 
 // CORS middleware
-// let corsOptions = {
-//     origin: 'http://127.0.0.1:4200',
-//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-// }
-// app.use(cors(corsOptions));
+let corsOptions = {
+    origin: 'http://127.0.0.1:4200',
+    credentials: true,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 
 // Cookie middleware
 app.use(cookieParser());
@@ -24,7 +25,7 @@ app.use(cookieParser());
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
 app.use(bodyParser.json());
 
-app.use('/users', users);
+app.use('/user', users);
 
 // Connect to Database
 mongoose.connect(configDb.database);

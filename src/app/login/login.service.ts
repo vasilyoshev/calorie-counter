@@ -7,9 +7,18 @@ import { User } from './../shared/entities/user';
 
 @Injectable()
 export class LoginService {
-    constructor(private http: HttpClient) { }
+
+    isLoggedIn: boolean;
+
+    constructor(private http: HttpClient) {
+        this.isLoggedIn = false;
+    }
 
     authenticateUser(user: User): Observable<any> {
-        return this.http.post('users/authenticate', user);
+        return this.http.post('user/authenticate', user, { withCredentials: true });
+    }
+
+    logoutUser(): Observable<any> {
+        return this.http.get('user/logout', { withCredentials: true });
     }
 }

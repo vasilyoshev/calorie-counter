@@ -3,7 +3,7 @@
 
   <span class="spacer"></span>
 
-  <button mat-button [routerLink]="['/profile']">Profile</button>
-  <button mat-button [routerLink]="['/login']">Log In</button>
-  <button mat-button [routerLink]="['/register']">Register</button>
+  <button mat-button *ngIf="loginService.isLoggedIn" [routerLink]="['/profile']">Profile</button>
+  <button mat-button *ngIf="!loginService.isLoggedIn" [routerLink]="['/register']">Register</button>
+  <button mat-button *ngIf="loginService.isLoggedIn" (click)="onLogout()">Logout</button>
 </mat-toolbar>
