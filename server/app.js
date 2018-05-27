@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,9 +12,16 @@ const port = process.env.PORT || 8080;
 const users = require('./routes/users');
 
 // CORS middleware
-app.use(cors());
+// let corsOptions = {
+//     origin: 'http://127.0.0.1:4200',
+//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
+// app.use(cors(corsOptions));
 
-// Body parser middleware
+// Cookie middleware
+app.use(cookieParser());
+
+// Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
 app.use(bodyParser.json());
 
 app.use('/users', users);
@@ -35,7 +43,6 @@ app.use(express.static(path.join(__dirname, '../dist')));
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
 require('./config/passport')(passport);
 
 app.get('*', (req, res) => {

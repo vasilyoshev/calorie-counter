@@ -12,7 +12,8 @@ router.post('/register', (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        role: "user"
     });
 
     User.addUser(newUser, (err, user) => {
@@ -53,24 +54,30 @@ router.post('/authenticate', (req, res, next) => {
             }
 
             if (isMatch) {
-                const token = jwt.sign(user.toJSON(), config.secret, {
+                var claims = {
+                    sub: user._id,
+                    permissions: user.role
+                  };
+
+                const token = jwt.sign(claims, config.secret, {
                     expiresIn: 600 // 15 minutes
                 });
 
+                res.cookie('jwt', token, { maxAge: 600, httpOnly: true });
                 res.json({
                     success: true,
-                    token: 'JWT ' + token,
-                    user: {
-                        id: user._id,
-                        name: user.name,
-                        username: user.username,
-                        email: user.email
-                    }
+                    token: 'JWT ' + token
+                    // user: {
+                    //     id: user._id,
+                    //     name: user.name,
+                    //     username: user.username,
+                    //     email: user.email
+                    // }
                 });
             } else {
                 return res.json({
                     success: false,
-                    msg: 'Wrong password'
+                    msg: 'Authentication failed.'
                 });
             }
         });

@@ -14,16 +14,16 @@ export class AuthService {
   ) { }
 
   getProfile() {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': localStorage.getItem('id_token')
-    });
-    return this.http.get('users/profile', { headers: headers });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': localStorage.getItem('id_token')
+    // });
+    return this.http.get('users/profile');
   }
 
   storeUserData(token, user) {
-    localStorage.setItem('id_token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    // localStorage.setItem('id_token', token);
+    // localStorage.setItem('user', JSON.stringify(user));
     this.authToken = token;
     this.user = user;
   }
