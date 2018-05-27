@@ -42,7 +42,7 @@ router.post('/authenticate', (req, res, next) => {
         if (!user) {
             return res.json({
                 success: false,
-                msg: 'User not found'
+                msg: 'Authentication failed.'
             });
         }
 
@@ -58,13 +58,16 @@ router.post('/authenticate', (req, res, next) => {
                 };
 
                 const token = jwt.sign(claims, config.secret, {
-                    expiresIn: 6000000 // 15 minutes
+                    expiresIn: 600 // 15 minutes
                 });
-                res.cookie('jwt', token);
 
                 res.json({
                     success: true,
-                    token: 'JWT ' + token
+                    token: 'JWT ' + token,
+                    user: {
+                        name: user.name,
+                        email: user.email
+                    }
                 });
             } else {
                 return res.json({
@@ -79,10 +82,5 @@ router.post('/authenticate', (req, res, next) => {
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res) => {
     res.json({ user: req.user });
 });
-
-router.get('/logout', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.cookie('jwt', '', { maxAge: 0 });
-    res.json('success');
-})
 
 module.exports = router;

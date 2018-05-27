@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     this.loginService.authenticateUser(user).subscribe((data: any) => {
       if (data.success) {
         this.loginService.isLoggedIn = true;
+        this.loginService.setToken(data.token);
         this.router.navigate(['']);
       } else {
         this.wrongCredentials = true;
