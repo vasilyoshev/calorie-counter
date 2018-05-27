@@ -13,7 +13,7 @@ export class ToolbarComponent {
 
   constructor(
     private router: Router,
-    private loginService: LoginService
+    public loginService: LoginService
   ) { }
 
   onLogout() {
