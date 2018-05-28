@@ -1,4 +1,5 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { AddGoalService } from './add-goal.service';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { DashboardService } from './../dashboard.service';
@@ -11,18 +12,27 @@ import { DashboardService } from './../dashboard.service';
 export class AddGoalComponent implements OnInit {
 
   addGoalForm: FormGroup;
+  /** Returns a FormArray with the name 'formArray'. */
+  get formArray(): AbstractControl | null { return this.addGoalForm.get('formArray'); }
 
   constructor(
     private fb: FormBuilder,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    public addGoalService: AddGoalService
   ) { }
 
   ngOnInit() {
     this.addGoalForm = this.fb.group({
-      calories: [''],
-      protein: [''],
-      carbs: [''],
-      fat: ['']
+      formArray: this.fb.array([
+        this.fb.group({
+          calories: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
+        }),
+        this.fb.group({
+          protein: ['', [Validators.pattern(/^\d+$/)]],
+          carbs: ['', [Validators.pattern(/^\d+$/)]],
+          fat: ['', [Validators.pattern(/^\d+$/)]]
+        })
+      ])
     });
   }
 

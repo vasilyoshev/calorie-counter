@@ -41,13 +41,15 @@ mat-slider {
 }
 
 input.slider-input::-webkit-outer-spin-button,
-input.slider-input::-webkit-inner-spin-button {
+input.slider-input::-webkit-inner-spin-button,
+input.cal-input::-webkit-outer-spin-button,
+input.cal-input::-webkit-inner-spin-button, {
     display: none;
 }
 
-// input.slider-input {
-//     -moz-appearance: textfield;
-// }
+input.slider-input, input.cal-input {
+    -moz-appearance: textfield;
+}
 
 .slider-container {
     display: flex;
