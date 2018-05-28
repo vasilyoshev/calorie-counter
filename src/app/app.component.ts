@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     this.loginService.isLoggedIn().subscribe(res => {
       this.loginService.loggedIn = res.loggedIn;
     }, (err) => {
-      console.log(err);
+      alert(err);
     });
   }
 }

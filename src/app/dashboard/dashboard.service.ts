@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { User } from './../shared/entities/user';
-
 @Injectable({
   providedIn: 'root'
 })
-export class ProfileService {
-
-  user: User;
+export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getProfile() {
-    return this.http.get('user/profile', { withCredentials: true });
+  setDailyGoal(dailyGoal: any) {
+    return this.http.post('user/setGoal', dailyGoal, { withCredentials: true });
   }
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProfileService } from './../profile/profile.service';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor() { }
+  hasDailyGoal: boolean;
+
+  constructor(public profileService: ProfileService) { }
 
   ngOnInit() {
   }

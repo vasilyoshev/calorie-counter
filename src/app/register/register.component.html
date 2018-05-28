@@ -5,7 +5,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
-        <input matInput formControlName="name" required>
+        <input matInput formControlName="name">
         <mat-error *ngIf="registerForm.get('name').hasError('required')">
           Username is required
         </mat-error>
@@ -16,7 +16,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username" required>
+        <input matInput formControlName="username">
         <mat-error *ngIf="registerForm.get('username').hasError('required')">
           Username is required
         </mat-error>
@@ -27,7 +27,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput formControlName="email" required>
+        <input matInput formControlName="email">
         <mat-error *ngIf="registerForm.get('email').hasError('required')">
           Email is required
         </mat-error>
@@ -38,7 +38,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" required>
+        <input matInput formControlName="password" type="password">
         <mat-error *ngIf="registerForm.get('password').hasError('required')">
           Password is required
         </mat-error>
@@ -46,7 +46,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Confirm Password</mat-label>
-        <input matInput formControlName="confirmPassword" required>
+        <input matInput formControlName="confirmPassword" type="password">
         <mat-error *ngIf="registerForm.get('confirmPassword').hasError('required')">
           Confirmation is required
         </mat-error>

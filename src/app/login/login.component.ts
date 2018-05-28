@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { LoginService } from './login.service';
 import { User } from '../shared/entities/user';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
+    private profileService: ProfileService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -42,13 +44,12 @@ export class LoginComponent implements OnInit {
     user.remember = this.shouldRemember;
 
     this.loginService.login(user).subscribe((data: any) => {
-      if (data.success) {
-        this.loginService.loggedIn = true;
-        this.router.navigate(['']);
-      } else {
-        this.loginService.loggedIn = false;
-        this.wrongCredentials = true;
-      }
+      this.loginService.loggedIn = true;
+      this.profileService.user = data.user;
+      this.router.navigate(['']);
+    }, (err: any) => {
+      this.loginService.loggedIn = false;
+      this.wrongCredentials = true;
     });
   }
 }

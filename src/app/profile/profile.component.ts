@@ -21,8 +21,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getProfile().subscribe((profile: any) => {
       this.user = profile.user;
     }, err => {
-      // console.log(err);
-      return false;
+      alert(err);
     });
   }
 }

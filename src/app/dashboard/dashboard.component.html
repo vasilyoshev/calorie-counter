@@ -1,2 +1,2 @@
-<h2 class="page-header">Dashboard</h2>
-<p>Welcome to your dashboard!</p>
+<app-add-goal *ngIf="!profileService.user?.hasGoal"></app-add-goal>
+<app-status *ngIf="profileService.user?.hasGoal"></app-status>

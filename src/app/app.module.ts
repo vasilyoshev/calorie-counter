@@ -1,9 +1,11 @@
+import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
+import { StatusComponent } from './dashboard/status/status.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule,
-  MatInputModule, MatMenuModule, MatCheckboxModule } from '@angular/material';
+  MatInputModule, MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { RoutingModule } from './routing.module';
@@ -34,7 +36,9 @@ import { CalculatorComponent } from './calculator/calculator.component';
     DashboardComponent,
     ProfileComponent,
     AlertComponent,
-    CalculatorComponent
+    CalculatorComponent,
+    StatusComponent,
+    AddGoalComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { CalculatorComponent } from './calculator/calculator.component';
     MatFormFieldModule,
     MatInputModule,
     MatMenuModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSliderModule,
+    MatDividerModule
   ],
   providers: [
     RegisterService,

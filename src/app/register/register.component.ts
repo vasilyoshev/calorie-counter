@@ -35,12 +35,9 @@ export class RegisterComponent implements OnInit {
     user.password = form.value.password;
 
     this.registerService.registerUser(user).subscribe((data: any) => {
-      if (data.success) {
-        alert('You are now registered and can log in.');
-        this.router.navigate(['login']);
-      } else {
-        alert('Something went wrong.');
-      }
+      this.router.navigate(['login']);
+    }, (err: any) => {
+      alert('Something went wrong.');
     });
   }
 }

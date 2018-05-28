@@ -4,14 +4,14 @@
       <app-alert *ngIf="this.wrongCredentials">Username or password is incorrect.</app-alert>
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
-        <input matInput formControlName="username" required>
+        <input matInput formControlName="username">
         <mat-error *ngIf="loginForm.get('username').hasError('required')">
           Username is required
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input type="password" matInput formControlName="password" required>
+        <input type="password" matInput formControlName="password">
         <mat-error *ngIf="loginForm.get('password').hasError('required')">
           Password is required
         </mat-error>

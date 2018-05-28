@@ -23,7 +23,8 @@ router.post('/register', (req, res, next) => {
         email: req.body.email,
         username: req.body.username,
         password: req.body.password,
-        role: "user"
+        role: "user",
+        hasGoal: false
     });
 
     User.addUser(newUser, (err, user) => {
@@ -66,14 +67,20 @@ router.post('/login', (req, res) => {
                 throw err;
             }
             if (isMatch) {
-                const userWithoutPassword = { ...user };
-                req.session.user = userWithoutPassword;
+                let userRes = {
+                    id: user._id,
+                    name: user.name,
+                    username: user.username,
+                    email: user.email,
+                    hasGoal: user.hasGoal
+                }
+                req.session.user = userRes;
                 if (req.body.remember) {
                     req.session.cookie.maxAge = null;
                 }
                 res.status(200).send({
                     success: true,
-                    user: userWithoutPassword
+                    user: userRes
                 });
             } else {
                 return res.status(400).json({
