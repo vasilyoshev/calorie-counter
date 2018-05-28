@@ -16,7 +16,10 @@
           Password is required
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button type="submit" color="primary">Log In</button>
+      <span class="remember-me">
+        <mat-checkbox [(ngModel)]="shouldRemember">Remember me</mat-checkbox>
+      </span>
+      <button mat-raised-button type="submit" class="submit" color="primary">Log In</button>
     </form>
   </mat-card-content>
   <mat-card-footer class="footer">

@@ -13,13 +13,17 @@ import { User } from '../shared/entities/user';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  wrongCredentials = false;
+  shouldRemember: boolean;
+  wrongCredentials: boolean;
 
   constructor(
     private loginService: LoginService,
     private router: Router,
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.wrongCredentials = false;
+    this.shouldRemember = false;
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -35,6 +39,7 @@ export class LoginComponent implements OnInit {
     const user = new User();
     user.username = form.value.username;
     user.password = form.value.password;
+    user.remember = this.shouldRemember;
 
     this.loginService.login(user).subscribe((data: any) => {
       if (data.success) {

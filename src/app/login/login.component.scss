@@ -1,20 +1,24 @@
 mat-form-field, button {
-    width: 100%;
+  width: 100%;
 }
 
 .login {
-    width: 400px;
-    max-width: 80%;
-    margin: 25px auto;
-  }
+  width: 400px;
+  max-width: 80%;
+  margin: 25px auto;
+}
   
-  .footer {
-    font-size: 14px;
-    margin: 0;
-    text-align: end;
-  }
-  
-  .reg-link {
-    font-weight: 600;
-    cursor: pointer;
-  }
+.footer {
+  font-size: 14px;
+  margin: 0;
+  text-align: end;
+}
+
+.reg-link {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.submit {
+  margin-top: 10px;
+}

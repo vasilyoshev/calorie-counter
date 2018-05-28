@@ -65,10 +65,12 @@ router.post('/login', (req, res) => {
             if (err) {
                 throw err;
             }
-
             if (isMatch) {
                 const userWithoutPassword = { ...user };
                 req.session.user = userWithoutPassword;
+                if (req.body.remember) {
+                    req.session.cookie.maxAge = null;
+                }
                 res.status(200).send({
                     success: true,
                     user: userWithoutPassword

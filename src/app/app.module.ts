@@ -1,8 +1,9 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule,
+  MatInputModule, MatMenuModule, MatCheckboxModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { RoutingModule } from './routing.module';
@@ -38,6 +39,7 @@ import { CalculatorComponent } from './calculator/calculator.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     ReactiveFormsModule,
     RoutingModule,
     HttpClientModule,
@@ -46,7 +48,8 @@ import { CalculatorComponent } from './calculator/calculator.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatMenuModule
+    MatMenuModule,
+    MatCheckboxModule
   ],
   providers: [
     RegisterService,

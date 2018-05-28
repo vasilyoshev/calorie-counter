@@ -24,7 +24,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     rolling: true,
-    cookie: { maxAge: 5000 }
+    cookie: { maxAge: 1800000 } // 30 minutes
 }));
 
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
