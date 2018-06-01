@@ -72,7 +72,7 @@ router.post('/login', (req, res) => {
                     name: user.name,
                     username: user.username,
                     email: user.email,
-                    goal: user.goals.length ? user.goals[user.goals.length -1] : "No goal set."
+                    goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
                 }
                 req.session.user = userRes;
                 if (req.body.remember) {
@@ -108,7 +108,15 @@ router.post('/logout', authMiddleware, (req, res, next) => {
 });
 
 router.get('/profile', authMiddleware, (req, res) => {
-    res.json({ user: req.session.user });
+    User.getUserByUsername(req.session.user.username, (err, user) => {
+        res.json({
+            id: user.id,
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
+        });
+    });
 });
 
 router.post('/set-goal', authMiddleware, (req, res) => {

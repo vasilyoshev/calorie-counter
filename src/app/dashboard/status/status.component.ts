@@ -1,3 +1,4 @@
+import { ProfileService } from './../../profile/profile.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusComponent implements OnInit {
 
-  constructor() { }
+  constructor(public profileService: ProfileService) { }
 
   ngOnInit() {
   }

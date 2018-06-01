@@ -1,3 +1,5 @@
+import { Goal } from './goal';
+
 export class User {
 
     id: string;
@@ -6,5 +8,5 @@ export class User {
     email: string;
     password: string;
     remember: boolean;
-    hasGoal: boolean;
+    goal: Goal;
 }

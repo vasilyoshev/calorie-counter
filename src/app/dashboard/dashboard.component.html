@@ -1,2 +1,2 @@
-<app-add-goal *ngIf="!profileService.user?.hasGoal"></app-add-goal>
-<app-status *ngIf="profileService.user?.hasGoal"></app-status>
+<app-add-goal *ngIf="profileService.user?.goal.calories"></app-add-goal>
+<app-status *ngIf="profileService.user?.goal.calories"></app-status>

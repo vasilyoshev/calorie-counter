@@ -10,16 +10,14 @@ import { ProfileService } from './profile.service';
 })
 export class ProfileComponent implements OnInit {
 
-  user: any;
-
   constructor(
-    private profileService: ProfileService,
+    public profileService: ProfileService,
     private router: Router
   ) { }
 
   ngOnInit() {
     this.profileService.getProfile().subscribe((profile: any) => {
-      this.user = profile.user;
+      this.profileService.user = profile;
     }, err => {
       alert('profile component' + err);
     });
