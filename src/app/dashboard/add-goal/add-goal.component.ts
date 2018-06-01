@@ -1,3 +1,4 @@
+import { ProfileService } from './../../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -16,9 +17,10 @@ export class AddGoalComponent implements OnInit {
   get formArray(): AbstractControl | null { return this.addGoalForm.get('formArray'); }
 
   constructor(
+    public addGoalService: AddGoalService,
     private fb: FormBuilder,
     private dashboardService: DashboardService,
-    public addGoalService: AddGoalService
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -42,10 +44,11 @@ export class AddGoalComponent implements OnInit {
     }
 
     const dailyGoal = {
-      calories: form.value.calories,
-      protein: form.value.protein,
-      carbs: form.value.carbs,
-      fat: form.value.fat
+      username: this.profileService.user.username,
+      calories: form.value.formArray[0].calories,
+      protein: form.value.formArray[1].protein,
+      carbs: form.value.formArray[1].carbs,
+      fat: form.value.formArray[1].fat
     };
 
     this.dashboardService.setDailyGoal(dailyGoal)
@@ -53,7 +56,7 @@ export class AddGoalComponent implements OnInit {
         if (data.success) {
 
         } else {
-          alert('Something went wrong.');
+          alert('Something went wrong add goal.');
         }
       });
   }

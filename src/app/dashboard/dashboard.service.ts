@@ -9,6 +9,6 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   setDailyGoal(dailyGoal: any) {
-    return this.http.post('user/setGoal', dailyGoal, { withCredentials: true });
+    return this.http.post('user/set-goal', dailyGoal, { withCredentials: true });
   }
 }
