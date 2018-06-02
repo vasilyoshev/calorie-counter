@@ -27,12 +27,12 @@ export class AddGoalComponent implements OnInit {
     this.addGoalForm = this.fb.group({
       formArray: this.fb.array([
         this.fb.group({
-          calories: ['', [Validators.required, Validators.pattern(/^\d+$/)]]
+          calories: ['', [Validators.min(100), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
         }),
         this.fb.group({
-          protein: ['', [Validators.pattern(/^\d+$/)]],
-          carbs: ['', [Validators.pattern(/^\d+$/)]],
-          fat: ['', [Validators.pattern(/^\d+$/)]]
+          protein: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]],
+          carbs: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]],
+          fat: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
         })
       ])
     });
