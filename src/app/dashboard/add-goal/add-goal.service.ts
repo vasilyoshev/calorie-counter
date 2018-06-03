@@ -164,7 +164,11 @@ export class AddGoalService {
   }
 
   setCarbsPercent(event: any) {
-    this.carbsPercent = event.value;
+    if (event.value > 100 - this.proteinPercent) {
+      this.carbsPercent = 1000 - this.proteinPercent;
+    } else {
+      this.carbsPercent = event.value;
+    }
     this.carbsCals = Math.round(this.carbsPercent / 100 * this.calories);
     this.carbsGrams = Math.round(this.carbsCals / 4);
 
@@ -174,7 +178,11 @@ export class AddGoalService {
   }
 
   setFatPercent(event: any) {
-    this.fatPercent = event.value;
+    if (event.value > 100 - this.proteinPercent) {
+      this.fatPercent = 100 - this.proteinPercent;
+    } else {
+      this.fatPercent = event.value;
+    }
     this.fatCals = Math.round(this.fatPercent / 100 * this.calories);
     this.fatGrams = Math.round(this.fatCals / 9);
 
@@ -202,7 +210,7 @@ export class AddGoalService {
     this.carbsGrams = 0;
     this.carbsPercent = 0;
 
-    this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+    this.fatCals = this.calories - this.proteinCals;
     this.fatGrams = Math.round(this.fatCals / 9);
     this.fatPercent = this.fatCals / this.calories * 100;
   }
@@ -212,7 +220,7 @@ export class AddGoalService {
     this.fatGrams = 0;
     this.fatPercent = 0;
 
-    this.carbsCals = this.calories - this.proteinCals - this.fatCals;
+    this.carbsCals = this.calories - this.proteinCals;
     this.carbsGrams = Math.round(this.carbsCals / 4);
     this.carbsPercent = this.carbsCals / this.calories * 100;
   }

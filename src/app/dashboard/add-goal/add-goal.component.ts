@@ -1,8 +1,8 @@
-import { ProfileService } from './../../profile/profile.service';
-import { AddGoalService } from './add-goal.service';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
+import { ProfileService } from './../../profile/profile.service';
+import { AddGoalService } from './add-goal.service';
 import { DashboardService } from './../dashboard.service';
 
 @Component({
