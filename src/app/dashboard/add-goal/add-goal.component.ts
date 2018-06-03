@@ -12,12 +12,8 @@ import { DashboardService } from './../dashboard.service';
 })
 export class AddGoalComponent implements OnInit {
 
-  calories: any;
-  protein: number;
-  carbs: number;
-  fat: number;
-
   addGoalForm: FormGroup;
+
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.addGoalForm.get('formArray'); }
 
@@ -25,74 +21,10 @@ export class AddGoalComponent implements OnInit {
     public addGoalService: AddGoalService,
     private dashboardService: DashboardService,
     private profileService: ProfileService
-  ) {
-    this.calories = 2000;
-  }
+  ) { }
 
   ngOnInit() {
     this.addGoalForm = this.addGoalService.getFormGroup();
-
-    // PROTEIN
-    this.addGoalService.proteinCals.subscribe((cals: number) => {
-      if (this.protein !== cals) {
-        this.protein = cals;
-        this.addGoalService.proteinGrams.next(cals / 4);
-        this.addGoalService.proteinPercent.next(this.protein / this.calories * 100);
-        this.addGoalService.carbsCals.next((this.calories - this.protein) * 0.666666);
-      }
-      this.formArray.get([1]).get('protein').setValue(this.protein);
-    });
-    this.addGoalService.proteinGrams.subscribe((grams: number) => {
-      if (this.protein !== grams * 4) {
-        this.addGoalService.proteinCals.next(Math.round(grams * 4));
-      }
-    });
-    this.addGoalService.proteinPercent.subscribe((percent: number) => {
-      if (this.protein !== percent * this.calories / 100) {
-        this.addGoalService.proteinCals.next(Math.round(percent * this.calories / 100));
-      }
-    });
-
-    // CARBS
-    this.addGoalService.carbsCals.subscribe((cals: number) => {
-      if (this.carbs !== cals) {
-        this.carbs = cals;
-        this.addGoalService.carbsGrams.next(cals / 4);
-        this.addGoalService.carbsPercent.next(this.carbs / this.calories * 100);
-        this.addGoalService.fatCals.next((this.calories - this.protein) * 0.333333);
-      }
-      this.formArray.get([1]).get('carbs').setValue(this.carbs);
-    });
-    this.addGoalService.carbsGrams.subscribe((grams: number) => {
-      if (this.carbs !== grams * 4) {
-        this.addGoalService.carbsCals.next(Math.round(grams * 4));
-      }
-    });
-    this.addGoalService.carbsPercent.subscribe((percent: number) => {
-      if (this.carbs !== percent * this.calories / 100) {
-        this.addGoalService.carbsCals.next(Math.round(percent * this.calories / 100));
-      }
-    });
-
-    // FAT
-    this.addGoalService.fatCals.subscribe((cals: number) => {
-      if (this.fat !== cals) {
-        this.fat = cals;
-        this.addGoalService.fatGrams.next(cals / 9);
-        this.addGoalService.fatPercent.next(this.fat / this.calories * 100);
-      }
-      this.formArray.get([1]).get('fat').setValue(this.fat);
-    });
-    this.addGoalService.fatGrams.subscribe((grams: number) => {
-      if (this.fat !== grams * 9) {
-        this.addGoalService.fatCals.next(Math.round(grams * 9));
-      }
-    });
-    this.addGoalService.fatPercent.subscribe((percent: number) => {
-      if (this.fat !== percent * this.calories / 100) {
-        this.addGoalService.fatCals.next(Math.round(percent * this.calories / 100));
-      }
-    });
   }
 
   onSubmit(form: FormGroup) {
@@ -121,5 +53,106 @@ export class AddGoalComponent implements OnInit {
 
   formatLabel(value: number | null) {
     return value ? value + '%' : 0 + '%';
+  }
+
+  calcDefaultMacros() {
+    this.addGoalService.calcDefaultMacros();
+    this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
+    this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+  }
+
+  setProteinCals(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setProteinCals(event);
+      this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  setCarbsCals(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setCarbsCals(event);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  setFatCals(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setFatCals(event);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    }
+  }
+
+  setProteinGrams(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setProteinGrams(event);
+      this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  setCarbsGrams(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setCarbsGrams(event);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  setFatGrams(event: any) {
+    if (event.target.value) {
+      this.addGoalService.setFatGrams(event);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    }
+  }
+
+  setProteinPercent(event: any) {
+    this.addGoalService.setProteinPercent(event);
+    this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
+    this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+  }
+
+  setCarbsPercent(event: any) {
+    this.addGoalService.setCarbsPercent(event);
+    this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+  }
+
+  setFatPercent(event: any) {
+    this.addGoalService.setFatPercent(event);
+    this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+  }
+
+  formatProteinOnBlur(event: any) {
+    if (!event.target.value) {
+      this.addGoalService.formatProteinOnBlur(event);
+      this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  formatCarbsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.addGoalService.formatCarbsOnBlur(event);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+    }
+  }
+
+  formatFatOnBlur(event: any) {
+    if (!event.target.value) {
+      this.addGoalService.formatFatOnBlur(event);
+      this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
+      this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
+    }
   }
 }

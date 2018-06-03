@@ -1,4 +1,4 @@
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 import { Subject, Observable } from 'rxjs';
@@ -8,159 +8,213 @@ import { Subject, Observable } from 'rxjs';
 })
 export class AddGoalService {
 
-  calories: any; // could be string from ngModel
-  protein: number;
-  carbs: number;
-  fat: number;
+  /** Returns a FormArray with the name 'formArray'. */
+  get formArray(): AbstractControl | null { return this.getFormGroup().get('formArray'); }
 
-  proteinCals: Subject<number>;
-  proteinGrams: Subject<number>;
-  proteinPercent: Subject<number>;
-  carbsCals: Subject<number>;
-  carbsGrams: Subject<number>;
-  carbsPercent: Subject<number>;
-  fatCals: Subject<number>;
-  fatGrams: Subject<number>;
-  fatPercent: Subject<number>;
+  calories: any; // could be string from ngModel
+  proteinCals: number;
+  proteinGrams: number;
+  proteinPercent: number;
+  carbsCals: number;
+  carbsGrams: number;
+  carbsPercent: number;
+  fatCals: number;
+  fatGrams: number;
+  fatPercent: number;
 
   constructor(private fb: FormBuilder) {
     this.calories = 2000;
-    this.proteinCals = new Subject<number>();
-    this.proteinGrams = new Subject<number>();
-    this.proteinPercent = new Subject<number>();
-    this.carbsCals = new Subject<number>();
-    this.carbsGrams = new Subject<number>();
-    this.carbsPercent = new Subject<number>();
-    this.fatCals = new Subject<number>();
-    this.fatGrams = new Subject<number>();
-    this.fatPercent = new Subject<number>();
   }
 
   calcDefaultMacros() {
     this.calories = +this.calories;
-    this.proteinCals.next(Math.round(4 / 10 * this.calories));
-    this.carbsCals.next(Math.round(4 / 10 * this.calories));
-    this.fatCals.next(Math.round(2 / 10 * this.calories));
+    this.proteinCals = Math.round(4 / 10 * this.calories);
+    this.carbsCals = Math.round(4 / 10 * this.calories);
+    this.fatCals = Math.round(2 / 10 * this.calories);
+    this.proteinGrams = Math.round(this.proteinCals / 4);
+    this.carbsGrams = Math.round(this.carbsCals / 4);
+    this.fatGrams = Math.round(this.fatCals / 9);
+    this.proteinPercent = Math.round(this.proteinCals / this.calories * 100);
+    this.carbsPercent = Math.round(this.carbsCals / this.calories * 100);
+    this.fatPercent = Math.round(this.fatCals / this.calories * 100);
   }
 
   setProteinCals(event: any) {
-    const proteinCals = event.target.value;
-    if (/^\d+$/.test(proteinCals)) {
-      if (proteinCals > this.calories) {
-        this.proteinCals.next(this.calories);
-        return;
+    const cals = event.target.value;
+    if (/^\d+$/.test(cals)) {
+      if (cals > this.calories) {
+        this.proteinCals = this.calories;
+      } else {
+        this.proteinCals = cals;
       }
-      this.proteinCals.next(proteinCals);
+      this.proteinGrams = Math.round(this.proteinCals / 4);
+      this.proteinPercent = this.proteinCals / this.calories * 100;
+
+      this.carbsCals = Math.round((this.calories - this.proteinCals) * 0.666666);
+      this.carbsGrams = Math.round(this.carbsCals / 4);
+      this.carbsPercent = this.carbsCals / this.calories * 100;
+
+      this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+      this.fatGrams = Math.round(this.fatCals / 9);
+      this.fatPercent = this.fatCals / this.calories * 100;
     }
   }
 
-  setCarbsCals(event: any, protein: any) {
-    const carbsCals = event.target.value;
-    if (/^\d+$/.test(carbsCals)) {
-      if (carbsCals > this.calories - protein) {
-        this.carbsCals.next(this.calories - protein);
-        return;
+  setCarbsCals(event: any) {
+    const cals = event.target.value;
+    if (/^\d+$/.test(cals)) {
+      if (cals > this.calories - this.proteinCals) {
+        this.carbsCals = this.calories - this.proteinCals;
+      } else {
+        this.carbsCals = cals;
       }
-      this.carbsCals.next(carbsCals);
+      this.carbsGrams = Math.round(this.carbsCals / 4);
+      this.carbsPercent = this.carbsCals / this.calories * 100;
+
+      this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+      this.fatGrams = Math.round(this.fatCals / 9);
+      this.fatPercent = this.fatCals / this.calories * 100;
     }
   }
 
-  setFatCals(event: any, protein: any) {
-    const fatCals = event.target.value;
-    if (/^\d+$/.test(fatCals)) {
-      if (fatCals > this.calories - protein) {
-        this.carbsCals.next(this.calories - protein);
-        return;
+  setFatCals(event: any) {
+    const cals = event.target.value;
+    if (/^\d+$/.test(cals)) {
+      if (cals > this.calories - this.proteinCals) {
+        this.fatCals = this.calories - this.proteinCals;
+      } else {
+        this.fatCals = cals;
       }
-      this.proteinCals.next(fatCals);
+      this.fatGrams = Math.round(this.fatCals / 9);
+      this.fatPercent = this.fatCals / this.calories * 100;
+
+      this.carbsCals = this.calories - this.proteinCals - this.fatCals;
+      this.carbsGrams = Math.round(this.carbsCals / 4);
+      this.carbsPercent = this.carbsCals / this.calories * 100;
     }
   }
 
   setProteinGrams(event: any) {
-    const proteinGrams = event.target.value;
-    if (/^\d+$/.test(event.target.value)) {
-      if (proteinGrams * 4 > this.calories) {
-        this.proteinGrams.next(this.calories / 4);
-        return;
+    const grams = event.target.value;
+    if (/^\d+$/.test(grams)) {
+      if (grams * 4 > this.calories) {
+        this.proteinGrams = this.calories / 4;
+      } else {
+        this.proteinGrams = +grams;
       }
-      this.proteinGrams.next(+event.target.value);
+      this.proteinCals = this.proteinGrams * 4;
+      this.proteinPercent = this.proteinCals / this.calories * 100;
+
+      this.carbsCals = Math.round((this.calories - this.proteinCals) * 0.666666); // make it const
+      this.carbsGrams = Math.round(this.carbsCals / 4);
+      this.carbsPercent = this.carbsCals / this.calories * 100;
+
+      this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+      this.fatGrams = Math.round(this.fatCals / 9);
+      this.fatPercent = this.fatCals / this.calories * 100;
     }
   }
 
-  setCarbsGrams(event: any, protein: any) {
-    const carbsGrams = event.target.value;
-    if (/^\d+$/.test(event.target.value)) {
-      if (carbsGrams * 4 > this.calories - protein) {
-        this.carbsGrams.next((this.calories - protein) / 4);
-        return;
+  setCarbsGrams(event: any) {
+    const grams = event.target.value;
+    if (/^\d+$/.test(grams)) {
+      if (grams * 4 > this.calories - this.proteinCals) {
+        this.carbsGrams = Math.round((this.calories - this.proteinCals) / 4);
+      } else {
+        this.carbsGrams = +grams;
       }
-      this.carbsGrams.next(+event.target.value);
+      this.carbsCals = this.carbsGrams * 4;
+      this.carbsPercent = this.carbsCals / this.calories * 100;
+
+      this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+      this.fatGrams = Math.round(this.fatCals / 9);
+      this.fatPercent = this.fatCals / this.calories * 100;
     }
   }
 
-  setFatGrams(event: any, protein: any) {
-    const fatGrams = event.target.value;
-    if (/^\d+$/.test(event.target.value)) {
-      if (fatGrams * 9 > this.calories - protein) {
-        this.fatGrams.next((this.calories - protein) / 9);
-        return;
+  setFatGrams(event: any) {
+    const grams = event.target.value;
+    if (/^\d+$/.test(grams)) {
+      if (grams * 9 > this.calories - this.proteinCals) {
+        this.fatGrams = Math.round((this.calories - this.proteinCals) / 9);
+      } else {
+        this.fatGrams = +grams;
       }
-      this.fatGrams.next(+event.target.value);
+      this.fatCals = this.fatGrams * 9;
+      this.fatPercent = this.fatCals / this.calories * 100;
+
+      this.carbsCals = this.calories - this.proteinCals - this.fatCals;
+      this.carbsGrams = Math.round(this.carbsCals / 4);
+      this.carbsPercent = this.carbsCals / this.calories * 100;
     }
   }
 
   setProteinPercent(event: any) {
-    this.proteinPercent.next(event.value);
+    this.proteinPercent = event.value;
+    this.proteinCals = Math.round(this.proteinPercent / 100 * this.calories);
+    this.proteinGrams = Math.round(this.proteinCals / 4);
+
+    this.carbsCals = Math.round((this.calories - this.proteinCals) * 0.666666);
+    this.carbsGrams = Math.round(this.carbsCals / 4);
+    this.carbsPercent = this.carbsCals / this.calories * 100;
+
+    this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+    this.fatGrams = Math.round(this.fatCals / 9);
+    this.fatPercent = this.fatCals / this.calories * 100;
   }
 
   setCarbsPercent(event: any) {
-    this.carbsPercent.next(event.value);
+    this.carbsPercent = event.value;
+    this.carbsCals = Math.round(this.carbsPercent / 100 * this.calories);
+    this.carbsGrams = Math.round(this.carbsCals / 4);
+
+    this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+    this.fatGrams = Math.round(this.fatCals / 9);
+    this.fatPercent = this.fatCals / this.calories * 100;
   }
 
   setFatPercent(event: any) {
-    this.fatPercent.next(event.value);
+    this.fatPercent = event.value;
+    this.fatCals = Math.round(this.fatPercent / 100 * this.calories);
+    this.fatGrams = Math.round(this.fatCals / 9);
+
+    this.carbsCals = this.calories - this.proteinCals - this.fatCals;
+    this.carbsGrams = Math.round(this.carbsGrams / 4);
+    this.carbsPercent = this.carbsCals / this.calories * 100;
   }
 
-  formatProteinCalsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.proteinCals.next(0);
-      return;
-    }
+  formatProteinOnBlur(event: any) {
+    this.proteinCals = 0;
+    this.proteinGrams = 0;
+    this.proteinPercent = 0;
+
+    this.carbsCals = Math.round((this.calories - this.proteinCals) * 0.666666); // make it const
+    this.carbsGrams = Math.round(this.carbsCals / 4);
+    this.carbsPercent = this.carbsCals / this.calories * 100;
+
+    this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+    this.fatGrams = Math.round(this.fatCals / 9);
+    this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatProteinGramsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.proteinGrams.next(0);
-      return;
-    }
+  formatCarbsOnBlur(event: any) {
+    this.carbsCals = 0;
+    this.carbsGrams = 0;
+    this.carbsPercent = 0;
+
+    this.fatCals = this.calories - this.proteinCals - this.carbsCals;
+    this.fatGrams = Math.round(this.fatCals / 9);
+    this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatCarbsCalsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.carbsCals.next(0);
-      return;
-    }
-  }
+  formatFatOnBlur(event: any) {
+    this.fatCals = 0;
+    this.fatGrams = 0;
+    this.fatPercent = 0;
 
-  formatCarbsGramsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.carbsGrams.next(0);
-      return;
-    }
-  }
-
-  formatFatCalsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.fatCals.next(0);
-      return;
-    }
-  }
-
-  formatFatGramsOnBlur(event: any) {
-    if (!event.target.value) {
-      this.fatGrams.next(0);
-      return;
-    }
+    this.carbsCals = this.calories - this.proteinCals - this.fatCals;
+    this.carbsGrams = Math.round(this.carbsCals / 4);
+    this.carbsPercent = this.carbsCals / this.calories * 100;
   }
 
   getFormGroup() {
