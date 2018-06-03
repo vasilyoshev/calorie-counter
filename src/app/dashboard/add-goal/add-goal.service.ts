@@ -1,3 +1,4 @@
+import { FormBuilder, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 import { Subject, Observable } from 'rxjs';
@@ -7,7 +8,7 @@ import { Subject, Observable } from 'rxjs';
 })
 export class AddGoalService {
 
-  calories: number;
+  calories: any; // could be string from ngModel
   protein: number;
   carbs: number;
   fat: number;
@@ -22,7 +23,7 @@ export class AddGoalService {
   fatGrams: Subject<number>;
   fatPercent: Subject<number>;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
     this.calories = 2000;
     this.proteinCals = new Subject<number>();
     this.proteinGrams = new Subject<number>();
@@ -33,56 +34,13 @@ export class AddGoalService {
     this.fatCals = new Subject<number>();
     this.fatGrams = new Subject<number>();
     this.fatPercent = new Subject<number>();
-
-    this.proteinCals.subscribe((cals) => {
-      if (this.protein !== cals) {
-        this.protein = cals;
-        this.proteinGrams.next(cals / 4);
-        this.proteinPercent.next(this.protein / this.calories * 100);
-      }
-    });
-    this.proteinGrams.subscribe((grams) => {
-      this.proteinCals.next(grams * 4);
-    });
-    this.proteinPercent.subscribe((percent) => {
-      this.proteinCals.next(percent * this.calories / 100);
-    });
   }
 
   calcDefaultMacros() {
-    this.proteinCals.next(4 / 10 * this.calories);
-    // this.proteinGrams.next(this.proteinCals.subscribe((cals: number) => {
-    //   return cals / 4;
-    // }));`
-    // this.proteinPercent.next();
-    // this.carbsCals.next();
-    // this.carbsGrams.next();
-    // this.carbsPercent.next();
-    // this.fatCals.next();
-    // this.fatGrams.next();
-    // this.fatPercent.next();
-
-    // this.proteinCals = 4 / 10 * this.calories;
-    // this.carbsCals = 4 / 10 * this.calories;
-    // this.fatCals = 2 / 10 * this.calories;
-    // this.proteinGrams = this.proteinCals / 4;
-    // this.carbsGrams = this.carbsCals / 4;
-    // this.fatGrams = this.fatCals / 9;
-    // this.proteinPercent = this.proteinCals / this.calories * 100;
-    // this.carbsPercent = this.carbsCals / this.calories * 100;
-    // this.fatPercent = this.fatCals / this.calories * 100;
-  }
-
-  calcProteinDefault(): number {
-    return 4 / 10 * this.calories;
-  }
-
-  calcCarbsDefault(calories: number): number {
-    return 4 / 10 * calories;
-  }
-
-  calcFatDefault(calories: number): number {
-    return 2 / 10 * calories;
+    this.calories = +this.calories;
+    this.proteinCals.next(Math.round(4 / 10 * this.calories));
+    this.carbsCals.next(Math.round(4 / 10 * this.calories));
+    this.fatCals.next(Math.round(2 / 10 * this.calories));
   }
 
   setProteinCals(event: any) {
@@ -96,27 +54,127 @@ export class AddGoalService {
     }
   }
 
-  fillProteinCalsIfEmpty(event: any) {
-    if (!event.target.value) {
-      this.proteinCals.next(this.calcProteinDefault());
-      return;
+  setCarbsCals(event: any, protein: any) {
+    const carbsCals = event.target.value;
+    if (/^\d+$/.test(carbsCals)) {
+      if (carbsCals > this.calories - protein) {
+        this.carbsCals.next(this.calories - protein);
+        return;
+      }
+      this.carbsCals.next(carbsCals);
+    }
+  }
+
+  setFatCals(event: any, protein: any) {
+    const fatCals = event.target.value;
+    if (/^\d+$/.test(fatCals)) {
+      if (fatCals > this.calories - protein) {
+        this.carbsCals.next(this.calories - protein);
+        return;
+      }
+      this.proteinCals.next(fatCals);
     }
   }
 
   setProteinGrams(event: any) {
+    const proteinGrams = event.target.value;
     if (/^\d+$/.test(event.target.value)) {
-      this.proteinGrams.next(event.target.value);
+      if (proteinGrams * 4 > this.calories) {
+        this.proteinGrams.next(this.calories / 4);
+        return;
+      }
+      this.proteinGrams.next(+event.target.value);
     }
   }
 
-  fillProteinGramsIfEmpty(event: any) {
-    if (!event.target.value) {
-      this.proteinGrams.next(this.calcProteinDefault() / 4);
-      return;
+  setCarbsGrams(event: any, protein: any) {
+    const carbsGrams = event.target.value;
+    if (/^\d+$/.test(event.target.value)) {
+      if (carbsGrams * 4 > this.calories - protein) {
+        this.carbsGrams.next((this.calories - protein) / 4);
+        return;
+      }
+      this.carbsGrams.next(+event.target.value);
+    }
+  }
+
+  setFatGrams(event: any, protein: any) {
+    const fatGrams = event.target.value;
+    if (/^\d+$/.test(event.target.value)) {
+      if (fatGrams * 9 > this.calories - protein) {
+        this.fatGrams.next((this.calories - protein) / 9);
+        return;
+      }
+      this.fatGrams.next(+event.target.value);
     }
   }
 
   setProteinPercent(event: any) {
     this.proteinPercent.next(event.value);
+  }
+
+  setCarbsPercent(event: any) {
+    this.carbsPercent.next(event.value);
+  }
+
+  setFatPercent(event: any) {
+    this.fatPercent.next(event.value);
+  }
+
+  formatProteinCalsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.proteinCals.next(0);
+      return;
+    }
+  }
+
+  formatProteinGramsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.proteinGrams.next(0);
+      return;
+    }
+  }
+
+  formatCarbsCalsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.carbsCals.next(0);
+      return;
+    }
+  }
+
+  formatCarbsGramsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.carbsGrams.next(0);
+      return;
+    }
+  }
+
+  formatFatCalsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.fatCals.next(0);
+      return;
+    }
+  }
+
+  formatFatGramsOnBlur(event: any) {
+    if (!event.target.value) {
+      this.fatGrams.next(0);
+      return;
+    }
+  }
+
+  getFormGroup() {
+    return this.fb.group({
+      formArray: this.fb.array([
+        this.fb.group({
+          calories: ['', [Validators.min(100), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
+        }),
+        this.fb.group({
+          protein: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]],
+          carbs: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]],
+          fat: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
+        })
+      ])
+    });
   }
 }

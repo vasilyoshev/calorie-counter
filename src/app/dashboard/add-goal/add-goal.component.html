@@ -9,7 +9,7 @@
           <ng-template matStepLabel>Enter calories</ng-template>
           <mat-form-field class="calories" appearance="outline">
             <mat-label>Calories</mat-label>
-            <input [(ngModel)]="addGoalService.calories" matInput formControlName="calories" autocomplete="off" class="cal-input">
+            <input [(ngModel)]="calories" matInput formControlName="calories" autocomplete="off" class="cal-input">
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('required')">This field is required</mat-error>
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('pattern')">Only digits are allowed</mat-error>
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('min')">Calories are too low</mat-error>
@@ -30,22 +30,25 @@
       <mat-card class="add-card">
         <mat-card-content>
           <ng-template matStepLabel>Enter macros</ng-template>
+
           <div class="header">Protein</div>
           <mat-divider [inset]="true"></mat-divider>
           <div class="slider-container">
             <mat-form-field appearance="outline" class="slider-form-field percent">
               <mat-label>kcal</mat-label>
-              <input matInput (keyup)="addGoalService.setProteinCals($event)" (blur)="addGoalService.fillProteinCalsIfEmpty($event)"
-                [value]="addGoalService.proteinCals | async" formControlName="protein" class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setProteinCals($event)" (blur)="addGoalService.formatProteinCalsOnBlur($event)" formControlName="protein"
+                class="slider-input" autocomplete="off">
               <mat-error *ngIf="formArray?.get([1]).get('protein').hasError('required')">Required</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('protein').hasError('pattern')">Digits only</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('protein').hasError('min')">Invalid calories</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('protein').hasError('max')">Invalid calories</mat-error>
             </mat-form-field>
-            <mat-slider [thumbLabel]="true" [value]="addGoalService.proteinPercent | async" (input)="addGoalService.setProteinPercent($event)"></mat-slider>
+            <mat-slider [value]="addGoalService.proteinPercent | async" (input)="addGoalService.setProteinPercent($event)" [thumbLabel]="true"
+              [displayWith]="formatLabel"></mat-slider>
             <mat-form-field appearance="outline" class="slider-form-field grams">
               <mat-label>g</mat-label>
-              <input matInput (keyup)="addGoalService.setProteinGrams($event)" (blur)="addGoalService.fillProteinGramsIfEmpty($event)" [value]="addGoalService.proteinGrams | async" class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setProteinGrams($event)" (blur)="addGoalService.formatProteinGramsOnBlur($event)"
+                [value]="addGoalService.proteinGrams | async | number:'1.0-0'" class="slider-input" autocomplete="off">
             </mat-form-field>
           </div>
 
@@ -54,16 +57,19 @@
           <div class="slider-container">
             <mat-form-field appearance="outline" class="slider-form-field percent">
               <mat-label>kcal</mat-label>
-              <input [(ngModel)]="addGoalService.carbsCals" matInput formControlName="carbs" class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setCarbsCals($event, protein)" (blur)="addGoalService.formatCarbsCalsOnBlur($event)"
+                formControlName="carbs" class="slider-input" autocomplete="off">
               <mat-error *ngIf="formArray?.get([1]).get('carbs').hasError('required')">Required</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('carbs').hasError('pattern')">Digits only</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('carbs').hasError('min')">Invalid calories</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('carbs').hasError('max')">Invalid calories</mat-error>
             </mat-form-field>
-            <mat-slider [(ngModel)]="addGoalService.carbsPercent" [ngModelOptions]="{standalone: true}" [thumbLabel]="true"></mat-slider>
+            <mat-slider [value]="addGoalService.carbsPercent | async" (input)="addGoalService.setCarbsPercent($event)" [thumbLabel]="true"
+              [displayWith]="formatLabel"></mat-slider>
             <mat-form-field appearance="outline" class="slider-form-field grams">
               <mat-label>g</mat-label>
-              <input [(ngModel)]="addGoalService.carbsGrams" [ngModelOptions]="{standalone: true}" matInput class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setCarbsGrams($event, protein)" (blur)="addGoalService.formatCarbsGramsOnBlur($event)"
+                [value]="addGoalService.carbsGrams | async | number:'1.0-0'" class="slider-input" autocomplete="off">
             </mat-form-field>
           </div>
 
@@ -72,16 +78,19 @@
           <div class="slider-container">
             <mat-form-field appearance="outline" class="slider-form-field percent">
               <mat-label>kcal</mat-label>
-              <input [(ngModel)]="addGoalService.fatCals" matInput formControlName="fat" class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setFatCals($event, protein)" (blur)="addGoalService.formatFatCalsOnBlur($event)"
+                formControlName="fat" class="slider-input" autocomplete="off">
               <mat-error *ngIf="formArray?.get([1]).get('fat').hasError('required')">Required</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('fat').hasError('pattern')">Digits only</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('fat').hasError('min')">Invalid calories</mat-error>
               <mat-error *ngIf="formArray?.get([1]).get('fat').hasError('max')">Invalid calories</mat-error>
             </mat-form-field>
-            <mat-slider [(ngModel)]="addGoalService.fatPercent" [ngModelOptions]="{standalone: true}" [thumbLabel]="true"></mat-slider>
+            <mat-slider [value]="addGoalService.fatPercent | async" (input)="addGoalService.setFatPercent($event)" [thumbLabel]="true"
+              [displayWith]="formatLabel"></mat-slider>
             <mat-form-field appearance="outline" class="slider-form-field grams">
               <mat-label>g</mat-label>
-              <input [(ngModel)]="addGoalService.fatGrams" [ngModelOptions]="{standalone: true}" matInput class="slider-input" autocomplete="off">
+              <input matInput (input)="addGoalService.setFatGrams($event, protein)" (blur)="addGoalService.formatFatGramsOnBlur($event)"
+                [value]="addGoalService.fatGrams | async | number:'1.0-0'" class="slider-input" autocomplete="off">
             </mat-form-field>
           </div>
 
