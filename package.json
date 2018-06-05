@@ -30,6 +30,7 @@
     "body-parser": "1.18.3",
     "core-js": "^2.5.7",
     "cors": "2.8.4",
+    "csv-parser": "^1.12.1",
     "express": "4.16.3",
     "express-session": "^1.15.6",
     "hammerjs": "^2.0.8",

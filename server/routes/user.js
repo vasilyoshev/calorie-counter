@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../config/database');
-const User = require('../models/user');
-const Goal = require('../models/goal');
+// const config = require('../config/database');
+const User = require('../entities/user');
+const Goal = require('../entities/goal');
 
 /**
  * Checks if user is logged in, by checking if user is stored in session.

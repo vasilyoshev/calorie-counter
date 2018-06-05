@@ -8,7 +8,20 @@ const session = require('express-session')
 
 const app = express();
 const port = process.env.PORT || 8080;
-const users = require('./routes/users');
+const user = require('./routes/user');
+const food = require('./routes/food');
+
+////////////
+// const Food = require('./entities/food');
+// var csv = require('csv-parser')
+// var fs = require('fs')
+// fs.createReadStream('nutrients.csv').pipe(csv()).on('data', function (data) {
+    // let food = new Food({
+
+    // });
+//     console.log('Name: %s Protein: %s', data.name, data.protein)
+// });
+////////////////////
 
 // CORS middleware
 let corsOptions = {
@@ -30,7 +43,8 @@ app.use(session({
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
 app.use(bodyParser.json());
 
-app.use('/user', users);
+app.use('/user', user);
+app.use('/food', food);
 
 // Connect to Database
 mongoose.connect(configDb.database);
