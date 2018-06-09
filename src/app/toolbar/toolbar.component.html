@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span class="logo" [routerLink]="['/']">Calorie Counter</span>
+  <div class="logo" [routerLink]="['/']">Calorie Counter</div>
 
   <span class="spacer"></span>
 
@@ -7,4 +7,7 @@
   <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/calculator']">Calculator</button>
   <button mat-button *ngIf="loginService.loggedIn" (click)="onLogout()">Logout</button>
   <button mat-button *ngIf="!loginService.loggedIn" [routerLink]="['/register']">Register</button>
+  <div>
+    Vasil Yoshev
+  </div>
 </mat-toolbar>

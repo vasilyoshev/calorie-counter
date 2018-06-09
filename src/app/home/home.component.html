@@ -1,3 +1,3 @@
 
-<app-login *ngIf="!loginService.loggedIn"></app-login>
+<app-login *ngIf="!loginService.loggedIn"></app-login> <!-- in order to NOT show if loggedIn is undefined -->
 <app-dashboard *ngIf="loginService.loggedIn"></app-dashboard>

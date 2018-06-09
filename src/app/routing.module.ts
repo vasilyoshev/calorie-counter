@@ -1,3 +1,4 @@
+import { AddFoodComponent } from './dashboard/add-food/add-food.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -32,6 +33,12 @@ const appRoutes: Routes = [
     {
         path: 'profile',
         component: ProfileComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'food/:ndbno',
+        pathMatch: 'prefix',
+        component: AddFoodComponent,
         canActivate: [AuthGuard]
     },
     {

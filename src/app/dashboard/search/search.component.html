@@ -1,0 +1,15 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
+  <mat-form-field appearance="outline" class="example-full-width">
+    <mat-label>Search food</mat-label>
+    <input matInput formControlName="query" (keyup)="searchTerm$.next($event.target.value)" [matAutocomplete]="auto">
+    <mat-icon color="primary" matSuffix>search</mat-icon>
+    <!-- <button mat-icon-button>
+      <mat-icon matSuffix>search</mat-icon>
+    </button> -->
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option [routerLink]="['/food', result.ndbno]" *ngFor="let result of results" [value]="result">
+        {{ result.name }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

@@ -19,7 +19,7 @@ export class LoginService {
     }
 
     logout(): Observable<any> {
-        return this.http.post('user/logout', {}, { withCredentials: true });
+        return this.http.get('user/logout', { withCredentials: true });
     }
 
     isLoggedIn(): Observable<any> {

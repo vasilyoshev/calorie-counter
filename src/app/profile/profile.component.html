@@ -1,9 +1,9 @@
 <div>
-  <h2 class="page-header">{{profileService.user.name}}</h2>
+  <h2 class="page-header">{{profileService.user?.name}}</h2>
   <ul class="list-group">
-    <li class="list-group-item">Username: {{profileService.user.username}}</li>
-    <li class="list-group-item">Email: {{profileService.user.email}}</li>
-    <li class="list-group-item" *ngIf="profileService.user.goal.calories">Goal: {{profileService.user.goal.calories}}, 
+    <li class="list-group-item">Username: {{profileService.user?.username}}</li>
+    <li class="list-group-item">Email: {{profileService.user?.email}}</li>
+    <li class="list-group-item" *ngIf="profileService.user?.goal?.calories">Goal: {{profileService.user.goal.calories}}, 
         {{profileService.user.goal.protein}}, {{profileService.user.goal.carbs}}, {{profileService.user.goal.fat}}
     </li>
   </ul>

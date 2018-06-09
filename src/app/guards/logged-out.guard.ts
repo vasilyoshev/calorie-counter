@@ -12,6 +12,11 @@ export class LoggedOutGuard implements CanActivate {
     ) { }
 
     canActivate() {
-        return !this.loginService.loggedIn ? true : this.router.navigate(['']);
+        if (this.loginService.loggedIn) {
+            this.router.navigate(['']);
+            return false;
+        }
+        return true;
+        // return !this.loginService.loggedIn ? true : this.router.navigate(['']);
     }
 }

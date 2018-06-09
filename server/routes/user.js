@@ -8,7 +8,8 @@ const Goal = require('../entities/goal');
  * Checks if user is logged in, by checking if user is stored in session.
  */
 const authMiddleware = (req, res, next) => {
-    if (req.session && req.session.user) {
+    if (req.session && req.session.username) {
+        req.session.views++;
         next();
     } else {
         res.status(403).json({
@@ -43,7 +44,7 @@ router.post('/register', (req, res, next) => {
 });
 
 router.get('/login', (req, res) => {
-    req.session.user ? res.status(200).send({ loggedIn: true }) : res.status(200).send({ loggedIn: false });
+    req.session.username ? res.status(200).send({ loggedIn: true }) : res.status(200).send({ loggedIn: false });
 });
 
 router.post('/login', (req, res) => {
@@ -74,7 +75,8 @@ router.post('/login', (req, res) => {
                     email: user.email,
                     goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
                 }
-                req.session.user = userRes;
+                req.session.username = user.username;
+                req.session.views = 1;
                 if (req.body.remember) {
                     req.session.cookie.maxAge = null;
                 }
@@ -92,23 +94,13 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.post('/logout', authMiddleware, (req, res, next) => {
-    req.session.destroy((err) => {
-        if (err) {
-            res.status(500).json({
-                success: false,
-                message: 'Could not log out.'
-            });
-        } else {
-            res.status(200).json({
-                success: true
-            });
-        }
-    });
+router.get('/logout', (req, res, next) => {
+    req.session = null;
+    res.json({ success: true });
 });
 
 router.get('/profile', authMiddleware, (req, res) => {
-    User.getUserByUsername(req.session.user.username, (err, user) => {
+    User.getUserByUsername(req.session.username, (err, user) => {
         res.json({
             id: user.id,
             name: user.name,

@@ -1,12 +1,12 @@
 <form [formGroup]="addGoalForm" (ngSubmit)="onSubmit(addGoalForm)">
-  <mat-vertical-stepper formArrayName="formArray" [linear]="true" #stepper>
+  <mat-horizontal-stepper formArrayName="formArray" [linear]="true" #stepper>
     <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
       <mat-card class="add-card">
         <mat-card-header>
           Enter desired daily calorie intake
         </mat-card-header>
         <mat-card-content>
-          <ng-template matStepLabel>Enter calories</ng-template>
+          <ng-template matStepLabel>Calories</ng-template>
           <mat-form-field class="calories" appearance="outline">
             <mat-label>Calories</mat-label>
             <input [(ngModel)]="addGoalService.calories" matInput formControlName="calories" autocomplete="off" class="cal-input">
@@ -29,7 +29,7 @@
     <mat-step formGroupName="1" [stepControl]="formArray?.get([1])">
       <mat-card class="add-card">
         <mat-card-content>
-          <ng-template matStepLabel>Enter macros</ng-template>
+          <ng-template matStepLabel>Macros</ng-template>
 
           <div class="header">Protein</div>
           <mat-divider [inset]="true"></mat-divider>
@@ -95,5 +95,5 @@
         </mat-card-content>
       </mat-card>
     </mat-step>
-  </mat-vertical-stepper>
+  </mat-horizontal-stepper>
 </form>
