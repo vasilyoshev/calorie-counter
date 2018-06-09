@@ -46,7 +46,7 @@ let sessionObj = {
     cookie: { maxAge: 1800000 } // 30 minutes
 };
 if (app.get('env') === 'production') {
-    sessionObj.cookie.secure = true; // serve secure cookies
+    // sessionObj.cookie.secure = true; // serve secure cookies
     // sessionObj.cookie.maxAge = 1800000; // 30 minutes
 }
 app.use(session(sessionObj));
