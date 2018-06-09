@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname, '..', 'dist')));
 
 // Session middleware
 let sessionObj = {
-    store: new FileStore(),
+    store: new FileStore({ secret: 'keyboard cat' }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
