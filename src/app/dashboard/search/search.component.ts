@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(form: FormGroup) {
     console.log('submitted');
   }
 }
