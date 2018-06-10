@@ -1,3 +1,33 @@
+<!-- Summary -->
+<mat-card class="diary">
+    <mat-card-content>
+      <table mat-table [dataSource]="totalData">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <ng-container matColumnDef="calories">
+          <th mat-header-cell *matHeaderCellDef>Calories</th>
+          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+        </ng-container>
+        <ng-container matColumnDef="protein">
+          <th mat-header-cell *matHeaderCellDef>Protein</th>
+          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
+        </ng-container>
+        <ng-container matColumnDef="carbs">
+          <th mat-header-cell *matHeaderCellDef>Carbs</th>
+          <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fat">
+          <th mat-header-cell *matHeaderCellDef>Fat</th>
+          <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+
 <!-- Breakfast -->
 <mat-card class="diary">
   <mat-card-content>

@@ -8,6 +8,12 @@ const ELEMENT_DATA = [
   {name: 'Rice', calories: 400, protein: 20, carbs: 200, fat: 234}
 ];
 
+const TOTAL = [
+  {name: 'Total', calories: 500, protein: 100, carbs: 100, fat: 50},
+  {name: 'Daily Goal', calories: 500, protein: 100, carbs: 100, fat: 50},
+  {name: 'Remaining', calories: 500, protein: 100, carbs: 100, fat: 50}
+]
+
 @Component({
   selector: 'app-diary',
   templateUrl: './diary.component.html',
@@ -16,6 +22,8 @@ const ELEMENT_DATA = [
 export class DiaryComponent implements OnInit {
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  totalData = new MatTableDataSource(TOTAL);
+  breakfastData = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns = ['name', 'calories', 'protein', 'carbs', 'fat'];
 
   constructor(public profileService: ProfileService) { }
