@@ -1,7 +1,8 @@
-import { AddFoodComponent } from './dashboard/add-food/add-food.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
+import { AddFoodComponent } from './dashboard/add-food/add-food.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/logged-out.guard';
@@ -39,6 +40,11 @@ const appRoutes: Routes = [
         path: 'food/:ndbno',
         pathMatch: 'prefix',
         component: AddFoodComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'setgoal',
+        component: AddGoalComponent,
         canActivate: [AuthGuard]
     },
     {

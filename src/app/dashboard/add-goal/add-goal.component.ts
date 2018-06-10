@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -20,7 +21,8 @@ export class AddGoalComponent implements OnInit {
   constructor(
     public addGoalService: AddGoalService,
     private dashboardService: DashboardService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class AddGoalComponent implements OnInit {
       .subscribe((data: any) => {
         if (data.success) {
           this.profileService.user.goal = data.user.goals[data.user.goals.length - 1];
+          this.router.navigate(['']);
         } else {
           alert('Something went wrong add goal.');
         }

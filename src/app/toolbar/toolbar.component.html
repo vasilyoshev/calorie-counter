@@ -3,15 +3,18 @@
 
   <span class="spacer"></span>
 
-  <div class="profile" [routerLink]="['/profile']">
-    Calorie Counter
+  <div *ngIf="loginService.loggedIn">
+    <span class="profile" [routerLink]="['/profile']">{{ profileService.user.name }}</span>
+    <mat-icon class="arrow" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onLogout()">Logout</button>
+      <button mat-menu-item [routerLink]="['/setgoal']">Set Goal</button>
+      <button mat-menu-item [routerLink]="['/calculator']">Calculator</button>
+    </mat-menu>
   </div>
 
-  <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/profile']">Profile</button>
+  <!-- <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/profile']">Profile</button>
   <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/calculator']">Calculator</button>
-  <button mat-button *ngIf="loginService.loggedIn" (click)="onLogout()">Logout</button>
+  <button mat-button *ngIf="loginService.loggedIn" (click)="onLogout()">Logout</button>-->
   <button mat-button *ngIf="!loginService.loggedIn" [routerLink]="['/register']">Register</button>
-  <div>
-    Vasil Yoshev
-  </div>
 </mat-toolbar>

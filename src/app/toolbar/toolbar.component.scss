@@ -2,10 +2,18 @@
     flex: 1 1 auto;
 }
 
-.logo {
+.logo, .profile {
     outline: none;
     cursor: pointer;
     white-space: pre-wrap;
     line-height: normal;
+}
+
+.logo {
     width: 80px;
+}
+
+.arrow {
+    vertical-align: middle;
+    cursor: pointer;
 }
