@@ -19,7 +19,8 @@ export class SessionInterceptor implements HttpInterceptor {
         return next
             .handle(req).pipe(
                 catchError((response: HttpEvent<any>) => {
-                    if (response instanceof HttpErrorResponse) {
+                    if (response instanceof HttpErrorResponse && response.error
+                        && response.error.message === 'You must be logged in.') {
                         this.loginService.loggedIn = false;
                         this.router.navigate(['']); // TODO add session expired screen
                     }

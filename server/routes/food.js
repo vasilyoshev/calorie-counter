@@ -32,13 +32,13 @@ router.post('/getFood', authMiddleware, (req, res, next) => {
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             body = JSON.parse(body);
-            if (!body.errors) {
+            if (body.notfound !== 1) {
                 res.json({
                     food: body
                 });
             } else {
-                res.json({
-                    food: []
+                res.status(400).json({
+                    msg: body.foods[0].error
                 });
             }
         }

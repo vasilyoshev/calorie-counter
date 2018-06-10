@@ -4,7 +4,7 @@
   <span class="spacer"></span>
 
   <div *ngIf="loginService.loggedIn">
-    <span class="profile" [routerLink]="['/profile']">{{ profileService.user.name }}</span>
+    <span class="profile" [routerLink]="['/profile']">{{ profileService.user?.name }}</span>
     <mat-icon class="arrow" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onLogout()">Logout</button>
