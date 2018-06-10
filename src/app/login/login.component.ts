@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
     this.loginService.login(user).subscribe((data: any) => {
       this.loginService.loggedIn = true;
       this.profileService.user = data.user;
+      this.profileService.getProfile().subscribe();
       this.router.navigate(['']);
     }, (err: any) => {
       this.loginService.loggedIn = false;

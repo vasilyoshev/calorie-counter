@@ -15,11 +15,5 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
-    this.profileService.getProfile().subscribe((profile: any) => {
-      this.profileService.user = profile;
-    }, err => {
-      alert('profile component' + err);
-    });
-  }
+  ngOnInit() { }
 }

@@ -81,8 +81,7 @@ router.post('/login', (req, res) => {
                     req.session.cookie.maxAge = null;
                 }
                 res.status(200).send({
-                    success: true,
-                    user: userRes
+                    success: true
                 });
             } else {
                 return res.status(400).json({
