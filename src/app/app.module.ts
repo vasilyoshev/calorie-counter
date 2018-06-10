@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule,
   MatInputModule, MatMenuModule, MatCheckboxModule, MatSliderModule,
-  MatDividerModule, MatStepperModule, MatAutocompleteModule, MatIconModule
+  MatDividerModule, MatStepperModule, MatAutocompleteModule, MatIconModule, MatTableModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -30,7 +30,7 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { AddGoalService } from './dashboard/add-goal/add-goal.service';
 import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
-import { StatusComponent } from './dashboard/status/status.component';
+import { DiaryComponent } from './dashboard/diary/diary.component';
 import { SearchComponent } from './dashboard/search/search.component';
 import { AddFoodComponent } from './dashboard/add-food/add-food.component';
 
@@ -45,7 +45,7 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     ProfileComponent,
     AlertComponent,
     CalculatorComponent,
-    StatusComponent,
+    DiaryComponent,
     AddGoalComponent,
     SearchComponent,
     AddFoodComponent
@@ -68,7 +68,8 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     MatDividerModule,
     MatStepperModule,
     MatAutocompleteModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule
   ],
   providers: [
     RegisterService,
