@@ -11,7 +11,7 @@ export class LoginService {
     loggedIn: boolean;
 
     constructor(private http: HttpClient) {
-        this.loggedIn = false;
+        // this.loggedIn = false;
     }
 
     login(user: User): Observable<any> {

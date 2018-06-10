@@ -165,7 +165,7 @@ export class AddGoalService {
 
   setCarbsPercent(event: any) {
     if (event.value > 100 - this.proteinPercent) {
-      this.carbsPercent = 1000 - this.proteinPercent;
+      this.carbsPercent = 100 - this.proteinPercent;
     } else {
       this.carbsPercent = event.value;
     }
