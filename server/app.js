@@ -33,7 +33,7 @@ let corsOptions = {
 app.use(cors(corsOptions));
 
 // Serves static files from FE build
-app.use(express.static(path.join(__dirname, '..', 'dist')));
+app.use(express.static(path.join(__dirname, '../dist')));
 
 // Session middleware
 let sessionObj = {
@@ -70,7 +70,7 @@ mongoose.connection.on('error', (err) => {
 
 app.get('*', (req, res) => {
     console.log(1);
-    res.send(path.join(__dirname, '..', 'dist/index.html'));
+    res.send(path.join(__dirname, '../dist/index.html'));
 });
 
 // function sendSpaFileIfUnmatched(req,res) {
