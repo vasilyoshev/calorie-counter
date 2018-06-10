@@ -69,7 +69,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 app.get('*', (req, res) => {
-    console.log(1);
+    console.log(__dirname);
     res.send(path.join(__dirname, '../dist/index.html'));
 });
 
