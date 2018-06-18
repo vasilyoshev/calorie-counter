@@ -5,24 +5,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const configDb = require('./config/database');
 const session = require('express-session')
-var FileStore = require('session-file-store')(session);
+const FileStore = require('session-file-store')(session);
+const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT || 8080;
 const user = require('./routes/user');
 const food = require('./routes/food');
-
-////////////
-// const Food = require('./entities/food');
-// var csv = require('csv-parser')
-// var fs = require('fs')
-// fs.createReadStream('nutrients.csv').pipe(csv()).on('data', function (data) {
-// let food = new Food({
-
-// });
-//     console.log('Name: %s Protein: %s', data.name, data.protein)
-// });
-////////////////////
 
 // CORS middleware
 let corsOptions = {
@@ -31,6 +20,9 @@ let corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
+
+// Compress all routes
+app.use(compression());
 
 // Serves static files from FE build
 app.use(express.static(path.join(__dirname, '../dist')));
@@ -45,10 +37,10 @@ let sessionObj = {
     // rolling: true,
     cookie: { maxAge: 1800000 } // 30 minutes
 };
-if (app.get('env') === 'production') {
-    // sessionObj.cookie.secure = true; // serve secure cookies
-    // sessionObj.cookie.maxAge = 1800000; // 30 minutes
-}
+// if (app.get('env') === 'production') {
+//     sessionObj.cookie.secure = true; // serve secure cookies
+//     sessionObj.cookie.maxAge = 1800000; // 30 minutes
+// }
 app.use(session(sessionObj));
 
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
@@ -72,11 +64,6 @@ app.get('*', (req, res) => {
     console.log(__dirname);
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
-
-// function sendSpaFileIfUnmatched(req,res) {
-//     res.sendFile("dist/index.html", { root: './..' });
-// }
-// app.use(sendSpaFileIfUnmatched);
 
 // Start server
 app.listen(port, () => {
