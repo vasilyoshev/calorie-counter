@@ -19,26 +19,46 @@ const authMiddleware = (req, res, next) => {
 };
 
 router.post('/register', (req, res, next) => {
-    let newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        username: req.body.username,
-        password: req.body.password,
-        role: "user"
-    });
+    let usernameUsed;
+    let emailUsed;
+    User.find({ username: req.body.username }, (err, user) => {
+        if (user.length) usernameUsed = true;
+        else usernameUsed = false;
 
-    User.addUser(newUser, (err, user) => {
-        if (err) {
-            res.status(400).json({
-                success: false,
-                message: 'Failed to register user'
+        User.find({ email: req.body.email }, (err, user) => {
+            if (user.length) emailUsed = true;
+            else emailUsed = false;
+
+            if (usernameUsed || emailUsed) {
+                return res.status(400).json({
+                    success: false,
+                    usernameUsed: usernameUsed,
+                    emailUsed: emailUsed
+                });
+            }
+
+            let newUser = new User({
+                name: req.body.name,
+                email: req.body.email,
+                username: req.body.username,
+                password: req.body.password,
+                role: "user"
             });
-        } else {
-            res.json({
-                success: true,
-                message: 'User registered'
+
+            User.addUser(newUser, (err, user) => {
+                if (err) {
+                    res.status(400).json({
+                        success: false,
+                        message: 'Failed to register user'
+                    });
+                } else {
+                    res.json({
+                        success: true,
+                        message: 'User registered'
+                    });
+                }
             });
-        }
+        });
     });
 });
 

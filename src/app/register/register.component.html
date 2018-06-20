@@ -7,7 +7,7 @@
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">
         <mat-error *ngIf="registerForm.get('name').hasError('required')">
-          Username is required
+          Name is required
         </mat-error>
         <mat-error *ngIf="registerForm.get('name').hasError('minlength')">
           Minimum length is 2 characters
@@ -23,6 +23,9 @@
         <mat-error *ngIf="registerForm.get('username').hasError('minlength')">
           Minimum length is 3 characters
         </mat-error>
+        <mat-error *ngIf="registerForm.get('username').hasError('taken')">
+          Username is already taken.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -33,6 +36,9 @@
         </mat-error>
         <mat-error *ngIf="registerForm.get('email').hasError('email')">
           Email is invalid
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('email').hasError('taken')">
+          Email is already taken.
         </mat-error>
       </mat-form-field>
 

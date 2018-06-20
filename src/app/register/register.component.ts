@@ -37,7 +37,16 @@ export class RegisterComponent implements OnInit {
     this.registerService.registerUser(user).subscribe((data: any) => {
       this.router.navigate(['login']);
     }, (err: any) => {
-      alert('Something went wrong in register component.');
+      if (err.error.emailUsed || err.error.usernameUsed) {
+        if (err.error.emailUsed) {
+          this.registerForm.controls['email'].setErrors({ 'taken': true });
+        }
+        if (err.error.usernameUsed) {
+          this.registerForm.controls['username'].setErrors({ 'taken': true });
+        }
+      } else {
+        alert('Something went wrong in register component.');
+      }
     });
   }
 }
