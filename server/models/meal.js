@@ -4,9 +4,14 @@ let Schema = mongoose.Schema;
 const MealSchema = Schema({
     type: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
     },
-    foods: [{ type: Schema.Types.ObjectId, ref: 'Food' }]
+    foods: [{ type: Schema.Types.ObjectId, ref: 'Food' }],
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const Meal = module.exports = mongoose.model('Meal', MealSchema);

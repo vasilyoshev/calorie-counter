@@ -3,6 +3,7 @@ const router = express.Router();
 // const config = require('../config/database');
 const User = require('../models/user');
 const Goal = require('../models/goal');
+const Meal = require('../models/meal');
 
 /**
  * Checks if user is logged in, by checking if user is stored in session.
@@ -129,6 +130,33 @@ router.get('/profile', authMiddleware, (req, res) => {
             email: user.email,
             goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
         });
+    });
+});
+
+router.post('/addFood', authMiddleware, (req, res) => {
+    User.getUserByUsername(req.session.username, (err, user) => {
+
+        
+        
+        
+        // let newMeal = new Meal({
+        //     type: 'Breakfast'
+        // });
+
+        // User.addMeal(newMeal, user, (err, user) => {
+        //     if (err) {
+        //         res.status(400).json({
+        //             success: false,
+        //             message: 'Failed to add meal'
+        //         });
+        //     } else {
+        //         res.json({
+        //             success: true,
+        //             message: 'Meal added'
+        //         });
+        //     }
+        // });
+
     });
 });
 

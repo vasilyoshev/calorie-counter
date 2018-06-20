@@ -39,5 +39,4 @@ export class AddFoodComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.routeParamsSub.unsubscribe();
   }
-
 }

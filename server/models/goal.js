@@ -17,6 +17,10 @@ const GoalSchema = Schema({
     fat: {
         type: Number,
         required: true
+    },
+    date: {
+        type: Date,
+        default: new Date()
     }
 });
 

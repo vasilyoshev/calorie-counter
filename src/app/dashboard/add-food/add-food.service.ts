@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/internal/operators/map';
 
+import { Food } from './../../shared/entities/food';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +17,12 @@ export class AddFoodService {
       .post('food/getFood', { ndbno: ndbno }, { withCredentials: true })
       .pipe(
         map((res: any) => {
-          return res.food.foods[0].food;
+          return res.food;
         })
       );
+  }
+
+  addToBreakfast(food: Food) {
+    return this.http.post('user/addFood', { food: food, type: 'Breakfast' }, { withCredentials: true }).subscribe();
   }
 }

@@ -69,10 +69,12 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 }
 
 module.exports.addGoal = function (newGoal, user, callback) {
+    // TODO replace goal if exist on that day
     user.goals.push(newGoal);
     user.save(callback);
 }
 
-module.exports.addFood = function (newFood, meal, callback) {
-    meal.foods.push(newFood._id);
+module.exports.addMeal = function (newMeal, user, callback) {
+    user.meals.push(newMeal);
+    user.save(callback);
 }

@@ -7,47 +7,22 @@ const FoodSchema = Schema({
         type: String,
         required: true
     },
-    group: {
-        type: String,
+    calories: {
+        type: Number,
         required: true
     },
     protein: {
-        type: Number
+        type: Number,
+        required: true
     },
-    sodium: {
-        type: Number
-    },
-    fiber: {
-        type: Number
-    },
-    carbohydrate: {
-        type: Number
-    },
-    sugars: {
-        type: Number
+    carbs: {
+        type: Number,
+        required: true
     },
     fat: {
-        type: Number
-    },
-    water: {
-        type: Number
-    },
-    calories: {
-        type: Number
-    },
-    saturated: {
-        type: Number
-    },
-    monounsat: {
-        type: Number
-    },
-    polyunsat: {
-        type: Number
+        type: Number,
+        required: true
     }
 });
 
 const Food = module.exports = mongoose.model('Food', FoodSchema);
-
-// module.exports.addFood = function (newFood, callback) {
-//     newFood.save(callback);
-// }
