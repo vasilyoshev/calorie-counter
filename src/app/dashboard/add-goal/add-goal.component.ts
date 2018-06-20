@@ -37,7 +37,7 @@ export class AddGoalComponent implements OnInit {
 
     const dailyGoal = {
       username: this.profileService.user.username,
-      calories: form.value.formArray[0].calories,
+      calories: Number(form.value.formArray[0].calories),
       protein: form.value.formArray[1].protein,
       carbs: form.value.formArray[1].carbs,
       fat: form.value.formArray[1].fat

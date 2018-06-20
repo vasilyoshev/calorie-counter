@@ -11,7 +11,7 @@ export class AddGoalService {
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.getFormGroup().get('formArray'); }
 
-  calories: any; // could be string from ngModel
+  calories: number;
   proteinCals: number;
   proteinGrams: number;
   proteinPercent: number;
@@ -229,7 +229,7 @@ export class AddGoalService {
     return this.fb.group({
       formArray: this.fb.array([
         this.fb.group({
-          calories: ['2000', [Validators.min(100), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
+          calories: [2000, [Validators.min(100), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]]
         }),
         this.fb.group({
           protein: ['', [Validators.min(0), Validators.max(20000), Validators.required, Validators.pattern(/^\d+$/)]],
