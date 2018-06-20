@@ -18,7 +18,7 @@ export class AddFoodComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private addFoodService: AddFoodService
+    public addFoodService: AddFoodService
   ) { }
 
   ngOnInit() {
