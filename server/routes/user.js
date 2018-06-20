@@ -122,7 +122,8 @@ router.get('/profile', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         res.json({
             id: user.id,
-            name: user.fname + " " + user.lname,
+            fname: user.fname,
+            lname: user.lname,
             username: user.username,
             email: user.email,
             goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
