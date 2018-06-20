@@ -11,13 +11,11 @@ const UserSchema = Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     password: {
         type: String,
@@ -64,4 +62,9 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 
         callback(null, isMatch);
     });
+}
+
+module.exports.addGoal = function (newGoal, user, callback) {
+    user.goals.push(newGoal);
+    user.save(callback);
 }
