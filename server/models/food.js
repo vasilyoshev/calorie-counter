@@ -48,6 +48,6 @@ const FoodSchema = Schema({
 
 const Food = module.exports = mongoose.model('Food', FoodSchema);
 
-module.exports.addFood = function (newFood, callback) {
-    newFood.save(callback);
-}
+// module.exports.addFood = function (newFood, callback) {
+//     newFood.save(callback);
+// }

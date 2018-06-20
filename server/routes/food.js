@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const config = require('../config/database');
-const Food = require('../entities/food');
+const Food = require('../models/food');
 var request = require('request');
 
 /**

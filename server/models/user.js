@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const MealSchema = require('mongoose').model('Meal').schema;
+const GoalSchema = require('mongoose').model('Goal').schema;
 const bcrypt = require('bcryptjs');
 
 let Schema = mongoose.Schema;
@@ -29,10 +31,8 @@ const UserSchema = Schema({
         type: String,
         required: true
     },
-    goals: {
-        type: Array,
-        default: []
-    }
+    goals: [GoalSchema],
+    meals: [MealSchema]
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);
@@ -71,4 +71,8 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 module.exports.addGoal = function (newGoal, user, callback) {
     user.goals.push(newGoal);
     user.save(callback);
+}
+
+module.exports.addFood = function (newFood, meal, callback) {
+    meal.foods.push(newFood._id);
 }

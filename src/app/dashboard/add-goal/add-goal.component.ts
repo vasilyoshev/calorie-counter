@@ -46,7 +46,7 @@ export class AddGoalComponent implements OnInit {
     this.dashboardService.setDailyGoal(dailyGoal)
       .subscribe((data: any) => {
         if (data.success) {
-          this.profileService.user.goal = data.user.goals[data.user.goals.length - 1];
+          this.profileService.user.goal = data.goal;
           this.router.navigate(['']);
         } else {
           alert('Something went wrong add goal.');

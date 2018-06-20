@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 // const config = require('../config/database');
-const User = require('../entities/user');
+const User = require('../models/user');
+const Goal = require('../models/goal');
 
 /**
  * Checks if user is logged in, by checking if user is stored in session.
@@ -139,13 +140,12 @@ router.post('/set-goal', authMiddleware, (req, res) => {
             throw err;
         }
 
-        let newGoal = {
+        let newGoal = new Goal({
             calories: req.body.calories,
             protein: req.body.protein,
             carbs: req.body.carbs,
-            fat: req.body.fat,
-            date: Date.now()
-        };
+            fat: req.body.fat
+        });
 
         User.addGoal(newGoal, user, (err, user) => {
             if (err) {
@@ -156,7 +156,8 @@ router.post('/set-goal', authMiddleware, (req, res) => {
             } else {
                 res.json({
                     success: true,
-                    message: 'Goal added'
+                    message: 'Goal added',
+                    goal: user.goals[user.goals.length - 1]
                 });
             }
         });

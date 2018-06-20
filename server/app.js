@@ -10,6 +10,10 @@ const compression = require('compression');
 
 const app = express();
 const port = process.env.PORT || 8080;
+require("./models/food");
+require("./models/goal");
+require("./models/meal");
+require("./models/user");
 const user = require('./routes/user');
 const food = require('./routes/food');
 
