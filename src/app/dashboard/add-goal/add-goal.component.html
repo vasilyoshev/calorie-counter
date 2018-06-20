@@ -9,7 +9,7 @@
           <ng-template matStepLabel>Calories</ng-template>
           <mat-form-field class="calories" appearance="outline">
             <mat-label>Calories</mat-label>
-            <input [(ngModel)]="addGoalService.calories" matInput formControlName="calories" autocomplete="off" class="cal-input">
+            <input #cals (change)="addGoalService.calories = cals.value" matInput formControlName="calories" autocomplete="off" class="cal-input">
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('required')">This field is required</mat-error>
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('pattern')">Only digits are allowed</mat-error>
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('min')">Calories are too low</mat-error>

@@ -17,7 +17,7 @@
         </mat-error>
       </mat-form-field>
       <span class="remember-me">
-        <mat-checkbox [(ngModel)]="shouldRemember" [ngModelOptions]="{standalone: true}">Remember me</mat-checkbox>
+        <mat-checkbox (change)="shouldRemember = !shouldRemember">Remember me</mat-checkbox>
       </span>
       <button mat-raised-button type="submit" class="submit" color="primary">Log In</button>
     </form>
