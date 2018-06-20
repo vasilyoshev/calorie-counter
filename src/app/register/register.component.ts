@@ -29,7 +29,8 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const user = new User();
-    user.name = form.value.name;
+    user.fname = form.value.fname;
+    user.lname = form.value.lname;
     user.username = form.value.username;
     user.email = form.value.email;
     user.password = form.value.password;

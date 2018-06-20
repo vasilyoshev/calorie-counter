@@ -3,7 +3,8 @@ import { Goal } from './goal';
 export class User {
 
     id: string;
-    name: string;
+    fname: string;
+    lname: string;
     username: string;
     email: string;
     password: string;

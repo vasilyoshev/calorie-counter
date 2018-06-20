@@ -38,7 +38,8 @@ router.post('/register', (req, res, next) => {
             }
 
             let newUser = new User({
-                name: req.body.name,
+                fname: req.body.fname,
+                lname: req.body.lname,
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
@@ -89,7 +90,7 @@ router.post('/login', (req, res) => {
             if (isMatch) {
                 let userRes = {
                     id: user._id,
-                    name: user.name,
+                    name: user.fname + " " + user.lname,
                     username: user.username,
                     email: user.email,
                     goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
@@ -121,7 +122,7 @@ router.get('/profile', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         res.json({
             id: user.id,
-            name: user.name,
+            name: user.fname + " " + user.lname,
             username: user.username,
             email: user.email,
             goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
@@ -152,11 +153,9 @@ router.post('/set-goal', authMiddleware, (req, res) => {
                     message: 'Failed to add goal'
                 });
             } else {
-                console.log(user);
                 res.json({
                     success: true,
-                    message: 'Goal added',
-                    user: user
+                    message: 'Goal added'
                 });
             }
         });

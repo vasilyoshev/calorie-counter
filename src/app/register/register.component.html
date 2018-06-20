@@ -4,13 +4,24 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm)">
 
       <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-        <mat-error *ngIf="registerForm.get('name').hasError('required')">
-          Name is required
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="fname">
+        <mat-error *ngIf="registerForm.get('fname').hasError('required')">
+          First name is required
         </mat-error>
-        <mat-error *ngIf="registerForm.get('name').hasError('minlength')">
-          Minimum length is 2 characters
+        <mat-error *ngIf="registerForm.get('fname').hasError('minlength')">
+          Minimum length is 1 character
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lname">
+        <mat-error *ngIf="registerForm.get('lname').hasError('required')">
+          Last name is required
+        </mat-error>
+        <mat-error *ngIf="registerForm.get('lname').hasError('minlength')">
+          Minimum length is 1 character
         </mat-error>
       </mat-form-field>
 
@@ -24,7 +35,7 @@
           Minimum length is 3 characters
         </mat-error>
         <mat-error *ngIf="registerForm.get('username').hasError('taken')">
-          Username is already taken.
+          Username is already taken
         </mat-error>
       </mat-form-field>
 
@@ -38,7 +49,7 @@
           Email is invalid
         </mat-error>
         <mat-error *ngIf="registerForm.get('email').hasError('taken')">
-          Email is already taken.
+          Email is already taken
         </mat-error>
       </mat-form-field>
 

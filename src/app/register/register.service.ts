@@ -20,7 +20,8 @@ export class RegisterService {
 
     getFormGroup() {
         return this.fb.group({
-            name: ['', [Validators.required, Validators.minLength(2)]],
+            fname: ['', [Validators.required, Validators.minLength(1)]],
+            lname: ['', [Validators.required, Validators.minLength(1)]],
             username: ['', [Validators.required, Validators.minLength(3)]],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required]],
