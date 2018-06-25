@@ -39,12 +39,12 @@ const User = module.exports = mongoose.model('User', UserSchema);
 
 module.exports.getUserById = function (id, callback) {
     User.findById(id, callback);
-}
+};
 
 module.exports.getUserByUsername = function (username, callback) {
     const query = { username: username };
     User.findOne(query, callback);
-}
+};
 
 module.exports.addUser = function (newUser, callback) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -56,7 +56,7 @@ module.exports.addUser = function (newUser, callback) {
             newUser.save(callback);
         })
     });
-}
+};
 
 module.exports.comparePassword = function (candidatePassword, hash, callback) {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
@@ -66,15 +66,23 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
 
         callback(null, isMatch);
     });
-}
+};
 
 module.exports.addGoal = function (newGoal, user, callback) {
-    // TODO replace goal if exist on that day
+    var currentGoalDate = user.goals.length ? user.goals[user.goals.length - 1].date.setHours(0, 0, 0, 0) : null;
+    if (currentGoalDate === new Date().setHours(0, 0, 0, 0)) {
+        user.goals.pull(user.goals[user.goals.length - 1]);
+    }
     user.goals.push(newGoal);
     user.save(callback);
-}
+};
 
-module.exports.addMeal = function (newMeal, user, callback) {
+module.exports.addMeal = (newMeal, user, callback) => {
     user.meals.push(newMeal);
     user.save(callback);
-}
+};
+
+module.exports.addFood = (food, meal, user, callback) => {
+    user.meals[meal].foods.push(food);
+    user.save(callback);
+};

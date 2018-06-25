@@ -14,8 +14,4 @@ const MealSchema = Schema({
     }
 });
 
-const Meal = module.exports = mongoose.model('Meal', MealSchema);
-
-module.exports.addMeal = function (newMeal, callback) {
-    newMeal.save(callback);
-}
+module.exports = mongoose.model('Meal', MealSchema);

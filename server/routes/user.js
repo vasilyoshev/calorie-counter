@@ -2,6 +2,8 @@ const express = require('express');
 const authMiddleware = require('../config/auth-middleware')
 const User = require('../models/user');
 const Goal = require('../models/goal');
+const Meal = require('../models/meal');
+const Food = require('../models/food');
 const router = express.Router();
 
 router.post('/register', (req, res) => {
@@ -118,38 +120,87 @@ router.get('/profile', authMiddleware, (req, res) => {
 });
 
 router.post('/addFood', authMiddleware, (req, res) => {
-    User.getUserByUsername(req.session.username, (err, user) => {
 
+    Food.getFoodByName(req.body.food.name, (err, food) => {
+        if (err) {
+            return res.status(400).json({
+                success: false,
+                message: 'Could not get food'
+            });
+        }
 
+        if (!food) {
+            food = new Food({
+                name: req.body.food.name,
+                calories: req.body.food.calories,
+                protein: req.body.food.protein,
+                carbs: req.body.food.carbs,
+                fat: req.body.food.fat
+            });
+            Food.createFood(food, (err, food) => {
+                if (err) {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Failed to add food'
+                    });
+                }
+            });
+        }
 
+        User.getUserByUsername(req.session.username, (err, user) => {
+            if (user.meals.length) {
+                const today = new Date().setHours(0, 0, 0, 0);
+                for (let i = user.meals.length - 1; i >= 0; i--) {
+                    const meal = user.meals[i];
+                    if (meal.date.setHours(0, 0, 0, 0) !== today) break;
+                    if (meal.type === req.body.type) {
+                        User.addFood(food, i, user, (err, user) => {
+                            if (err) {
+                                return res.status(400).json({
+                                    success: false,
+                                    message: 'Failed to add food'
+                                });
+                            } else {
+                                return res.json({
+                                    success: true,
+                                    message: 'Food added'
+                                });
+                            }
+                        });
+                        return;
+                    }
+                }
+            }
 
-        // let newMeal = new Meal({
-        //     type: 'Breakfast'
-        // });
+            let meal = new Meal({
+                type: req.body.type,
+                foods: [food]
+            });
 
-        // User.addMeal(newMeal, user, (err, user) => {
-        //     if (err) {
-        //         res.status(400).json({
-        //             success: false,
-        //             message: 'Failed to add meal'
-        //         });
-        //     } else {
-        //         res.json({
-        //             success: true,
-        //             message: 'Meal added'
-        //         });
-        //     }
-        // });
-
+            User.addMeal(meal, user, (err, user) => {
+                if (err) {
+                    return res.status(400).json({
+                        success: false,
+                        message: 'Failed to add meal'
+                    });
+                } else {
+                    return res.json({
+                        success: true,
+                        message: 'Meal added'
+                    });
+                }
+            });
+        });
     });
 });
 
 router.post('/set-goal', authMiddleware, (req, res) => {
-    const username = req.body.username;
-
-    User.getUserByUsername(username, (err, user) => {
+    User.getUserByUsername(req.body.username, (err, user) => {
         if (err) {
-            throw err;
+            return res.status(400).json({
+                success: false,
+                message: 'Failed to get user'
+            });
         }
 
         let newGoal = new Goal({
@@ -161,12 +212,12 @@ router.post('/set-goal', authMiddleware, (req, res) => {
 
         User.addGoal(newGoal, user, (err, user) => {
             if (err) {
-                res.status(400).json({
+                return res.status(400).json({
                     success: false,
                     message: 'Failed to add goal'
                 });
             } else {
-                res.json({
+                return res.json({
                     success: true,
                     message: 'Goal added',
                     goal: user.goals[user.goals.length - 1]

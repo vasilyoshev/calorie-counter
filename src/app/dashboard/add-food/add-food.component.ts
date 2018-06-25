@@ -23,7 +23,7 @@ export class AddFoodComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeParamsSub = this.route.params.subscribe(params => {
-      this.addFoodService.getFood(+params['ndbno'])
+      this.addFoodService.getFood(params['ndbno'])
         .subscribe((food: any) => {
           if (food.error) {
             console.log('does not exist');

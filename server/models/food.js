@@ -22,7 +22,20 @@ const FoodSchema = Schema({
     fat: {
         type: Number,
         required: true
+    },
+    date: {
+        type: Date,
+        default: new Date()
     }
 });
 
 const Food = module.exports = mongoose.model('Food', FoodSchema);
+
+module.exports.getFoodByName = (foodName, callback) => {
+    const query = { name: foodName };
+    Food.findOne(query, callback);
+};
+
+module.exports.createFood = (food, callback) => {
+    food.save(callback);
+};
