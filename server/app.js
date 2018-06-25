@@ -1,21 +1,22 @@
 const express = require('express');
+const session = require('express-session')
+const FileStore = require('session-file-store')(session);
+const mongoose = require('mongoose');
+const configDb = require('./config/database');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
-const configDb = require('./config/database');
-const session = require('express-session')
-const FileStore = require('session-file-store')(session);
 const compression = require('compression');
 
-const app = express();
-const port = process.env.PORT || 8080;
 require("./models/food");
 require("./models/goal");
 require("./models/meal");
 require("./models/user");
 const user = require('./routes/user');
 const food = require('./routes/food');
+
+const app = express();
+const port = process.env.PORT || 8080;
 
 // CORS middleware
 let corsOptions = {
@@ -24,12 +25,6 @@ let corsOptions = {
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
-
-// Compress all routes
-app.use(compression());
-
-// Serves static files from FE build
-app.use(express.static(path.join(__dirname, '../dist')));
 
 // Session middleware
 let sessionObj = {
@@ -50,6 +45,12 @@ app.use(session(sessionObj));
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
 app.use(bodyParser.json());
 
+// Compress all routes
+app.use(compression());
+
+// Serves static files from FE build
+app.use(express.static(path.join(__dirname, '../dist')));
+
 app.use('/user', user);
 app.use('/food', food);
 
@@ -64,10 +65,10 @@ mongoose.connection.on('error', (err) => {
     console.log('Database error: ' + err);
 });
 
-app.get('*', (req, res) => {
-    console.log(__dirname);
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-});
+// app.get('*', (req, res) => {
+//     console.log(__dirname);
+//     res.sendFile(path.join(__dirname, '../dist/index.html'));
+// });
 
 // Start server
 app.listen(port, () => {

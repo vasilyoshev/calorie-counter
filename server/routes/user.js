@@ -1,26 +1,10 @@
 const express = require('express');
-const router = express.Router();
-// const config = require('../config/database');
+const authMiddleware = require('../config/auth-middleware')
 const User = require('../models/user');
 const Goal = require('../models/goal');
-const Meal = require('../models/meal');
+const router = express.Router();
 
-/**
- * Checks if user is logged in, by checking if user is stored in session.
- */
-const authMiddleware = (req, res, next) => {
-    if (req.session && req.session.username) {
-        req.session.views++;
-        next();
-    } else {
-        res.status(403).json({
-            success: false,
-            message: 'You must be logged in.'
-        });
-    }
-};
-
-router.post('/register', (req, res, next) => {
+router.post('/register', (req, res) => {
     let usernameUsed;
     let emailUsed;
     User.find({ username: req.body.username }, (err, user) => {
@@ -136,9 +120,9 @@ router.get('/profile', authMiddleware, (req, res) => {
 router.post('/addFood', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
 
-        
-        
-        
+
+
+
         // let newMeal = new Meal({
         //     type: 'Breakfast'
         // });

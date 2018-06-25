@@ -1,22 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../config/database');
-const Food = require('../models/food');
 var request = require('request');
-
-/**
- * Checks if user is logged in, by checking if user is stored in session.
- */
-const authMiddleware = (req, res, next) => {
-    if (req.session && req.session.username) {
-        next();
-    } else {
-        res.status(403).json({
-            success: false,
-            message: 'You must be logged in.'
-        });
-    }
-};
+const authMiddleware = require('../config/auth-middleware')
 
 router.post('/getFood', authMiddleware, (req, res, next) => {
     var options = {
