@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
+
 import { LoginService } from './login/login.service';
 import { ProfileService } from './profile/profile.service';
 
@@ -13,18 +16,23 @@ export class AppComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.loginService.isLoggedIn().subscribe(res => {
       this.loginService.loggedIn = res.loggedIn;
       if (res.loggedIn) {
-        this.profileService.getProfile().subscribe();
+        this.profileService.getProfile().subscribe(() => {
+          this.spinner.hide();
+        });
+      } else {
+        this.spinner.hide();
       }
     }, (err) => {
-      // alert('app component err');
-      console.log(err);
+      alert('app component err ' + err);
     });
   }
 }

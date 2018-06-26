@@ -13,8 +13,5 @@
     </mat-menu>
   </div>
 
-  <!-- <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/profile']">Profile</button>
-  <button mat-button *ngIf="loginService.loggedIn" [routerLink]="['/calculator']">Calculator</button>
-  <button mat-button *ngIf="loginService.loggedIn" (click)="onLogout()">Logout</button>-->
   <button mat-button *ngIf="!loginService.loggedIn" [routerLink]="['/register']">Register</button>
 </mat-toolbar>

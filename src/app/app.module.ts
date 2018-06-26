@@ -11,6 +11,8 @@ import {
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { RoutingModule } from './routing.module';
 import { ProfileService } from './profile/profile.service';
 import { AppComponent } from './app.component';
@@ -53,6 +55,7 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     RoutingModule,
