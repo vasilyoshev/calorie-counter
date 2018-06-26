@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule,
   MatInputModule, MatMenuModule, MatCheckboxModule, MatSliderModule,
-  MatDividerModule, MatStepperModule, MatAutocompleteModule, MatIconModule, MatTableModule
+  MatDividerModule, MatStepperModule, MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -72,7 +72,8 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     MatStepperModule,
     MatAutocompleteModule,
     MatIconModule,
-    MatTableModule
+    MatTableModule,
+    MatListModule
   ],
   providers: [
     RegisterService,

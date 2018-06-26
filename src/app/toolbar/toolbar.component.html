@@ -3,8 +3,8 @@
 
   <span class="spacer"></span>
 
-  <div *ngIf="loginService.loggedIn">
-    <span class="profile" [routerLink]="['/profile']">{{ profileService.user?.fname }}</span>
+  <div *ngIf="loginService.loggedIn && profileService.user">
+    <span class="profile" [routerLink]="['/profile', profileService.user.username]">{{ profileService.user.fname }}</span>
     <mat-icon class="arrow" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onLogout()">Logout</button>
