@@ -1,18 +1,19 @@
-import { AddFoodService } from './dashboard/add-food/add-food.service';
-import { SearchService } from './dashboard/search/search.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule,
-  MatInputModule, MatMenuModule, MatCheckboxModule, MatSliderModule,
-  MatDividerModule, MatStepperModule, MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule
+  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
+  MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
+  MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule
 } from '@angular/material';
 import { NgModule } from '@angular/core';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { DiaryService } from './dashboard/diary/diary.service';
+import { AddFoodService } from './dashboard/add-food/add-food.service';
+import { SearchService } from './dashboard/search/search.service';
 import { RoutingModule } from './routing.module';
 import { ProfileService } from './profile/profile.service';
 import { AppComponent } from './app.component';
@@ -73,7 +74,8 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     MatAutocompleteModule,
     MatIconModule,
     MatTableModule,
-    MatListModule
+    MatListModule,
+    MatExpansionModule
   ],
   providers: [
     RegisterService,
@@ -82,6 +84,7 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     AddGoalService,
     SearchService,
     AddFoodService,
+    DiaryService,
     AuthGuard,
     LoggedOutGuard,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },

@@ -1,6 +1,11 @@
-.diary {
-    // max-width: 95%;
+mat-card {
+    max-width: 80%;
     margin: 25px auto;
+}
+
+.card-header {
+    justify-content: center;
+    font-weight: 600;
 }
 
 table {

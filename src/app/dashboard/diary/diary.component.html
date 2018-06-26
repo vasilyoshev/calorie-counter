@@ -1,173 +1,64 @@
 <!-- Summary -->
-<mat-card class="diary">
-    <mat-card-content>
-      <table mat-table [dataSource]="totalData">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef>Calories</th>
-          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
-        </ng-container>
-        <ng-container matColumnDef="protein">
-          <th mat-header-cell *matHeaderCellDef>Protein</th>
-          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
-        </ng-container>
-        <ng-container matColumnDef="carbs">
-          <th mat-header-cell *matHeaderCellDef>Carbs</th>
-          <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
-        </ng-container>
-        <ng-container matColumnDef="fat">
-          <th mat-header-cell *matHeaderCellDef>Fat</th>
-          <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-
-<!-- Breakfast -->
-<mat-card class="diary">
+<mat-card>
+  <mat-card-header class="card-header">
+    Today
+  </mat-card-header>
   <mat-card-content>
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="summaryData">
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Breakfast</th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        <td mat-footer-cell *matFooterCellDef>Total</td>
       </ng-container>
       <ng-container matColumnDef="calories">
         <th mat-header-cell *matHeaderCellDef>Calories</th>
         <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
-        <td mat-footer-cell *matFooterCellDef>100</td>
       </ng-container>
       <ng-container matColumnDef="protein">
         <th mat-header-cell *matHeaderCellDef>Protein</th>
         <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
-        <td mat-footer-cell *matFooterCellDef>100</td>
       </ng-container>
       <ng-container matColumnDef="carbs">
         <th mat-header-cell *matHeaderCellDef>Carbs</th>
         <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
-        <td mat-footer-cell *matFooterCellDef>100</td>
       </ng-container>
       <ng-container matColumnDef="fat">
         <th mat-header-cell *matHeaderCellDef>Fat</th>
         <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
-        <td mat-footer-cell *matFooterCellDef>100</td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
+
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Breakfast
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Lunch
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Dinner
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Snacks
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </mat-accordion>
+
   </mat-card-content>
 </mat-card>
-
-<!-- Lunch -->
-<mat-card class="diary">
-    <mat-card-content>
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Lunch</th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          <td mat-footer-cell *matFooterCellDef>Total</td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef>Calories</th>
-          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="protein">
-          <th mat-header-cell *matHeaderCellDef>Protein</th>
-          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="carbs">
-          <th mat-header-cell *matHeaderCellDef>Carbs</th>
-          <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="fat">
-          <th mat-header-cell *matHeaderCellDef>Fat</th>
-          <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-
-  <!-- Dinner -->
-<mat-card class="diary">
-    <mat-card-content>
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Dinner</th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          <td mat-footer-cell *matFooterCellDef>Total</td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef>Calories</th>
-          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="protein">
-          <th mat-header-cell *matHeaderCellDef>Protein</th>
-          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="carbs">
-          <th mat-header-cell *matHeaderCellDef>Carbs</th>
-          <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="fat">
-          <th mat-header-cell *matHeaderCellDef>Fat</th>
-          <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
-
-  <!-- Snacks -->
-<mat-card class="diary">
-    <mat-card-content>
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Snacks</th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-          <td mat-footer-cell *matFooterCellDef>Total</td>
-        </ng-container>
-        <ng-container matColumnDef="calories">
-          <th mat-header-cell *matHeaderCellDef>Calories</th>
-          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="protein">
-          <th mat-header-cell *matHeaderCellDef>Protein</th>
-          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="carbs">
-          <th mat-header-cell *matHeaderCellDef>Carbs</th>
-          <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <ng-container matColumnDef="fat">
-          <th mat-header-cell *matHeaderCellDef>Fat</th>
-          <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
-          <td mat-footer-cell *matFooterCellDef>100</td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
