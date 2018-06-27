@@ -225,6 +225,74 @@ router.post('/set-goal', authMiddleware, (req, res) => {
             }
         });
     });
-})
+});
+
+router.post('/get-day', authMiddleware, (req, res) => {
+    User.getUserByUsername(req.session.username, (err, user) => {
+        if (err) {
+            return res.status(400).json({
+                success: false,
+                message: 'Failed to get user'
+            });
+        }
+
+        let summary = [];
+        let details = {};
+        let day = new Date(req.body.date).setHours(0, 0, 0, 0);
+        let endOfDay = day + 24 * 60 * 60 * 1000;
+
+        let goal;
+        for (let i = user.goals.length - 1; i >= 0; i--) {
+            if (user.goals[i].date < endOfDay) {
+                goal = user.goals[i];
+                summary.push({
+                    name: 'Daily Goal', calories: goal.calories,
+                    protein: goal.protein, carbs: goal.carbs, fat: goal.fat
+                });
+                break;
+            }
+        }
+
+        let calories = 0, protein = 0, carbs = 0, fat = 0;
+        for (let i = user.meals.length - 1; i >= 0 && i !== user.meals.length - 5; i--) {
+            if (user.meals[i].date < endOfDay && user.meals[i].date > day) {
+                let meal = user.meals[i];
+                details[meal.type] = [];
+                for (let j = 0; j < meal.foods.length; j++) {
+                    let food = meal.foods[j];
+                    calories += food.calories;
+                    protein += food.protein;
+                    carbs += food.carbs;
+                    fat += food.fat;
+                    details[meal.type].push({
+                        name: food.name,
+                        calories: calories,
+                        protein: protein,
+                        carbs: carbs,
+                        fat: fat
+                    });
+                }
+            }
+        }
+
+        calories = Math.round(calories);
+        protein = Math.round(protein);
+        carbs = Math.round(carbs);
+        fat = Math.round(fat);
+        summary.push({
+            name: 'Total', calories: calories, protein: protein, carbs: carbs, fat: fat
+        });
+
+        summary.push({
+            name: 'Remaining', calories: goal.calories - calories,
+            protein: goal.protein - protein, carbs: goal.carbs - carbs, fat: goal.fat - fat
+        });
+
+        res.json({
+            summary: summary,
+            details: details
+        })
+    });
+});
 
 module.exports = router;
