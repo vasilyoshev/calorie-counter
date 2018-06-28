@@ -283,10 +283,12 @@ router.post('/get-day', authMiddleware, (req, res) => {
             name: 'Total', calories: calories, protein: protein, carbs: carbs, fat: fat
         });
 
-        summary.push({
-            name: 'Remaining', calories: goal.calories - calories,
-            protein: goal.protein - protein, carbs: goal.carbs - carbs, fat: goal.fat - fat
-        });
+        if (goal) {
+            summary.push({
+                name: 'Remaining', calories: goal.calories - calories,
+                protein: goal.protein - protein, carbs: goal.carbs - carbs, fat: goal.fat - fat
+            });
+        }
 
         res.json({
             summary: summary,
