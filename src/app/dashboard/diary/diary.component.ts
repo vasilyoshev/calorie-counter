@@ -12,8 +12,11 @@ import { DiaryService } from './diary.service';
 })
 export class DiaryComponent implements OnInit {
 
-  displayedColumns = ['name', 'calories', 'protein', 'carbs', 'fat'];
-  summaryDataSource: MatTableDataSource<any>;
+  summary: any;
+  breakfast: any;
+  lunch: any;
+  dinner: any;
+  snack: any;
   day = {
     date: new Date(),
     name: 'Today'
@@ -21,14 +24,17 @@ export class DiaryComponent implements OnInit {
 
   constructor(
     private diaryService: DiaryService,
-    private spinner: NgxSpinnerService
-  ) {
-  }
+    private spinner: NgxSpinnerService,
+  ) { }
 
   ngOnInit() {
     this.spinner.show();
     this.diaryService.getDay(this.day.date).subscribe(() => {
-      this.summaryDataSource = new MatTableDataSource(this.diaryService.summary);
+      this.summary = this.diaryService.summary;
+      this.breakfast = this.diaryService.details.Breakfast;
+      this.lunch = this.diaryService.details.Lunch;
+      this.dinner = this.diaryService.details.Dinner;
+      this.snack = this.diaryService.details.Snack;
       this.spinner.hide();
     });
   }

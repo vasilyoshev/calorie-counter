@@ -154,7 +154,7 @@ router.post('/addFood', authMiddleware, (req, res) => {
                     const meal = user.meals[i];
                     if (meal.date.setHours(0, 0, 0, 0) !== today) break;
                     if (meal.type === req.body.type) {
-                        User.addFood(food, i, user, (err, user) => {
+                        User.addFood(food, req.body.quantity, i, user, (err, user) => {
                             if (err) {
                                 return res.status(400).json({
                                     success: false,
@@ -174,7 +174,10 @@ router.post('/addFood', authMiddleware, (req, res) => {
 
             let meal = new Meal({
                 type: req.body.type,
-                foods: [food]
+                foods: [{
+                    _id: food,
+                    quantity: req.body.quantity
+                }]
             });
 
             User.addMeal(meal, user, (err, user) => {
@@ -259,17 +262,19 @@ router.post('/get-day', authMiddleware, (req, res) => {
                 let meal = user.meals[i];
                 details[meal.type] = [];
                 for (let j = 0; j < meal.foods.length; j++) {
-                    let food = meal.foods[j];
-                    calories += food.calories;
-                    protein += food.protein;
-                    carbs += food.carbs;
-                    fat += food.fat;
+                    let food = meal.foods[j]._id;
+                    let quantity = meal.foods[j].quantity;
+                    calories += (food.calories * quantity) / 100;
+                    protein += (food.protein * quantity) / 100;
+                    carbs += (food.carbs * quantity) / 100;
+                    fat += (food.fat * quantity) / 100;
                     details[meal.type].push({
                         name: food.name,
-                        calories: calories,
-                        protein: protein,
-                        carbs: carbs,
-                        fat: fat
+                        quantity: quantity,
+                        calories: Math.round((food.calories * quantity) / 100),
+                        protein: Math.round((food.protein * quantity) / 100),
+                        carbs: Math.round((food.carbs * quantity) / 100),
+                        fat: Math.round((food.fat * quantity) / 100)
                     });
                 }
             }

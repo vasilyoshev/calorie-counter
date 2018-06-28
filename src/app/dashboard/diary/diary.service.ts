@@ -20,7 +20,7 @@ export class DiaryService {
   goalFat: number;
 
   summary: Array<any>;
-  details: Object;
+  details: any;
 
   constructor(
     public profileService: ProfileService,

@@ -23,6 +23,6 @@ export class AddFoodService {
   }
 
   addToBreakfast(food: Food) {
-    return this.http.post('user/addFood', { food: food, type: 'Breakfast' }, { withCredentials: true }).subscribe();
+    return this.http.post('user/addFood', { food: food, quantity: 200, type: 'Breakfast' }, { withCredentials: true }).subscribe();
   }
 }

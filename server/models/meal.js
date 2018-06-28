@@ -7,7 +7,14 @@ const MealSchema = Schema({
         required: true,
         enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
     },
-    foods: [{ type: Schema.Types.ObjectId, ref: 'Food' }],
+    foods: [{
+        _id: {
+            type: Schema.Types.ObjectId, ref: 'Food'
+        },
+        quantity: {
+            type: Number
+        }
+    }],
     date: {
         type: Date,
         default: Date.now

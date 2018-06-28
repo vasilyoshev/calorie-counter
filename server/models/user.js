@@ -43,7 +43,7 @@ module.exports.getUserById = function (id, callback) {
 
 module.exports.getUserByUsername = function (username, callback) {
     const query = { username: username };
-    User.findOne(query, callback).populate({path: 'meals.foods', model: 'Food'});
+    User.findOne(query, callback).populate({ path: 'meals.foods._id', model: 'Food' });
 };
 
 module.exports.addUser = function (newUser, callback) {
@@ -87,7 +87,10 @@ module.exports.addMeal = (newMeal, user, callback) => {
     user.save(callback);
 };
 
-module.exports.addFood = (food, meal, user, callback) => {
-    user.meals[meal].foods.push(food);
+module.exports.addFood = (food, quantity, mealIndex, user, callback) => {
+    user.meals[mealIndex].foods.push({
+        _id: food._id,
+        quantity: quantity
+    });
     user.save(callback);
 };

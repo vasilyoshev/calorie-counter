@@ -11,6 +11,7 @@ import { NgModule } from '@angular/core';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { MacrosTableComponent } from './dashboard/diary/macros-table/macros-table.component';
 import { DiaryService } from './dashboard/diary/diary.service';
 import { AddFoodService } from './dashboard/add-food/add-food.service';
 import { SearchService } from './dashboard/search/search.service';
@@ -51,7 +52,8 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     DiaryComponent,
     AddGoalComponent,
     SearchComponent,
-    AddFoodComponent
+    AddFoodComponent,
+    MacrosTableComponent
   ],
   imports: [
     BrowserModule,
