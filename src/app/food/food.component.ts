@@ -1,9 +1,10 @@
-import { SearchService } from './../search/search.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
+import { SearchService } from './../search/search.service';
 import { AddFoodDialogComponent } from './add-food-dialog/add-food-dialog.component';
 import { Food } from './../shared/entities/food';
 import { FoodService } from './food.service';
@@ -27,22 +28,19 @@ export class FoodComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.foodService.getFood(this.searchService.selectedFood.ndbno)
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe((food: any) => {
         if (food.error) {
           console.log('does not exist');
         }
         this.food = food;
-        this.spinner.hide();
       },
         (err) => {
-          console.log(err);
+          alert('food component' + err); // TODO
         });
   }
 
   openDialog() {
-    this.dialog.open(AddFoodDialogComponent, {
-      // width: '250px',
-      data: this.food
-    });
+    this.dialog.open(AddFoodDialogComponent, { data: this.food });
   }
 }

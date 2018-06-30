@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { finalize } from 'rxjs/internal/operators/finalize';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { LoginService } from './login.service';
 import { User } from '../shared/entities/user';
 import { ProfileService } from '../profile/profile.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -49,12 +51,11 @@ export class LoginComponent implements OnInit {
       this.spinner.show();
       this.loginService.loggedIn = true;
       this.profileService.user = data.user;
-      this.profileService.getProfile().subscribe(() => {
-        this.spinner.hide();
-      }, (err) => {
-        alert('login component getProfile()');
-      });
-      this.router.navigate(['']);
+      this.profileService.getProfile()
+        .pipe(finalize(() => this.spinner.hide()))
+        .subscribe(() => {
+          this.router.navigate(['']);
+        });
     }, (err: any) => {
       this.loginService.loggedIn = false;
       this.wrongCredentials = true;

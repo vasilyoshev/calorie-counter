@@ -1,4 +1,4 @@
 
 <app-login *ngIf="!loginService.loggedIn"></app-login>
 <app-diary *ngIf="loginService.loggedIn && profileService.user?.goal"></app-diary>
-<app-add-goal *ngIf="loginService.loggedIn && !profileService.user?.goal"></app-add-goal>
+<app-add-goal *ngIf="loginService.loggedIn && profileService.user && !profileService.user.goal"></app-add-goal>

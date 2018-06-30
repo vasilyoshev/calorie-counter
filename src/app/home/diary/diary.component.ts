@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 import { DiaryService } from './diary.service';
 
@@ -29,13 +29,16 @@ export class DiaryComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.diaryService.getDay(this.day.date).subscribe(() => {
-      this.summary = this.diaryService.summary;
-      this.breakfast = this.diaryService.details.Breakfast;
-      this.lunch = this.diaryService.details.Lunch;
-      this.dinner = this.diaryService.details.Dinner;
-      this.snack = this.diaryService.details.Snack;
-      this.spinner.hide();
-    });
+    this.diaryService.getDay(this.day.date)
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(() => {
+        this.summary = this.diaryService.summary;
+        this.breakfast = this.diaryService.details.Breakfast;
+        this.lunch = this.diaryService.details.Lunch;
+        this.dinner = this.diaryService.details.Dinner;
+        this.snack = this.diaryService.details.Snack;
+      }, (err) => {
+        // TODO handle expired session
+      });
   }
 }
