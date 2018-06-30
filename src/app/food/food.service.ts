@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/internal/operators/map';
 
-import { Food } from './../../shared/entities/food';
+import { Food } from './../shared/entities/food';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AddFoodService {
+export class FoodService {
 
   constructor(private http: HttpClient) { }
 
@@ -22,7 +22,7 @@ export class AddFoodService {
       );
   }
 
-  addToBreakfast(food: Food) {
-    return this.http.post('user/addFood', { food: food, quantity: 200, type: 'Breakfast' }, { withCredentials: true }).subscribe();
+  addToDiary(food: Food, quantity: number, type: string) {
+    return this.http.post('user/addFood', { food: food, quantity: quantity, type: type }, { withCredentials: true });
   }
 }

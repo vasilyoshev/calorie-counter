@@ -4,10 +4,17 @@
     {{day.name}}
   </mat-card-header>
   <mat-card-content>
-    <app-macros-table *ngIf="summary" [data]="summary"></app-macros-table>
 
-    <mat-accordion>
-      <mat-expansion-panel id="breakfast-panel">
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Summary
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-macros-table *ngIf="summary" [data]="summary"></app-macros-table>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
             Breakfast

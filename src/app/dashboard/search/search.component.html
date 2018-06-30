@@ -7,7 +7,7 @@
       <mat-icon matSuffix>search</mat-icon>
     </button> -->
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option [routerLink]="['/food', result.ndbno]" *ngFor="let result of results" [value]="result">
+      <mat-option [routerLink]="['/food', result.ndbno]" (click)="goToFood(result)" *ngFor="let result of results" [value]="result">
         {{ result.name }}
       </mat-option>
     </mat-autocomplete>

@@ -14,6 +14,8 @@ import { Food } from './../../shared/entities/food';
 })
 export class SearchService {
 
+  selectedFood: Food;
+
   constructor(private http: HttpClient) { }
 
   search(terms: Observable<string>): Observable<Array<Food>> {
@@ -27,7 +29,7 @@ export class SearchService {
   searchEntries(term: string): Observable<Array<Food>> {
     if (term) {
       return this.http
-        .post('food/search', { term: term }, { withCredentials: true })
+        .post('food/search', { term: term, max: 5 }, { withCredentials: true })
         .pipe(
           map((res: any) => {
             return res.results;

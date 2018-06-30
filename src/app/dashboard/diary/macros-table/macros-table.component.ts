@@ -17,7 +17,7 @@ export class MacrosTableComponent implements OnInit {
 
   ngOnInit() {
     if (this.quantity) {
-      this.displayedColumns.push('quantity');
+      this.displayedColumns.splice(1, 0, 'quantity');
     }
     this.dataSource = new MatTableDataSource(this.data);
   }

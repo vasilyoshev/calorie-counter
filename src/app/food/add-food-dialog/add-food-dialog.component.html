@@ -1,0 +1,18 @@
+<form [formGroup]="addFoodForm" (ngSubmit)="onSubmit(addFoodForm)">
+  <mat-form-field appearance="outline">
+    <mat-label>g</mat-label>
+    <input matInput formControlName="quantity">
+    <mat-error *ngIf="addFoodForm.get('quantity').hasError('required')">
+      Quantity is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Meal" [(value)]="selectedMeal" formControlName="meal">
+      <mat-option value="Breakfast">Breakfast</mat-option>
+      <mat-option value="Lunch">Lunch</mat-option>
+      <mat-option value="Dinner">Dinner</mat-option>
+      <mat-option value="Snack">Snack</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button type="submit" class="submit" color="primary">Add Food</button>
+</form>

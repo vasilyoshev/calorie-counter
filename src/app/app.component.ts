@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
-import { finalize } from 'rxjs/internal/operators/finalize';
 
 import { LoginService } from './login/login.service';
 import { ProfileService } from './profile/profile.service';

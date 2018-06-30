@@ -79,11 +79,11 @@ module.exports.addGoal = function (newGoal, user, callback) {
 
 module.exports.addMeal = (newMeal, user, callback) => {
     user.meals.push(newMeal);
-    user.meals.sort((a, b) => {
-        if (a.date < b.date) return -1;
-        if (a.date > b.date) return 1;
-        return 0;
-    });
+    // user.meals.sort((a, b) => {
+    //     if (a.date < b.date) return -1;
+    //     if (a.date > b.date) return 1;
+    //     return 0;
+    // });
     user.save(callback);
 };
 

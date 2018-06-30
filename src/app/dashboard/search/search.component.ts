@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -19,7 +20,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.searchService.search(this.searchTerm$)
       .subscribe((results: Array<Food>) => {
@@ -35,5 +37,10 @@ export class SearchComponent implements OnInit {
 
   onSubmit(form: FormGroup) {
     console.log('submitted');
+  }
+
+  goToFood(food: Food) {
+    this.searchService.selectedFood = food;
+    this.router.navigate(['/food', food.name]);
   }
 }

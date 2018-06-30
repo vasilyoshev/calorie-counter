@@ -42,7 +42,7 @@ router.post('/search', authMiddleware, (req, res, next) => {
         url: 'https://api.nal.usda.gov/ndb/search',
         method: 'GET',
         qs: {
-            'max': 5,
+            'max': req.body.max,
             'api_key': '4ZJRDE57fjl6yCZbsKZa5ocNKLU3gLHuZkqvnioo',
             'q': req.body.term,
             'ds': 'Standard Reference',

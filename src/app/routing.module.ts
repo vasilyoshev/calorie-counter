@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
-import { AddFoodComponent } from './dashboard/add-food/add-food.component';
+import { FoodComponent } from './food/food.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/logged-out.guard';
@@ -37,9 +37,9 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'food/:ndbno',
+        path: 'food/:name',
         pathMatch: 'prefix',
-        component: AddFoodComponent,
+        component: FoodComponent,
         canActivate: [AuthGuard]
     },
     {

@@ -2,18 +2,20 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
-  MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule
+  MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule,
+  MatGridListModule, MatDialogModule, MatSelectModule
 } from '@angular/material';
-import { NgModule } from '@angular/core';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { AddFoodDialogComponent } from './food/add-food-dialog/add-food-dialog.component';
 import { MacrosTableComponent } from './dashboard/diary/macros-table/macros-table.component';
 import { DiaryService } from './dashboard/diary/diary.service';
-import { AddFoodService } from './dashboard/add-food/add-food.service';
+import { FoodService } from './food/food.service';
 import { SearchService } from './dashboard/search/search.service';
 import { RoutingModule } from './routing.module';
 import { ProfileService } from './profile/profile.service';
@@ -36,7 +38,7 @@ import { AddGoalService } from './dashboard/add-goal/add-goal.service';
 import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
 import { DiaryComponent } from './dashboard/diary/diary.component';
 import { SearchComponent } from './dashboard/search/search.component';
-import { AddFoodComponent } from './dashboard/add-food/add-food.component';
+import { FoodComponent } from './food/food.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +54,9 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     DiaryComponent,
     AddGoalComponent,
     SearchComponent,
-    AddFoodComponent,
-    MacrosTableComponent
+    FoodComponent,
+    MacrosTableComponent,
+    AddFoodDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,10 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     MatIconModule,
     MatTableModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatGridListModule,
+    MatDialogModule,
+    MatSelectModule
   ],
   providers: [
     RegisterService,
@@ -85,12 +91,15 @@ import { AddFoodComponent } from './dashboard/add-food/add-food.component';
     ProfileService,
     AddGoalService,
     SearchService,
-    AddFoodService,
+    FoodService,
     DiaryService,
     AuthGuard,
     LoggedOutGuard,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true }
+  ],
+  entryComponents: [
+    AddFoodDialogComponent
   ],
   bootstrap: [AppComponent]
 })
