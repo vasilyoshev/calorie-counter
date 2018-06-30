@@ -1,10 +1,9 @@
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService } from './../../profile/profile.service';
+import { ProfileService } from './../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
-import { DashboardService } from './../dashboard.service';
 
 @Component({
   selector: 'app-add-goal',
@@ -20,7 +19,6 @@ export class AddGoalComponent implements OnInit {
 
   constructor(
     public addGoalService: AddGoalService,
-    private dashboardService: DashboardService,
     private profileService: ProfileService,
     private router: Router
   ) { }
@@ -43,7 +41,7 @@ export class AddGoalComponent implements OnInit {
       fat: form.value.formArray[1].fat
     };
 
-    this.dashboardService.setDailyGoal(dailyGoal)
+    this.addGoalService.setDailyGoal(dailyGoal)
       .subscribe((data: any) => {
         if (data.success) {
           this.profileService.user.goal = data.goal;

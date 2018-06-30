@@ -1,3 +1,4 @@
+import { SearchService } from './../search/search.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
@@ -6,7 +7,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AddFoodDialogComponent } from './add-food-dialog/add-food-dialog.component';
 import { Food } from './../shared/entities/food';
 import { FoodService } from './food.service';
-import { SearchService } from '../dashboard/search/search.service';
 
 @Component({
   selector: 'app-food',

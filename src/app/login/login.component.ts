@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { User } from '../shared/entities/user';
 import { ProfileService } from '../profile/profile.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private profileService: ProfileService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private spinner: NgxSpinnerService
   ) {
     this.wrongCredentials = false;
     this.shouldRemember = false;
@@ -44,9 +46,14 @@ export class LoginComponent implements OnInit {
     user.remember = this.shouldRemember;
 
     this.loginService.login(user).subscribe((data: any) => {
+      this.spinner.show();
       this.loginService.loggedIn = true;
       this.profileService.user = data.user;
-      this.profileService.getProfile().subscribe();
+      this.profileService.getProfile().subscribe(() => {
+        this.spinner.hide();
+      }, (err) => {
+        alert('login component getProfile()');
+      });
       this.router.navigate(['']);
     }, (err: any) => {
       this.loginService.loggedIn = false;

@@ -12,11 +12,14 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { AddGoalService } from './add-goal/add-goal.service';
+import { DiaryService } from './home/diary/diary.service';
+import { SearchService } from './search/search.service';
+import { MacrosTableComponent } from './home/diary/macros-table/macros-table.component';
+import { AddGoalComponent } from './add-goal/add-goal.component';
+import { DiaryComponent } from './home/diary/diary.component';
 import { AddFoodDialogComponent } from './food/add-food-dialog/add-food-dialog.component';
-import { MacrosTableComponent } from './dashboard/diary/macros-table/macros-table.component';
-import { DiaryService } from './dashboard/diary/diary.service';
 import { FoodService } from './food/food.service';
-import { SearchService } from './dashboard/search/search.service';
 import { RoutingModule } from './routing.module';
 import { ProfileService } from './profile/profile.service';
 import { AppComponent } from './app.component';
@@ -24,7 +27,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/logged-out.guard';
@@ -34,11 +36,8 @@ import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
 import { AlertComponent } from './shared/alert/alert.component';
 import { CalculatorComponent } from './calculator/calculator.component';
-import { AddGoalService } from './dashboard/add-goal/add-goal.service';
-import { AddGoalComponent } from './dashboard/add-goal/add-goal.component';
-import { DiaryComponent } from './dashboard/diary/diary.component';
-import { SearchComponent } from './dashboard/search/search.component';
 import { FoodComponent } from './food/food.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -47,12 +46,11 @@ import { FoodComponent } from './food/food.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    DashboardComponent,
     ProfileComponent,
     AlertComponent,
     CalculatorComponent,
-    DiaryComponent,
     AddGoalComponent,
+    DiaryComponent,
     SearchComponent,
     FoodComponent,
     MacrosTableComponent,

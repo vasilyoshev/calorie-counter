@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProfileService } from './../profile/profile.service';
 import { LoginService } from './../login/login.service';
 
 @Component({
@@ -9,7 +10,10 @@ import { LoginService } from './../login/login.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public loginService: LoginService) { }
+  constructor(
+    public loginService: LoginService,
+    public profileService: ProfileService
+  ) { }
 
   ngOnInit() {
   }

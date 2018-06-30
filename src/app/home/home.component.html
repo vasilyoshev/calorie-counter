@@ -1,3 +1,4 @@
 
-<app-login *ngIf="!loginService.loggedIn"></app-login> <!-- in order to NOT show if loggedIn is undefined -->
-<app-dashboard *ngIf="loginService.loggedIn"></app-dashboard>
+<app-login *ngIf="!loginService.loggedIn"></app-login>
+<app-diary *ngIf="loginService.loggedIn && profileService.user?.goal"></app-diary>
+<app-add-goal *ngIf="loginService.loggedIn && !profileService.user?.goal"></app-add-goal>

@@ -1,7 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
-
-import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +21,14 @@ export class AddGoalService {
   fatGrams: number;
   fatPercent: number;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient) {
     this.calories = 2000;
+  }
+
+  setDailyGoal(dailyGoal: any) {
+    return this.http.post('user/set-goal', dailyGoal, { withCredentials: true });
   }
 
   calcDefaultMacros() {
