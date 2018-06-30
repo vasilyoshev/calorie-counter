@@ -7,7 +7,7 @@ import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChang
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { map } from 'rxjs/internal/operators/map';
 
-import { Food } from './../../shared/entities/food';
+import { Food } from './../shared/entities/food';
 
 @Injectable({
   providedIn: 'root'

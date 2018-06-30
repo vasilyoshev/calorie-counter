@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { SearchService } from './search.service';
-import { Food } from './../../shared/entities/food';
+import { Food } from './../shared/entities/food';
 
 @Component({
   selector: 'app-search',
