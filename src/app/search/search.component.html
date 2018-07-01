@@ -4,10 +4,15 @@
     <input matInput formControlName="query" (keyup)="searchTerm$.next($event.target.value)" [matAutocomplete]="auto">
     <mat-icon color="primary" matSuffix>search</mat-icon>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option [routerLink]="['/food', result.ndbno]" (click)="goToFood(result)" *ngFor="let result of results" [value]="result">
+      <mat-option (click)="goToFood(result)" *ngFor="let result of results">
         <span class="option-name">{{ result.name }}</span>
         <span class="add-container">
-          <mat-icon class="add-icon" color="primary" matSuffix>add_circle</mat-icon>
+          <mat-icon class="add-icon" color="primary" matSuffix
+            (click)="onAddFood(result);$event.stopPropagation()"
+            (mouseover)="$event.target.textContent = 'add_circle_outline'"
+            (mouseleave)="$event.target.textContent = 'add_circle'">
+            add_circle
+          </mat-icon>
         </span>
       </mat-option>
     </mat-autocomplete>

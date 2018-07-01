@@ -1,3 +1,9 @@
+<mat-card>
+  <mat-card-content>
+    <app-search></app-search>
+  </mat-card-content>
+</mat-card>
+
 <!-- Summary -->
 <mat-card>
   <mat-card-header class="card-header">
@@ -20,7 +26,6 @@
             Breakfast
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-search></app-search>
         <app-macros-table *ngIf="breakfast" [data]="breakfast" [quantity]="true"></app-macros-table>
       </mat-expansion-panel>
       <mat-expansion-panel>
@@ -29,7 +34,6 @@
             Lunch
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-search></app-search>
         <app-macros-table *ngIf="lunch" [data]="lunch" [quantity]="true"></app-macros-table>
       </mat-expansion-panel>
       <mat-expansion-panel>
@@ -38,7 +42,6 @@
             Dinner
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-search></app-search>
         <app-macros-table *ngIf="dinner" [data]="dinner" [quantity]="true"></app-macros-table>
       </mat-expansion-panel>
       <mat-expansion-panel>
@@ -47,7 +50,6 @@
             Snacks
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <app-search></app-search>
         <app-macros-table *ngIf="snack" [data]="snack" [quantity]="true"></app-macros-table>
       </mat-expansion-panel>
     </mat-accordion>

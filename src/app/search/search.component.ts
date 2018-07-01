@@ -1,3 +1,5 @@
+import { AddFoodDialogComponent } from './../food/add-food-dialog/add-food-dialog.component';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -21,7 +23,8 @@ export class SearchComponent implements OnInit {
   constructor(
     private searchService: SearchService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     this.searchService.search(this.searchTerm$)
       .subscribe((results: Array<Food>) => {
@@ -42,5 +45,9 @@ export class SearchComponent implements OnInit {
   goToFood(food: Food) {
     this.searchService.selectedFood = food;
     this.router.navigate(['/food', food.name]);
+  }
+
+  onAddFood(food: Food) {
+    this.dialog.open(AddFoodDialogComponent, { data: food });
   }
 }
