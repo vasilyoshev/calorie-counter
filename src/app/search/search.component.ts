@@ -1,11 +1,14 @@
-import { AddFoodDialogComponent } from './../food/add-food-dialog/add-food-dialog.component';
+import { finalize } from 'rxjs/internal/operators/finalize';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { Subject } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
+import { FoodService } from './../food/food.service';
+import { AddFoodDialogComponent } from './../food/add-food-dialog/add-food-dialog.component';
 import { SearchService } from './search.service';
 import { Food } from './../shared/entities/food';
 
@@ -22,9 +25,11 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
+    private foodService: FoodService,
     private fb: FormBuilder,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) {
     this.searchService.search(this.searchTerm$)
       .subscribe((results: Array<Food>) => {
@@ -48,6 +53,9 @@ export class SearchComponent implements OnInit {
   }
 
   onAddFood(food: Food) {
-    this.dialog.open(AddFoodDialogComponent, { data: food });
+    this.spinner.show();
+    this.foodService.getFood(food.ndbno)
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(res => this.dialog.open(AddFoodDialogComponent, { data: res }));
   }
 }

@@ -24,8 +24,7 @@ export class AppComponent implements OnInit {
     this.spinner.show();
     this.loginService.isLoggedIn()
       .subscribe(res => {
-        this.loginService.loggedIn = res.loggedIn;
-        if (res.loggedIn) {
+        if (res) {
           this.profileService.getProfile()
             .pipe(finalize(() => this.spinner.hide()))
             .subscribe();

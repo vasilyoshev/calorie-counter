@@ -1,3 +1,4 @@
+import { ProfileService } from './../../profile/profile.service';
 import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -12,6 +13,7 @@ import { DiaryService } from './diary.service';
 })
 export class DiaryComponent implements OnInit {
 
+  hasGoal: boolean;
   summary: any;
   breakfast: any;
   lunch: any;
@@ -25,10 +27,12 @@ export class DiaryComponent implements OnInit {
   constructor(
     private diaryService: DiaryService,
     private spinner: NgxSpinnerService,
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
     this.spinner.show();
+    this.hasGoal = !!this.profileService.user.goal;
     this.diaryService.getDay(this.day.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {

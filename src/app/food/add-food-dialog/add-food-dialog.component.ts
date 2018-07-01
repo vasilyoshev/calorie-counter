@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { FoodService } from './../food.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +21,8 @@ export class AddFoodDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AddFoodDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Food,
     private fb: FormBuilder,
-    private foodService: FoodService
+    private foodService: FoodService,
+    private router: Router
   ) { }
 
   ngOnInit() {

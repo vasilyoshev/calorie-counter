@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { User } from './../shared/entities/user';
+import { map } from 'rxjs/internal/operators/map';
 
 @Injectable()
 export class LoginService {
@@ -22,6 +23,7 @@ export class LoginService {
     }
 
     isLoggedIn(): Observable<any> {
-        return this.http.get('user/login', { withCredentials: true });
+        return this.http.get('user/login', { withCredentials: true })
+        .pipe(map((res: any) => this.loggedIn = res.loggedIn));
     }
 }
