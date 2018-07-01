@@ -1,9 +1,19 @@
-.example-form {
-    min-width: 150px;
-    max-width: 500px;
+mat-form-field {
     width: 100%;
 }
-  
-.example-full-width {
-    width: 100%;
+
+.add-container {
+    float: right;
+    max-width: 15%;
+}
+
+.add-icon {
+    margin: 0 !important;
+}
+
+.option-name {
+    float: left;
+    max-width: 85%;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
