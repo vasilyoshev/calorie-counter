@@ -4,3 +4,13 @@
 body {
     margin: 0;
 }
+
+mat-card {
+    margin: 25px auto;
+}
+
+@media (max-width: 575px) {
+    mat-card {
+        margin: 0 auto 25px;
+    }
+}

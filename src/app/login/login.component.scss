@@ -2,10 +2,14 @@ mat-form-field, button {
   width: 100%;
 }
 
+mat-card-header {
+  font-size: larger;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
 .login {
-  width: 400px;
-  max-width: 80%;
-  margin: 25px auto;
+  max-width: 575px;
 }
   
 .footer {

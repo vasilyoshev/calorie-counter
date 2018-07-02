@@ -1,4 +1,5 @@
 <mat-card class="login">
+  <mat-card-header>Log in</mat-card-header>
   <mat-card-content>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
       <app-alert *ngIf="this.wrongCredentials">Username or password is incorrect.</app-alert>

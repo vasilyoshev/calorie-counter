@@ -1,7 +1,5 @@
-.add-card {
-    width: 800px;
-    max-width: 80%;
-    margin: 25px auto;
+::ng-deep mat-horizontal-stepper .mat-horizontal-content-container {
+    padding: 1px;
 }
 
 .calories, button {

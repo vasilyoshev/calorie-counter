@@ -1,9 +1,13 @@
-mat-card {
-    max-width: 80%;
-    margin: 25px auto;
-}
-
 .card-header {
     justify-content: center;
     font-weight: 600;
+}
+
+// Equivalent to:
+//
+// ::ng-deep .mat-expansion-panel-body {
+//     padding: 0 !important;
+// }
+::ng-deep mat-expansion-panel .mat-expansion-panel-body {
+    padding: 0;
 }

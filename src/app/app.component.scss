@@ -1,12 +1,7 @@
-.example-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-    background-size: cover;
-}
+.container {
+    margin: auto 25px;
 
-.example-icon {
-    padding: 0 14px;
-}
-
-.example-spacer {
-    flex: 1 1 auto;
+    @media (max-width: 575px) {
+        margin: auto;
+    }
 }
