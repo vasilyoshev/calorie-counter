@@ -1,9 +1,9 @@
-import { finalize } from 'rxjs/internal/operators/finalize';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { finalize } from 'rxjs/internal/operators/finalize';
 import { Subject } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   results: Array<Food>;
   searchTerm$ = new Subject<string>();
+  @Output() quickAdd = new EventEmitter<string>();
 
   constructor(
     private searchService: SearchService,
@@ -56,6 +57,11 @@ export class SearchComponent implements OnInit {
     this.spinner.show();
     this.foodService.getFood(food.ndbno)
       .pipe(finalize(() => this.spinner.hide()))
-      .subscribe(res => this.dialog.open(AddFoodDialogComponent, { data: res }));
+      .subscribe(res => {
+        const dialogRef = this.dialog.open(AddFoodDialogComponent, { data: res });
+        dialogRef.afterClosed().subscribe(() => {
+          this.quickAdd.emit();
+        });
+      });
   }
 }

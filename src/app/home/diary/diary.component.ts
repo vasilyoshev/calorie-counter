@@ -33,6 +33,15 @@ export class DiaryComponent implements OnInit {
   ngOnInit() {
     this.spinner.show();
     this.hasGoal = !!this.profileService.user.goal;
+    this.getDay();
+  }
+
+  refreshData() {
+    this.spinner.show();
+    this.getDay();
+  }
+
+  getDay() {
     this.diaryService.getDay(this.day.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {

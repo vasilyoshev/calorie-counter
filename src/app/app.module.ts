@@ -12,10 +12,10 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { MacrosTableComponent } from './home/diary/macros-table/macros-table.component';
 import { AddGoalService } from './add-goal/add-goal.service';
 import { DiaryService } from './home/diary/diary.service';
 import { SearchService } from './search/search.service';
-import { MacrosTableComponent } from './home/diary/macros-table/macros-table.component';
 import { AddGoalComponent } from './add-goal/add-goal.component';
 import { DiaryComponent } from './home/diary/diary.component';
 import { AddFoodDialogComponent } from './food/add-food-dialog/add-food-dialog.component';
