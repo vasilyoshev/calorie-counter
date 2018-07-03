@@ -5,6 +5,7 @@ const Goal = require('../models/goal');
 const Meal = require('../models/meal');
 const Food = require('../models/food');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 router.post('/register', (req, res) => {
     let usernameUsed;
@@ -149,25 +150,30 @@ router.post('/addFood', authMiddleware, (req, res) => {
 
         User.getUserByUsername(req.session.username, (err, user) => {
             if (user.meals.length) {
-                const today = new Date().setHours(0, 0, 0, 0);
+                let day = new Date(req.body.date).setHours(0, 0, 0, 0);
+                let endOfDay = day + 24 * 60 * 60 * 1000;
                 for (let i = user.meals.length - 1; i >= 0; i--) {
                     const meal = user.meals[i];
-                    if (meal.date.setHours(0, 0, 0, 0) !== today) break;
-                    if (meal.type === req.body.type) {
-                        User.addFood(food, req.body.quantity, i, user, (err, user) => {
-                            if (err) {
-                                return res.status(400).json({
-                                    success: false,
-                                    message: 'Failed to add food'
-                                });
-                            } else {
-                                return res.json({
-                                    success: true,
-                                    message: 'Food added'
-                                });
-                            }
-                        });
-                        return;
+
+                    if (meal.date < day || meal.date > endOfDay) break;
+
+                    if (meal.date > day && meal.date < endOfDay) {
+                        if (meal.type === req.body.type) {
+                            User.addFood(food, req.body.quantity, i, user, (err, user) => {
+                                if (err) {
+                                    return res.status(400).json({
+                                        success: false,
+                                        message: 'Failed to add food'
+                                    });
+                                } else {
+                                    return res.json({
+                                        success: true,
+                                        message: 'Food added'
+                                    });
+                                }
+                            });
+                            return;
+                        }
                     }
                 }
             }
@@ -177,7 +183,8 @@ router.post('/addFood', authMiddleware, (req, res) => {
                 foods: [{
                     _id: food,
                     quantity: req.body.quantity
-                }]
+                }],
+                date: new Date(req.body.date)
             });
 
             User.addMeal(meal, user, (err, user) => {

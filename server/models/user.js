@@ -43,7 +43,8 @@ module.exports.getUserById = function (id, callback) {
 
 module.exports.getUserByUsername = function (username, callback) {
     const query = { username: username };
-    User.findOne(query, callback).populate({ path: 'meals.foods._id', model: 'Food' });
+    User.findOne(query, callback)
+        .populate({ path: 'meals.foods._id', model: 'Food' });
 };
 
 module.exports.addUser = function (newUser, callback) {
@@ -79,11 +80,8 @@ module.exports.addGoal = function (newGoal, user, callback) {
 
 module.exports.addMeal = (newMeal, user, callback) => {
     user.meals.push(newMeal);
-    // user.meals.sort((a, b) => {
-    //     if (a.date < b.date) return -1;
-    //     if (a.date > b.date) return 1;
-    //     return 0;
-    // });
+    user.meals.sort((a, b) => { return a.date - b.date; });
+
     user.save(callback);
 };
 

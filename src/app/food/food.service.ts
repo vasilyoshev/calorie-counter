@@ -23,6 +23,7 @@ export class FoodService {
   }
 
   addToDiary(food: Food, quantity: number, type: string) {
-    return this.http.post('user/addFood', { food: food, quantity: quantity, type: type }, { withCredentials: true });
+    const date = new Date()
+    return this.http.post('user/addFood', { food: food, quantity: quantity, type: type, date: date }, { withCredentials: true });
   }
 }
