@@ -9,4 +9,5 @@ export class User {
     password: string;
     remember: boolean;
     goal: Goal;
+    mealTypes: Array<string>;
 }

@@ -15,6 +15,7 @@ export class DiaryComponent implements OnInit {
 
   hasGoal: boolean;
   summary: any;
+  meals: Array<any>;
   breakfast: any;
   lunch: any;
   dinner: any;
@@ -23,6 +24,8 @@ export class DiaryComponent implements OnInit {
     date: new Date(),
     name: 'Today'
   };
+  // in order to iterate meals keys in template
+  Object = Object;
 
   constructor(
     private diaryService: DiaryService,
@@ -46,10 +49,7 @@ export class DiaryComponent implements OnInit {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         this.summary = this.diaryService.summary;
-        this.breakfast = this.diaryService.details.Breakfast;
-        this.lunch = this.diaryService.details.Lunch;
-        this.dinner = this.diaryService.details.Dinner;
-        this.snack = this.diaryService.details.Snack;
+        this.meals = this.diaryService.meals;
       }, (err) => {
         // TODO handle expired session
       });

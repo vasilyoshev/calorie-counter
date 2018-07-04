@@ -4,8 +4,7 @@ let Schema = mongoose.Schema;
 const MealSchema = Schema({
     type: {
         type: String,
-        required: true,
-        enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack']
+        required: true
     },
     foods: [{
         _id: {

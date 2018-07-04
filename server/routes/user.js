@@ -5,14 +5,12 @@ const Goal = require('../models/goal');
 const Meal = require('../models/meal');
 const Food = require('../models/food');
 const router = express.Router();
-const mongoose = require('mongoose');
 
 router.post('/register', (req, res) => {
     let usernameUsed;
     let emailUsed;
     User.find({ username: req.body.username }, (err, user) => {
         if (user.length) usernameUsed = true;
-        else usernameUsed = false;
 
         User.find({ email: req.body.email }, (err, user) => {
             if (user.length) emailUsed = true;
@@ -115,6 +113,7 @@ router.get('/profile', authMiddleware, (req, res) => {
             lname: user.lname,
             username: user.username,
             email: user.email,
+            mealTypes: user.mealTypes,
             goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
         });
     });
@@ -150,30 +149,33 @@ router.post('/addFood', authMiddleware, (req, res) => {
 
         User.getUserByUsername(req.session.username, (err, user) => {
             if (user.meals.length) {
-                let day = new Date(req.body.date).setHours(0, 0, 0, 0);
-                let endOfDay = day + 24 * 60 * 60 * 1000;
+                let startOfDay = new Date(req.body.date).setHours(0, 0, 0, 0);
+                // startOfDay + 1 day - 1 ms
+                let endOfDay = startOfDay + 24 * 60 * 60 * 1000 - 1;
+
                 for (let i = user.meals.length - 1; i >= 0; i--) {
                     const meal = user.meals[i];
 
-                    if (meal.date < day || meal.date > endOfDay) break;
+                    // if meal date is after desired day => go to next meal
+                    if (meal.date > endOfDay) continue;
+                    // if meal date is before desired day => no meal => go to create meal
+                    if (meal.date < startOfDay) break;
 
-                    if (meal.date > day && meal.date < endOfDay) {
-                        if (meal.type === req.body.type) {
-                            User.addFood(food, req.body.quantity, i, user, (err, user) => {
-                                if (err) {
-                                    return res.status(400).json({
-                                        success: false,
-                                        message: 'Failed to add food'
-                                    });
-                                } else {
-                                    return res.json({
-                                        success: true,
-                                        message: 'Food added'
-                                    });
-                                }
-                            });
-                            return;
-                        }
+                    if (meal.type === req.body.type) {
+                        User.addFood(food, req.body.quantity, i, user, (err, user) => {
+                            if (err) {
+                                return res.status(400).json({
+                                    success: false,
+                                    message: 'Failed to add food'
+                                });
+                            } else {
+                                return res.json({
+                                    success: true,
+                                    message: 'Food added'
+                                });
+                            }
+                        });
+                        return;
                     }
                 }
             }
@@ -247,9 +249,10 @@ router.post('/get-day', authMiddleware, (req, res) => {
         }
 
         let summary = [];
-        let details = {};
-        let day = new Date(req.body.date).setHours(0, 0, 0, 0);
-        let endOfDay = day + 24 * 60 * 60 * 1000;
+        let meals = [];
+        let startOfDay = new Date(req.body.date).setHours(0, 0, 0, 0);
+        // startOfDay + 1 day - 1 ms
+        let endOfDay = startOfDay + 24 * 60 * 60 * 1000 - 1;
 
         let goal;
         for (let i = user.goals.length - 1; i >= 0; i--) {
@@ -264,10 +267,16 @@ router.post('/get-day', authMiddleware, (req, res) => {
         }
 
         let calories = 0, protein = 0, carbs = 0, fat = 0;
-        for (let i = user.meals.length - 1; i >= 0 && i !== user.meals.length - 5; i--) {
-            if (user.meals[i].date < endOfDay && user.meals[i].date > day) {
-                let meal = user.meals[i];
-                details[meal.type] = [];
+        for (let i = user.meals.length - 1; i >= 0; i--) {
+            let meal = user.meals[i]
+
+            // if meal date is after desired day => go to next meal
+            if (meal.date > endOfDay) continue;
+            // if meal date is before desired day => no meal => go to create meal
+            if (meal.date < startOfDay) break;
+
+            if (meal.date <= endOfDay && meal.date >= startOfDay) {
+                let foods = [];
                 for (let j = 0; j < meal.foods.length; j++) {
                     let food = meal.foods[j]._id;
                     let quantity = meal.foods[j].quantity;
@@ -275,7 +284,7 @@ router.post('/get-day', authMiddleware, (req, res) => {
                     protein += (food.protein * quantity) / 100;
                     carbs += (food.carbs * quantity) / 100;
                     fat += (food.fat * quantity) / 100;
-                    details[meal.type].push({
+                    foods.push({
                         name: food.name,
                         quantity: quantity,
                         calories: Math.round((food.calories * quantity) / 100),
@@ -284,6 +293,13 @@ router.post('/get-day', authMiddleware, (req, res) => {
                         fat: Math.round((food.fat * quantity) / 100)
                     });
                 }
+
+                // push in beginning of array
+                meals.unshift({
+                    type: meal.type,
+                    date: meal.date,
+                    foods: foods
+                });
             }
         }
 
@@ -304,8 +320,26 @@ router.post('/get-day', authMiddleware, (req, res) => {
 
         res.json({
             summary: summary,
-            details: details
+            meals: meals
         })
+    });
+});
+
+router.post('/set-meal-types', authMiddleware, (req, res) => {
+    User.getUserByUsername(req.session.username, (err, user) => {
+        user.mealTypes = req.body.mealTypes;
+        user.save((err, user) => {
+            if (err) {
+                res.status(400).json({
+                    success: false,
+                    message: 'Falied to set meal types'
+                });
+            } else {
+                res.json({
+                    success: true
+                });
+            }
+        });
     });
 });
 

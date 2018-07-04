@@ -5,11 +5,26 @@
       <mat-list-item role="listitem">Username: {{profileService.user?.username}}</mat-list-item>
       <mat-list-item role="listitem">Email: {{profileService.user?.email}}</mat-list-item>
       <mat-list-item role="listitem">
-        Goal: {{profileService.user.goal.calories}} calories, 
-        {{profileService.user.goal.protein}} protein,
-        {{profileService.user.goal.carbs}} carbs, 
-        {{profileService.user.goal.fat}} fat
+        Goal: {{profileService.user.goal.calories}} calories, {{profileService.user.goal.protein}} protein, {{profileService.user.goal.carbs}}
+        carbs, {{profileService.user.goal.fat}} fat
       </mat-list-item>
     </mat-list>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Add meal type"
+      [matChipInputFor]="chipList"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="addType($event)">
+    </mat-form-field>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let mealType of mealTypes" [selectable]="selectable" [removable]="true" (removed)="removeType(mealType)">
+        {{ mealType }}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
   </mat-card-content>
 </mat-card>

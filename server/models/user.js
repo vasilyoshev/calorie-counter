@@ -32,7 +32,11 @@ const UserSchema = Schema({
         required: true
     },
     goals: [GoalSchema],
-    meals: [MealSchema]
+    meals: [MealSchema],
+    mealTypes: {
+        type: Array,
+        default: ['Breakfast', 'Lunch', 'Dinner', 'Snacks']
+    }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

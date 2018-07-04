@@ -6,14 +6,13 @@
 
 <app-add-goal *ngIf="!hasGoal"></app-add-goal>
 
-<!-- Summary -->
 <mat-card *ngIf="summary">
   <mat-card-header class="card-header">
     {{day.name}}
   </mat-card-header>
   <mat-card-content>
-
     <mat-accordion [multi]="true">
+
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -22,42 +21,19 @@
         </mat-expansion-panel-header>
         <app-macros-table *ngIf="summary" [data]="summary"></app-macros-table>
       </mat-expansion-panel>
-      <mat-expansion-panel [expanded]="true">
+
+      <mat-expansion-panel [expanded]="true" *ngFor="let meal of meals">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Breakfast
+            {{ meal.type }}
           </mat-panel-title>
+          <mat-panel-description>
+            {{ meal.date }}
+          </mat-panel-description>
         </mat-expansion-panel-header>
-        <app-macros-table *ngIf="breakfast" [data]="breakfast" [quantity]="true"></app-macros-table>
-        <div *ngIf="!breakfast">No logged foods.</div>
+        <app-macros-table [data]="meal.foods" [quantity]="true"></app-macros-table>
       </mat-expansion-panel>
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Lunch
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-macros-table *ngIf="lunch" [data]="lunch" [quantity]="true"></app-macros-table>
-        <div *ngIf="!lunch">No logged foods.</div>
-      </mat-expansion-panel>
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Dinner
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-macros-table *ngIf="dinner" [data]="dinner" [quantity]="true"></app-macros-table>
-        <div *ngIf="!dinner">No logged foods.</div>
-      </mat-expansion-panel>
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Snacks
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-macros-table *ngIf="snack" [data]="snack" [quantity]="true"></app-macros-table>
-        <div *ngIf="!snack">No logged foods.</div>
-      </mat-expansion-panel>
+
     </mat-accordion>
   </mat-card-content>
 </mat-card>

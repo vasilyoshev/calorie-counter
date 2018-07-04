@@ -10,7 +10,7 @@ import { map } from 'rxjs/internal/operators/map';
 export class DiaryService {
 
   summary: Array<any>;
-  details: any;
+  meals: any;
 
   constructor(
     public profileService: ProfileService,
@@ -23,7 +23,7 @@ export class DiaryService {
       .pipe(
         map((res: any) => {
           this.summary = res.summary;
-          this.details = res.details;
+          this.meals = res.meals;
         })
       );
   }
