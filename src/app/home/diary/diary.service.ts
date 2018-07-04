@@ -24,6 +24,11 @@ export class DiaryService {
         map((res: any) => {
           this.summary = res.summary;
           this.meals = res.meals;
+          for (let i = 0; i < this.meals.length; i++) {
+            // convert mongoose Date to JS local time Date
+            const mealDate = new Date(this.meals[i].date);
+            this.meals[i].time = mealDate.getHours() + ':' + mealDate.getMinutes();
+          }
         })
       );
   }
