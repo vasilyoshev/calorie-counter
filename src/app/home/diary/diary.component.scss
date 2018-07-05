@@ -3,6 +3,7 @@
     font-weight: 600;
 }
 
+// In order to override .mat-expansion-panel-body
 // Equivalent to:
 //
 // ::ng-deep .mat-expansion-panel-body {
@@ -14,4 +15,16 @@
 
 .meal-time {
     justify-content: flex-end;
+}
+
+.chevron-left {
+    margin-right: auto;
+}
+
+.chevron-right {
+    margin-left: auto;
+}
+
+::ng-deep mat-card-header .mat-card-header-text {
+    margin: 0;
 }

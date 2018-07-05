@@ -20,10 +20,7 @@ export class DiaryComponent implements OnInit {
   lunch: any;
   dinner: any;
   snack: any;
-  day = {
-    date: new Date(),
-    name: 'Today'
-  };
+  day: any;
 
   constructor(
     private diaryService: DiaryService,
@@ -33,9 +30,15 @@ export class DiaryComponent implements OnInit {
 
   ngOnInit() {
     this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
+
+    if (!this.diaryService.currentDay) {
+      this.diaryService.currentDay = { name: 'Today', date: new Date() }
+    }
+    this.day = this.diaryService.currentDay;
+
     if (!this.diaryService.summary || !this.diaryService.meals) {
       this.spinner.show();
-      this.getDay();
+      this.getCurrentDay();
     } else {
       this.summary = this.diaryService.summary;
       this.meals = this.diaryService.meals;
@@ -44,10 +47,10 @@ export class DiaryComponent implements OnInit {
 
   refreshData() {
     this.spinner.show();
-    this.getDay();
+    this.getCurrentDay();
   }
 
-  getDay() {
+  getCurrentDay() {
     this.diaryService.getDay(this.day.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
@@ -56,5 +59,35 @@ export class DiaryComponent implements OnInit {
       }, (err) => {
         // TODO handle expired session
       });
+  }
+
+  getPreviousDay() {
+    this.spinner.show();
+    this.day.date.setDate(this.day.date.getDate() - 1);
+    if (this.day.name === 'Today') {
+      this.day.name = 'Yesterday';
+    } else if (this.day.name === 'Tomorrow') {
+      this.day.name = 'Today';
+    } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()) {
+      this.day.name = 'Tomorrow';
+    } else {
+      this.day.name = this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
+    }
+    this.getCurrentDay();
+  }
+
+  getNextDay() {
+    this.spinner.show();
+    this.day.date.setDate(this.day.date.getDate() + 1);
+    if (this.day.name === 'Today') {
+      this.day.name = 'Tomorrow';
+    } else if (this.day.name === 'Yesterday') {
+      this.day.name = 'Today';
+    } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()) {
+      this.day.name = 'Yesterday';
+    } else {
+      this.day.name = this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
+    }
+    this.getCurrentDay();
   }
 }
