@@ -5,7 +5,11 @@
     <button type="button" mat-mini-fab color="primary" class="chevron-left">
       <mat-icon matIcon (click)="getPreviousDay()">chevron_left</mat-icon>
     </button>
-    {{day.name}}
+    <mat-form-field>
+      <input matInput [matDatepicker]="picker" placeholder="{{day.name}}" [formControl]="dateFormControl">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker touchUi></mat-datepicker>
+    </mat-form-field>
     <button type="button" mat-mini-fab color="primary" class="chevron-right">
       <mat-icon (click)="getNextDay()">chevron_right</mat-icon>
     </button>

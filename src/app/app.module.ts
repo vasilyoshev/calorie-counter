@@ -7,7 +7,7 @@ import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
   MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule,
-  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule
+  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -82,7 +82,9 @@ import { SearchComponent } from './search/search.component';
     MatGridListModule,
     MatDialogModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     RegisterService,

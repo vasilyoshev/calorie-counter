@@ -1,9 +1,10 @@
-import { ProfileService } from './../../profile/profile.service';
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
 
+import { ProfileService } from './../../profile/profile.service';
 import { DiaryService } from './diary.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class DiaryComponent implements OnInit {
   dinner: any;
   snack: any;
   day: any;
+  dateFormControl: FormControl;
 
   constructor(
     private diaryService: DiaryService,
@@ -32,9 +34,10 @@ export class DiaryComponent implements OnInit {
     this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
 
     if (!this.diaryService.currentDay) {
-      this.diaryService.currentDay = { name: 'Today', date: new Date() }
+      this.diaryService.currentDay = { name: 'Today', date: new Date() };
     }
     this.day = this.diaryService.currentDay;
+    this.dateFormControl = new FormControl(this.day.date);
 
     if (!this.diaryService.summary || !this.diaryService.meals) {
       this.spinner.show();
@@ -64,6 +67,7 @@ export class DiaryComponent implements OnInit {
   getPreviousDay() {
     this.spinner.show();
     this.day.date.setDate(this.day.date.getDate() - 1);
+    this.dateFormControl.setValue(this.day.date);
     if (this.day.name === 'Today') {
       this.day.name = 'Yesterday';
     } else if (this.day.name === 'Tomorrow') {
@@ -71,7 +75,7 @@ export class DiaryComponent implements OnInit {
     } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()) {
       this.day.name = 'Tomorrow';
     } else {
-      this.day.name = this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
+      this.day.name = ''; // this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
     }
     this.getCurrentDay();
   }
@@ -79,6 +83,7 @@ export class DiaryComponent implements OnInit {
   getNextDay() {
     this.spinner.show();
     this.day.date.setDate(this.day.date.getDate() + 1);
+    this.dateFormControl.setValue(this.day.date);
     if (this.day.name === 'Today') {
       this.day.name = 'Tomorrow';
     } else if (this.day.name === 'Yesterday') {
@@ -86,7 +91,7 @@ export class DiaryComponent implements OnInit {
     } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()) {
       this.day.name = 'Yesterday';
     } else {
-      this.day.name = this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
+      this.day.name = ''; // this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
     }
     this.getCurrentDay();
   }
