@@ -24,8 +24,6 @@ export class DiaryComponent implements OnInit {
     date: new Date(),
     name: 'Today'
   };
-  // in order to iterate meals keys in template
-  Object = Object;
 
   constructor(
     private diaryService: DiaryService,
@@ -34,9 +32,14 @@ export class DiaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.spinner.show();
-    this.hasGoal = !!this.profileService.user.goal;
-    this.getDay();
+    this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
+    if (!this.diaryService.summary || !this.diaryService.meals) {
+      this.spinner.show();
+      this.getDay();
+    } else {
+      this.summary = this.diaryService.summary;
+      this.meals = this.diaryService.meals;
+    }
   }
 
   refreshData() {
