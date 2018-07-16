@@ -3,20 +3,15 @@
 <mat-card>
   <mat-card-header class="card-header">
     <button type="button" mat-mini-fab color="primary" class="chevron-left">
-      <mat-icon matIcon (click)="getDay(day.date.setDate(day.date.getDate() - 1))">chevron_left</mat-icon>
+      <mat-icon matIcon (click)="getDay(date.setDate(date.getDate() - 1))">chevron_left</mat-icon>
     </button>
-    <!-- <mat-form-field id="date-form-field">
-      <input matInput [matDatepicker]="picker" (dateChange)="getDay($event.value)" placeholder="{{day.name}}" [formControl]="dateFormControl">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker disabled="false" color="primary" #picker touchUi></mat-datepicker>
-    </mat-form-field> -->
-    <app-calendar [day]="day" (dateChange)="getDay($event)"></app-calendar>
+    <app-calendar [date]="date" (dateChange)="getDay($event)"></app-calendar>
     <button type="button" mat-mini-fab color="primary" class="chevron-right">
-      <mat-icon (click)="getDay(day.date.setDate(day.date.getDate() + 1))">chevron_right</mat-icon>
+      <mat-icon (click)="getDay(date.setDate(date.getDate() + 1))">chevron_right</mat-icon>
     </button>
   </mat-card-header>
   <mat-card-content>
-    <app-search (quickAdd)="refreshData()" [addDate]="day.date"></app-search>
+    <app-search (quickAdd)="refreshData()" [addDate]="date"></app-search>
   </mat-card-content>
 </mat-card>
 

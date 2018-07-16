@@ -11,7 +11,7 @@ export class DiaryService {
 
   summary: Array<any>;
   meals: any;
-  currentDay: any;
+  currentDate: Date;
 
   constructor(
     public profileService: ProfileService,

@@ -21,7 +21,7 @@ export class DiaryComponent implements OnInit {
   lunch: any;
   dinner: any;
   snack: any;
-  day: any;
+  date: Date;
   dateFormControl: FormControl;
 
   constructor(
@@ -34,12 +34,10 @@ export class DiaryComponent implements OnInit {
   ngOnInit() {
     this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
 
-    if (!this.diaryService.currentDay) {
-      this.diaryService.currentDay = { name: 'Today', date: new Date() };
+    if (!this.diaryService.currentDate) {
+      this.diaryService.currentDate = new Date();
     }
-    this.day = this.diaryService.currentDay;
-    this.dateFormControl = new FormControl(this.day.date);
-    this.dateFormControl.disable();
+    this.date = this.diaryService.currentDate;
 
     if (!this.diaryService.summary || !this.diaryService.meals) {
       this.spinner.show();
@@ -52,7 +50,7 @@ export class DiaryComponent implements OnInit {
 
   refreshData() {
     this.spinner.show();
-    this.getDay(this.day.date);
+    this.getDay(this.date);
   }
 
   getDay(date: Date) {
@@ -64,18 +62,8 @@ export class DiaryComponent implements OnInit {
       .subscribe(() => {
         this.summary = this.diaryService.summary;
         this.meals = this.diaryService.meals;
-        this.day.date.setDate(date.getDate());
-        if (date.toDateString() === new Date().toDateString()) {
-          this.day.name = 'Today';
-        } else if (date.toDateString()
-          === new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()) {
-          this.day.name = 'Tomorrow';
-        } else if (date.toDateString()
-          === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()) {
-          this.day.name = 'Yesterday';
-        } else {
-          this.day.name = '';
-        }
+        // new ref in order for change detection to trigger calendar component input
+        this.date = new Date(this.date.setDate(date.getDate()));
         this.ref.markForCheck();
       }, (err) => {
         // TODO handle expired session
