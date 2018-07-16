@@ -8,7 +8,7 @@
         <span class="option-name">{{ result.name }}</span>
         <span class="add-container">
           <mat-icon class="add-icon" color="primary" matSuffix
-            (click)="onAddFood(result);$event.stopPropagation()"
+            (click)="onAddFood(result, addDate);$event.stopPropagation()"
             (mouseover)="$event.target.textContent = 'add_circle_outline'"
             (mouseleave)="$event.target.textContent = 'add_circle'">
             add_circle

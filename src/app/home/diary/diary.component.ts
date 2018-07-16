@@ -51,7 +51,7 @@ export class DiaryComponent implements OnInit {
 
   refreshData() {
     this.spinner.show();
-    this.getDay(new Date());
+    this.getDay(this.day.date);
   }
 
   getDay(date: Date) {

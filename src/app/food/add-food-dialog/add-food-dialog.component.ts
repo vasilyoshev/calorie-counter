@@ -22,7 +22,7 @@ export class AddFoodDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddFoodDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Food,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private fb: FormBuilder,
     private foodService: FoodService,
     private profileService: ProfileService,
@@ -56,7 +56,7 @@ export class AddFoodDialogComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.foodService.addToDiary(this.data, form.value.quantity, meal)
+    this.foodService.addToDiary(this.data.food, form.value.quantity, meal, this.data.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         if (form.value.meal === 'Other') {
