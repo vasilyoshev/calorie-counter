@@ -8,7 +8,7 @@
     <mat-form-field id="date-form-field">
       <input matInput [matDatepicker]="picker" (dateChange)="getDay($event.value)" placeholder="{{day.name}}" [formControl]="dateFormControl">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker color="primary" #picker touchUi></mat-datepicker>
+      <mat-datepicker disabled="false" color="primary" #picker touchUi></mat-datepicker>
     </mat-form-field>
     <button type="button" mat-mini-fab color="primary" class="chevron-right">
       <mat-icon (click)="getDay(day.date.setDate(day.date.getDate() + 1))">chevron_right</mat-icon>

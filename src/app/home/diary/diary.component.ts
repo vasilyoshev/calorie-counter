@@ -38,6 +38,7 @@ export class DiaryComponent implements OnInit {
     }
     this.day = this.diaryService.currentDay;
     this.dateFormControl = new FormControl(this.day.date);
+    this.dateFormControl.disable();
 
     if (!this.diaryService.summary || !this.diaryService.meals) {
       this.spinner.show();
