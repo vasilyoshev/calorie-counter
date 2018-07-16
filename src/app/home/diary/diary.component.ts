@@ -41,7 +41,7 @@ export class DiaryComponent implements OnInit {
 
     if (!this.diaryService.summary || !this.diaryService.meals) {
       this.spinner.show();
-      this.getCurrentDay();
+      this.getDay(new Date());
     } else {
       this.summary = this.diaryService.summary;
       this.meals = this.diaryService.meals;
@@ -50,49 +50,32 @@ export class DiaryComponent implements OnInit {
 
   refreshData() {
     this.spinner.show();
-    this.getCurrentDay();
+    this.getDay(new Date());
   }
 
-  getCurrentDay() {
-    this.diaryService.getDay(this.day.date)
+  getDay(date: Date) {
+    this.spinner.show();
+    date = new Date(date);
+    this.dateFormControl.setValue(date);
+    this.diaryService.getDay(date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         this.summary = this.diaryService.summary;
         this.meals = this.diaryService.meals;
+        this.day.date.setDate(date.getDate());
+        if (date.toDateString() === new Date().toDateString()) {
+          this.day.name = 'Today';
+        } else if (date.toDateString()
+          === new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()) {
+          this.day.name = 'Tomorrow';
+        } else if (date.toDateString()
+          === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()) {
+          this.day.name = 'Yesterday';
+        } else {
+          this.day.name = '';
+        }
       }, (err) => {
         // TODO handle expired session
       });
-  }
-
-  getPreviousDay() {
-    this.spinner.show();
-    this.day.date.setDate(this.day.date.getDate() - 1);
-    this.dateFormControl.setValue(this.day.date);
-    if (this.day.name === 'Today') {
-      this.day.name = 'Yesterday';
-    } else if (this.day.name === 'Tomorrow') {
-      this.day.name = 'Today';
-    } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() + 1)).toDateString()) {
-      this.day.name = 'Tomorrow';
-    } else {
-      this.day.name = ''; // this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
-    }
-    this.getCurrentDay();
-  }
-
-  getNextDay() {
-    this.spinner.show();
-    this.day.date.setDate(this.day.date.getDate() + 1);
-    this.dateFormControl.setValue(this.day.date);
-    if (this.day.name === 'Today') {
-      this.day.name = 'Tomorrow';
-    } else if (this.day.name === 'Yesterday') {
-      this.day.name = 'Today';
-    } else if (this.day.date.toDateString() === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()) {
-      this.day.name = 'Yesterday';
-    } else {
-      this.day.name = ''; // this.day.date.toISOString().slice(0, 10).split('-').reverse().join('.');
-    }
-    this.getCurrentDay();
   }
 }

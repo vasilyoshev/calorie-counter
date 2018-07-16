@@ -55,6 +55,8 @@ export class LoginComponent implements OnInit {
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe(() => {
           this.router.navigate(['']);
+        }, (err) => {
+          console.log(err);
         });
     }, (err: any) => {
       this.loginService.loggedIn = false;
