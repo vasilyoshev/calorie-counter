@@ -1,12 +1,13 @@
-import { finalize } from 'rxjs/internal/operators/finalize';
-import { ProfileService } from './../../profile/profile.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import { FoodService } from './../food.service';
-import { Food } from './../../shared/entities/food';
+import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
+
+import { DiaryService } from './../../home/diary/diary.service';
+import { ProfileService } from './../../profile/profile.service';
+import { FoodService } from './../food.service';
 
 @Component({
   selector: 'app-add-food-dialog',
@@ -19,6 +20,7 @@ export class AddFoodDialogComponent implements OnInit {
   addFoodForm: FormGroup;
   mealTypes: Array<string>;
   otherSelected: boolean;
+  date: Date;
 
   constructor(
     public dialogRef: MatDialogRef<AddFoodDialogComponent>,
@@ -26,10 +28,12 @@ export class AddFoodDialogComponent implements OnInit {
     private fb: FormBuilder,
     private foodService: FoodService,
     private profileService: ProfileService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private diaryService: DiaryService
   ) { }
 
   ngOnInit() {
+    this.date = this.data.date || this.diaryService.currentDate || new Date(); // TODO remove new Date() ?
     this.mealTypes = this.profileService.user.mealTypes;
     this.addFoodForm = this.fb.group({
       quantity: ['100', [Validators.required]],
@@ -56,7 +60,7 @@ export class AddFoodDialogComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.foodService.addToDiary(this.data.food, form.value.quantity, meal, this.data.date)
+    this.foodService.addToDiary(this.data.food, form.value.quantity, meal, this.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         if (form.value.meal === 'Other') {
@@ -65,5 +69,9 @@ export class AddFoodDialogComponent implements OnInit {
         }
         this.dialogRef.close();
       });
+  }
+
+  changeDate(date: Date) {
+    this.date = date;
   }
 }

@@ -64,6 +64,7 @@ export class DiaryComponent implements OnInit {
         this.meals = this.diaryService.meals;
         // new ref in order for change detection to trigger calendar component input
         this.date = new Date(this.date.setDate(date.getDate()));
+        this.diaryService.currentDate = this.date;
         this.ref.markForCheck();
       }, (err) => {
         // TODO handle expired session
