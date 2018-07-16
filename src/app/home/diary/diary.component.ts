@@ -53,9 +53,11 @@ export class DiaryComponent implements OnInit {
     this.getDay(this.date);
   }
 
-  getDay(date: Date) {
+  getDay(date: any) {
     this.spinner.show();
-    date = new Date(date);
+    if (!(date instanceof Date)) {
+      date = new Date(date);
+    }
     // this.dateFormControl.setValue(date);
     this.diaryService.getDay(date)
       .pipe(finalize(() => this.spinner.hide()))
