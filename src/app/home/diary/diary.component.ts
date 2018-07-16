@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
@@ -27,7 +27,8 @@ export class DiaryComponent implements OnInit {
   constructor(
     private diaryService: DiaryService,
     private spinner: NgxSpinnerService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private ref: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -57,7 +58,7 @@ export class DiaryComponent implements OnInit {
   getDay(date: Date) {
     this.spinner.show();
     date = new Date(date);
-    this.dateFormControl.setValue(date);
+    // this.dateFormControl.setValue(date);
     this.diaryService.getDay(date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
@@ -75,6 +76,7 @@ export class DiaryComponent implements OnInit {
         } else {
           this.day.name = '';
         }
+        this.ref.markForCheck();
       }, (err) => {
         // TODO handle expired session
       });

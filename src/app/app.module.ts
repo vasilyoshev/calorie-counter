@@ -1,3 +1,4 @@
+import { CalendarComponent } from './shared/calendar/calendar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -54,7 +55,8 @@ import { SearchComponent } from './search/search.component';
     SearchComponent,
     FoodComponent,
     MacrosTableComponent,
-    AddFoodDialogComponent
+    AddFoodDialogComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

@@ -13,8 +13,8 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field [hidden]="!otherSelected" appearance="outline">
-      <input matInput placeholder="Add meal type" formControlName="other">
-      <mat-error *ngIf="addFoodForm.get('other')?.hasError('required')">This field is required</mat-error>
+    <input matInput placeholder="Add meal type" formControlName="other">
+    <mat-error *ngIf="addFoodForm.get('other')?.hasError('required')">This field is required</mat-error>
   </mat-form-field>
   <button mat-raised-button type="submit" class="submit" color="primary">Add Food</button>
 </form>
