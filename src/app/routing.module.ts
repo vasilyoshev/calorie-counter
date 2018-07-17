@@ -1,3 +1,4 @@
+import { SearchResultsComponent } from './search-results/search-results.component';
 import { AddGoalComponent } from './add-goal/add-goal.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -45,6 +46,11 @@ const appRoutes: Routes = [
     {
         path: 'setgoal',
         component: AddGoalComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'search/:query',
+        component: SearchResultsComponent,
         canActivate: [AuthGuard]
     },
     {

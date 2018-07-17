@@ -1,3 +1,5 @@
+import { ResultsTableComponent } from './search-results/results-table/results-table.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 import { TimePickerComponent } from './shared/time-picker/time-picker.component';
 import { CalendarComponent } from './shared/calendar/calendar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -58,7 +60,9 @@ import { SearchComponent } from './search/search.component';
     MacrosTableComponent,
     AddFoodDialogComponent,
     CalendarComponent,
-    TimePickerComponent
+    TimePickerComponent,
+    SearchResultsComponent,
+    ResultsTableComponent
   ],
   imports: [
     BrowserModule,

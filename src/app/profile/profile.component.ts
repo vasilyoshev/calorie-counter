@@ -20,7 +20,6 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     public profileService: ProfileService,
-    private fb: FormBuilder,
     private spinner: NgxSpinnerService
   ) { }
 

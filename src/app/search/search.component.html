@@ -2,7 +2,7 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Add food</mat-label>
     <input matInput formControlName="query" (keyup)="searchTerm$.next($event.target.value)" [matAutocomplete]="auto">
-    <mat-icon color="primary" matSuffix>search</mat-icon>
+    <mat-icon color="primary" matSuffix id="search-icon" (click)="onSubmit(searchForm)">search</mat-icon>
     <mat-autocomplete #auto="matAutocomplete">
       <mat-option (click)="goToFood(result)" *ngFor="let result of results">
         <span class="option-name">{{ result.name }}</span>

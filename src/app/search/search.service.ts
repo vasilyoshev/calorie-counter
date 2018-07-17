@@ -16,9 +16,18 @@ export class SearchService {
 
   selectedFood: Food;
 
+  searchQuery: string;
+  results: Array<Food>;
+
   constructor(private http: HttpClient) { }
 
   search(terms: Observable<string>): Observable<Array<Food>> {
+    return terms.pipe(
+      switchMap(term => this.searchEntries(term, 20))
+    );
+  }
+
+  searchSuggestions(terms: Observable<string>): Observable<Array<Food>> {
     return terms.pipe(
       debounceTime(400),
       distinctUntilChanged(),
@@ -26,10 +35,10 @@ export class SearchService {
     );
   }
 
-  searchEntries(term: string): Observable<Array<Food>> {
+  searchEntries(term: string, max: number = 5): Observable<Array<Food>> {
     if (term) {
       return this.http
-        .post('food/search', { term: term, max: 5 }, { withCredentials: true })
+        .post('food/search', { term: term, max: max }, { withCredentials: true })
         .pipe(
           map((res: any) => {
             return res.results;

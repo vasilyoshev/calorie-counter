@@ -9,6 +9,12 @@ mat-card {
     margin: 25px auto;
 }
 
+mat-card-header {
+    font-size: larger;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 575px) {
     mat-card {
         margin: 0 auto 25px;
