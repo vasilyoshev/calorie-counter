@@ -24,7 +24,7 @@ export class AddFoodDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddFoodDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public food: any,
     private fb: FormBuilder,
     private foodService: FoodService,
     private profileService: ProfileService,
@@ -33,7 +33,7 @@ export class AddFoodDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.date = this.data.date || this.diaryService.currentDate || new Date(); // TODO remove new Date() ?
+    this.date = this.diaryService.currentDate;
     this.mealTypes = this.profileService.user.mealTypes;
     this.addFoodForm = this.fb.group({
       quantity: ['100', [Validators.required]],
@@ -60,7 +60,7 @@ export class AddFoodDialogComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.foodService.addToDiary(this.data.food, form.value.quantity, meal, this.date)
+    this.foodService.addToDiary(this.food, form.value.quantity, meal, this.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         if (form.value.meal === 'Other') {
@@ -71,7 +71,8 @@ export class AddFoodDialogComponent implements OnInit {
       });
   }
 
-  changeDate(date: Date) {
-    this.date = date;
+  changeTime(hour: number, minute: number) {
+    this.date = new Date(this.date.setHours(hour));
+    this.date = new Date(this.date.setMinutes(minute));
   }
 }

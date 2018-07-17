@@ -1,0 +1,15 @@
+<div>
+  <mat-form-field appearance="outline">
+    <mat-select placeholder="Hour" [(value)]="hour" (selectionChange)="emitTime()">
+      <mat-option *ngFor="let hr of hours" value="{{hr}}">
+        {{ hr < 10 ? '0' + hr : hr }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <span>:</span>
+  <mat-form-field appearance="outline">
+    <mat-select placeholder="Minute" [(value)]="minute" (selectionChange)="emitTime()">
+      <mat-option *ngFor="let min of minutes" value="{{min}}">
+        {{ min < 10 ? '0' + min : min }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

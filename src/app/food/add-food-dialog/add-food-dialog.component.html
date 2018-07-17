@@ -16,6 +16,7 @@
     <input matInput placeholder="Add meal type" formControlName="other">
     <mat-error *ngIf="addFoodForm.get('other')?.hasError('required')">This field is required</mat-error>
   </mat-form-field>
-  <app-calendar *ngIf="!data.date" [date]="date" (dateChange)="date = $event"></app-calendar>
+  <app-calendar [date]="date" (dateChange)="date = $event"></app-calendar>
+  <app-time-picker (timeChange)="changeTime($event.hour, $event.minute)"></app-time-picker>
   <button mat-raised-button type="submit" class="submit" color="primary">Add Food</button>
 </form>

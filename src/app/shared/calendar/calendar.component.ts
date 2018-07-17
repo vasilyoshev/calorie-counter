@@ -30,8 +30,4 @@ export class CalendarComponent {
     this.dateFormControl = new FormControl(new Date());
     this.dateFormControl.disable();
   }
-
-  changeDate(date: Date) {
-    this.dateChange.emit(date);
-  }
 }

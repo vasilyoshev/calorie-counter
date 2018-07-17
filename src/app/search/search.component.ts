@@ -54,16 +54,12 @@ export class SearchComponent implements OnInit {
     this.router.navigate(['/food', food.name]);
   }
 
-  onAddFood(food: Food, date: Date) {
+  onAddFood(food: Food) {
     this.spinner.show();
     this.foodService.getFood(food.ndbno)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(res => {
-        const data = {
-          food: res,
-          date: date
-        };
-        const dialogRef = this.dialog.open(AddFoodDialogComponent, { data: data });
+        const dialogRef = this.dialog.open(AddFoodDialogComponent, { data: res });
         dialogRef.afterClosed().subscribe(() => {
           this.quickAdd.emit();
         });

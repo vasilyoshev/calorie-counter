@@ -1,3 +1,4 @@
+import { TimePickerComponent } from './shared/time-picker/time-picker.component';
 import { CalendarComponent } from './shared/calendar/calendar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -56,7 +57,8 @@ import { SearchComponent } from './search/search.component';
     FoodComponent,
     MacrosTableComponent,
     AddFoodDialogComponent,
-    CalendarComponent
+    CalendarComponent,
+    TimePickerComponent
   ],
   imports: [
     BrowserModule,

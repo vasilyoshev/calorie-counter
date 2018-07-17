@@ -42,10 +42,7 @@ export class FoodComponent implements OnInit {
 
   openDialog() {
     if (this.food) {
-      const data = {
-        food: this.food
-      };
-      this.dialog.open(AddFoodDialogComponent, { data: data });
+      this.dialog.open(AddFoodDialogComponent, { data: this.food });
     } // TODO handle this if
   }
 }

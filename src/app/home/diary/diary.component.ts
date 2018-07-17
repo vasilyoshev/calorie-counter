@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
@@ -27,8 +27,7 @@ export class DiaryComponent implements OnInit {
   constructor(
     private diaryService: DiaryService,
     private spinner: NgxSpinnerService,
-    private profileService: ProfileService,
-    private ref: ChangeDetectorRef
+    private profileService: ProfileService
   ) { }
 
   ngOnInit() {
@@ -64,10 +63,14 @@ export class DiaryComponent implements OnInit {
       .subscribe(() => {
         this.summary = this.diaryService.summary;
         this.meals = this.diaryService.meals;
-        // new ref in order for change detection to trigger calendar component input
-        this.date = new Date(this.date.setDate(date.getDate()));
+
+        let newDate = new Date(this.date);
+        newDate = new Date(newDate.setDate(date.getDate()));
+        newDate = new Date(newDate.setMonth(date.getMonth()));
+        newDate = new Date(newDate.setFullYear(date.getFullYear()));
+
+        this.date = newDate;
         this.diaryService.currentDate = this.date;
-        this.ref.markForCheck();
       }, (err) => {
         // TODO handle expired session
       });
