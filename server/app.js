@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
 
-require("./models/food");
-require("./models/goal");
-require("./models/meal");
-require("./models/user");
+require('./models/food');
+require('./models/goal');
+require('./models/meal');
+require('./models/user');
 const user = require('./routes/user');
 const food = require('./routes/food');
 

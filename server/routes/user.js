@@ -1,3 +1,5 @@
+const nodemailer = require('nodemailer');
+const fs = require('fs');
 const express = require('express');
 const authMiddleware = require('../config/auth-middleware')
 const User = require('../models/user');
@@ -40,9 +42,37 @@ router.post('/register', (req, res) => {
                         message: 'Failed to register user'
                     });
                 } else {
-                    res.json({
-                        success: true,
-                        message: 'User registered'
+                    fs.readFile('pass.txt', 'utf8', function (err, data) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                        let transporter = nodemailer.createTransport({
+                            service: 'gmail',
+                            auth: {
+                                user: 'vyoshev.caloriecounter@gmail.com',
+                                pass: data
+                            }
+                        });
+
+                        let mailOptions = {
+                            from: 'vyoshev.caloriecounter@gmail.com',
+                            to: req.body.email,
+                            subject: 'New account in Calorie Counter',
+                            text: req.body.fname + ', thank you for registering! Enjoy tracking calories.'
+                        };
+
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log('Email sent: ' + info.response);
+                            }
+                        });
+
+                        res.json({
+                            success: true,
+                            message: 'User registered'
+                        });
                     });
                 }
             });
