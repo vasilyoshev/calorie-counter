@@ -1,5 +1,6 @@
 const express = require('express');
-const session = require('express-session')
+const session = require('express-session');
+const helmet = require('helmet')
 const FileStore = require('session-file-store')(session);
 const mongoose = require('mongoose');
 const configDb = require('./config/database');
@@ -17,6 +18,7 @@ const food = require('./routes/food');
 
 const app = express();
 const port = process.env.PORT || 8080;
+app.use(helmet());
 
 // CORS middleware
 let corsOptions = {
