@@ -25,6 +25,7 @@
     "@angular/material": "^6.1.0",
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
+    "@angular/pwa": "^0.6.8",
     "@angular/router": "^6.0.3",
     "bcryptjs": "2.4.3",
     "body-parser": "1.18.3",
@@ -41,7 +42,8 @@
     "nodemailer": "^4.6.7",
     "rxjs": "^6.2.0",
     "session-file-store": "^1.2.0",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.19",
+    "@angular/service-worker": "^6.0.3"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^6.0.3",

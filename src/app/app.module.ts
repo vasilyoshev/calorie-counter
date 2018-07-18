@@ -41,6 +41,8 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { FoodComponent } from './food/food.component';
 import { SearchComponent } from './search/search.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import { SearchComponent } from './search/search.component';
     MatChipsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     RegisterService,
