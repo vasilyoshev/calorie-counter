@@ -1,7 +1,7 @@
 {
-  "name": "calorie-counter",
-  "short_name": "calorie-counter",
-  "theme_color": "#1976d2",
+  "name": "Calorie Counter",
+  "short_name": "CCounter",
+  "theme_color": "#03a9f4",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "/",
