@@ -23,6 +23,7 @@ export class SearchComponent implements OnInit {
   results: Array<Food>;
   searchTerm$ = new Subject<string>();
   @Output() quickAdd = new EventEmitter<string>();
+  @Output() submit = new EventEmitter<string>();
 
   constructor(
     private searchService: SearchService,
@@ -33,8 +34,8 @@ export class SearchComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     this.searchService.searchSuggestions(this.searchTerm$)
-      .subscribe((results: Array<Food>) => {
-        this.results = results;
+      .subscribe((res: any) => {
+        this.results = res.results;
       });
   }
 
@@ -48,6 +49,7 @@ export class SearchComponent implements OnInit {
     if (form.value.query) {
       this.searchService.searchQuery = form.value.query;
       this.router.navigate(['search', form.value.query]);
+      this.submit.emit(form.value.query);
     }
   }
 

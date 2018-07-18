@@ -1,4 +1,3 @@
-import { ResultsTableComponent } from './search-results/results-table/results-table.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TimePickerComponent } from './shared/time-picker/time-picker.component';
 import { CalendarComponent } from './shared/calendar/calendar.component';
@@ -11,7 +10,7 @@ import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
   MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule,
-  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule
+  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatPaginatorModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -61,8 +60,7 @@ import { SearchComponent } from './search/search.component';
     AddFoodDialogComponent,
     CalendarComponent,
     TimePickerComponent,
-    SearchResultsComponent,
-    ResultsTableComponent
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +90,8 @@ import { SearchComponent } from './search/search.component';
     MatSelectModule,
     MatChipsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [
     RegisterService,

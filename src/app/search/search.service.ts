@@ -16,32 +16,32 @@ export class SearchService {
 
   selectedFood: Food;
 
-  searchQuery: string;
   results: Array<Food>;
+  searchQuery: string;
 
   constructor(private http: HttpClient) { }
 
-  search(terms: Observable<string>): Observable<Array<Food>> {
-    return terms.pipe(
-      switchMap(term => this.searchEntries(term, 20))
+  search(queries: Observable<any>): Observable<any> {
+    return queries.pipe(
+      switchMap(query => this.searchEntries(query.term, query.pageSize, query.offset))
     );
   }
 
-  searchSuggestions(terms: Observable<string>): Observable<Array<Food>> {
-    return terms.pipe(
+  searchSuggestions(queries: Observable<string>): Observable<any> {
+    return queries.pipe(
       debounceTime(400),
       distinctUntilChanged(),
-      switchMap(term => this.searchEntries(term))
+      switchMap(query => this.searchEntries(query, 5, 0))
     );
   }
 
-  searchEntries(term: string, max: number = 5): Observable<Array<Food>> {
+  searchEntries(term: string, max: number, offset: number): Observable<any> {
     if (term) {
       return this.http
-        .post('food/search', { term: term, max: max }, { withCredentials: true })
+        .post('food/search', { term: term, max: max, offset: offset }, { withCredentials: true })
         .pipe(
           map((res: any) => {
-            return res.results;
+            return res;
           })
         );
     } else {

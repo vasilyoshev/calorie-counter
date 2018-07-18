@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Food } from './../shared/entities/food';
@@ -16,23 +16,67 @@ export class SearchResultsComponent implements OnInit {
 
   query: string;
   results: Array<Food>;
-  searchTerm$ = new Subject<string>();
+  pageSize: number;
+  totalResults: number;
+  offset: number;
+  searchQuery$ = new Subject<any>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource: MatTableDataSource<any>;
+  displayedColumns = ['name', 'group'];
 
   constructor(
     private searchService: SearchService,
     private spinner: NgxSpinnerService
   ) {
-    this.query = this.searchService.searchQuery;
+    this.pageSize = 25;
+    this.offset = 0;
   }
 
   ngOnInit() {
     this.spinner.show(); // possible bug TODO
-    this.searchService.search(this.searchTerm$)
-      .subscribe((results: Array<Food>) => {
-        this.results = results;
+    this.dataSource = new MatTableDataSource(this.results);
+    this.dataSource.paginator = this.paginator;
+    this.query = this.searchService.searchQuery;
+    this.searchService.search(this.searchQuery$)
+      .subscribe((res: any) => {
+        this.results = res.results;
+        this.query = res.query;
+        this.totalResults = res.total;
+        this.dataSource.data = this.results;
+
         this.spinner.hide(); // possible bug TODO
+      }, (err: any) => {
+        console.log('search results component'); // TODO handle
+        console.log(err);
+        this.spinner.hide();
       });
 
-    this.searchTerm$.next(this.query);
+    this.searchQuery$.next({
+      term: this.query,
+      offset: this.offset,
+      pageSize: this.pageSize
+    });
+  }
+
+  onPaginatorChange(event: PageEvent) {
+    this.spinner.show();
+    this.offset = this.pageSize * event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.searchQuery$.next({
+      term: this.query,
+      offset: this.offset,
+      pageSize: this.pageSize
+    });
+  }
+
+  onSearch(query: any) {
+    if (!(query instanceof Event)) { // fix bug where event is fired twice TODO
+      this.searchQuery$.next({
+        term: query,
+        offset: this.offset,
+        pageSize: this.pageSize
+      });
+    }
   }
 }

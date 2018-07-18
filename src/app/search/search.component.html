@@ -1,9 +1,11 @@
 <form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
   <mat-form-field appearance="outline" class="full-width">
-    <mat-label>Add food</mat-label>
-    <input matInput formControlName="query" (keyup)="searchTerm$.next($event.target.value)" [matAutocomplete]="auto">
+    <mat-label>Search food database</mat-label>
+    <!-- <input matInput formControlName="query" (keyup)="searchTerm$.next($event.target.value)" [matAutocomplete]="auto"> -->
+    <input matInput formControlName="query">
     <mat-icon color="primary" matSuffix id="search-icon" (click)="onSubmit(searchForm)">search</mat-icon>
-    <mat-autocomplete #auto="matAutocomplete">
+    
+    <!-- <mat-autocomplete #auto="matAutocomplete">
       <mat-option (click)="goToFood(result)" *ngFor="let result of results">
         <span class="option-name">{{ result.name }}</span>
         <span class="add-container">
@@ -15,6 +17,7 @@
           </mat-icon>
         </span>
       </mat-option>
-    </mat-autocomplete>
+    </mat-autocomplete> -->
+
   </mat-form-field>
 </form>

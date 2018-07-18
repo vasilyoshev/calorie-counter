@@ -37,7 +37,7 @@ router.post('/getFood', authMiddleware, (req, res, next) => {
     })
 });
 
-router.post('/search', authMiddleware, (req, res, next) => {
+router.post('/search', authMiddleware, (req, res) => {
     var options = {
         url: 'https://api.nal.usda.gov/ndb/search',
         method: 'GET',
@@ -46,7 +46,8 @@ router.post('/search', authMiddleware, (req, res, next) => {
             'api_key': '4ZJRDE57fjl6yCZbsKZa5ocNKLU3gLHuZkqvnioo',
             'q': req.body.term,
             'ds': 'Standard Reference',
-            'sort': 'r'
+            'sort': 'r',
+            'offset': req.body.offset || 0
         }
     }
 
@@ -55,11 +56,15 @@ router.post('/search', authMiddleware, (req, res, next) => {
             body = JSON.parse(body);
             if (!body.errors) {
                 res.json({
-                    results: body.list.item
+                    results: body.list.item,
+                    total: body.list.total,
+                    query: body.list.q // TODO is this used?
                 });
             } else {
                 res.json({
-                    results: []
+                    results: [],
+                    total: 0,
+                    query: req.body.term // TODO is this used?
                 });
             }
         }
