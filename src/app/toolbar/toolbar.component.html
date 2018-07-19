@@ -5,12 +5,15 @@
   <span class="spacer"></span>
 
   <div *ngIf="loginService.loggedIn && profileService.user">
-    <span class="profile" [routerLink]="['/profile', profileService.user.username]">{{ profileService.user.fname }}</span>
-    <mat-icon class="arrow" [matMenuTriggerFor]="menu">arrow_drop_down</mat-icon>
+    <span class="profile" [matMenuTriggerFor]="menu">
+      {{ profileService.user.fname }}
+      <mat-icon class="arrow">arrow_drop_down</mat-icon>
+    </span>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onLogout()">Logout</button>
-      <button mat-menu-item [routerLink]="['/setgoal']">Set Goal</button>
+      <button mat-menu-item [routerLink]="['/profile', profileService.user.username]">Profile</button>
       <button mat-menu-item [routerLink]="['/calculator']">Calculator</button>
+      <button mat-menu-item [routerLink]="['/setgoal']">Set Goal</button>
+      <button mat-menu-item (click)="onLogout()">Logout</button>
     </mat-menu>
   </div>
 
