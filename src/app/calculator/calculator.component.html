@@ -1,3 +1,97 @@
-<p>
-  calculator works!
-</p>
+<mat-card>
+  <mat-card-header>
+    Calculate your optimal macronutrient ratios
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit(calculatorForm)">
+      <mat-form-field appearance="outline">
+        <mat-label>Age</mat-label>
+        <input matInput formControlName="age">
+        <mat-error *ngIf="calculatorForm.get('age').hasError('required')">
+          Age is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select placeholder="Gender" formControlName="gender">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
+        </mat-select>
+        <mat-error *ngIf="calculatorForm.get('gender').hasError('required')">
+          Gender is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Weight (kg)</mat-label>
+        <input matInput formControlName="weight">
+        <mat-error *ngIf="calculatorForm.get('weight').hasError('required')">
+          Weight is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Height (cm)</mat-label>
+        <input matInput formControlName="height">
+        <mat-error *ngIf="calculatorForm.get('height').hasError('required')">
+          Height is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select placeholder="Activity level" formControlName="activity">
+          <mat-option value="sedentary">Sedentary</mat-option>
+          <mat-option value="light">Light activity</mat-option>
+          <mat-option value="moderate">Moderate activity</mat-option>
+          <mat-option value="high">Very Active</mat-option>
+        </mat-select>
+        <mat-error *ngIf="calculatorForm.get('activity').hasError('required')">
+          Activity level is required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select placeholder="Goal" formControlName="goal">
+          <mat-option value="lose">Lose weight</mat-option>
+          <mat-option value="maintain">Maintain weight</mat-option>
+          <mat-option value="gain">Gain weight</mat-option>
+        </mat-select>
+        <mat-error *ngIf="calculatorForm.get('goal').hasError('required')">
+          Goal is required
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" class="submit" color="primary">
+        Calculate
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="dataSource">
+  <mat-card-header>
+    {{goalCalories}} calories per day
+  </mat-card-header>
+
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="macro">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"> {{element.macro}} </td>
+      </ng-container>
+      <ng-container matColumnDef="calories">
+        <th mat-header-cell *matHeaderCellDef>Calories</th>
+        <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+      </ng-container>
+      <ng-container matColumnDef="grams">
+        <th mat-header-cell *matHeaderCellDef>Grams</th>
+        <td mat-cell *matCellDef="let element"> {{element.grams}} </td>
+      </ng-container>
+      <ng-container matColumnDef="percent">
+        <th mat-header-cell *matHeaderCellDef>Percent</th>
+        <td mat-cell *matCellDef="let element"> {{element.percent}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="primary" (click)="setGoal()">Set daily goal</button>
+  </mat-card-content>
+  <mat-card-footer class="footer">
+    Want to add custom macros? Set your daily goal manually
+    <span class="add-goal-link" [routerLink]="['/setgoal']">HERE</span>.
+  </mat-card-footer>
+</mat-card>

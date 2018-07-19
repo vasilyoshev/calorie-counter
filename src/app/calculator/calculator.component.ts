@@ -1,4 +1,11 @@
+import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+
+import { ProfileService } from './../profile/profile.service';
+import { AddGoalService } from './../add-goal/add-goal.service';
+import { CalculatorService } from './calculator.service';
 
 @Component({
   selector: 'app-calculator',
@@ -7,9 +14,98 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalculatorComponent implements OnInit {
 
-  constructor() { }
+  calculatorForm: FormGroup;
 
-  ngOnInit() {
+  dataSource: MatTableDataSource<any>;
+  data: Array<any>;
+  displayedColumns = ['macro', 'calories', 'grams', 'percent'];
+
+  ree: number;
+  tdee: number;
+  goalCalories: number;
+  proteinCals: number;
+  carbsCals: number;
+  fatCals: number;
+
+  constructor(
+    private fb: FormBuilder,
+    private calculatorService: CalculatorService,
+    private addGoalService: AddGoalService,
+    private profileService: ProfileService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.calculatorForm = this.fb.group({
+      age: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      weight: ['', [Validators.required]],
+      height: ['', [Validators.required]],
+      activity: ['', [Validators.required]],
+      goal: ['', [Validators.required]]
+    });
   }
 
+  onSubmit(form: FormGroup) {
+    if (!form.valid) {
+      return;
+    }
+    // resting energy expenditure
+    this.ree = this.calculatorService.getRee(form.value.gender, +form.value.weight, +form.value.height, +form.value.age);
+    // total daily energy expendure
+    this.tdee = this.calculatorService.getTdee(this.ree, form.value.activity);
+
+    this.goalCalories = Math.round(this.calculatorService.getGoalCalories(this.tdee, form.value.goal));
+
+    const proteinGrams = Math.round(form.value.weight * 2); // 2g per 1kg personal weight
+    this.proteinCals = proteinGrams * 4;
+    this.fatCals = Math.round(0.25 * this.tdee);
+    this.carbsCals = Math.round(this.goalCalories - this.proteinCals - this.fatCals);
+
+    this.data = [];
+    this.data.push({
+      macro: 'Protein',
+      calories: this.proteinCals,
+      grams: proteinGrams,
+      percent: Math.round(this.proteinCals * 100 / this.goalCalories)
+    });
+
+    const carbsGrams = Math.round(this.carbsCals / 4);
+    this.data.push({
+      macro: 'Carbs',
+      calories: this.carbsCals,
+      grams: carbsGrams,
+      percent: Math.round(this.carbsCals * 100 / this.goalCalories)
+    });
+
+    const fatGrams = Math.round(this.fatCals / 9);
+    this.data.push({
+      macro: 'Fat',
+      calories: this.fatCals,
+      grams: fatGrams,
+      percent: Math.round(this.fatCals * 100 / this.goalCalories)
+    });
+
+    this.dataSource = new MatTableDataSource(this.data);
+  }
+
+  setGoal() {
+    const dailyGoal = {
+      username: this.profileService.user.username,
+      calories: this.goalCalories,
+      protein: this.proteinCals,
+      carbs: this.carbsCals,
+      fat: this.fatCals
+    };
+
+    this.addGoalService.setDailyGoal(dailyGoal)
+      .subscribe((data: any) => {
+        if (data.success) {
+          this.profileService.user.goal = data.goal;
+          this.router.navigate(['']);
+        } else {
+          alert('Something went wrong in add goal.');
+        }
+      });
+  }
 }
