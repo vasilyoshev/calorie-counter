@@ -1,3 +1,9 @@
-
-<app-login *ngIf="loginService.loggedIn === false"></app-login>
+<mat-card class="welcome-card" *ngIf="loginService.loggedIn === false">
+    <mat-card-header class="header">
+        Welcome to Calorie Counter!
+    </mat-card-header>
+    <mat-card-content class="logo-container">
+        <img mat-card-image src="../../assets/icons/icon-512x512.png" alt="Calorie Counter Logo">
+    </mat-card-content>
+</mat-card>
 <app-diary *ngIf="loginService.loggedIn && profileService.user?.goal"></app-diary>

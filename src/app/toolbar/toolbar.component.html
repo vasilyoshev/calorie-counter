@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
-  <div class="logo" [routerLink]="['/']">Calorie Counter</div>
+  <img class="logo" src="../../assets/icons/icon-72x72.png" alt="logo" [routerLink]="['/']">
+  <div class="name" [routerLink]="['/']">Calorie Counter</div>
 
   <span class="spacer"></span>
 
@@ -13,5 +14,6 @@
     </mat-menu>
   </div>
 
+  <button mat-button *ngIf="loginService.loggedIn === false" [routerLink]="['/login']">Log In</button>
   <button mat-button *ngIf="loginService.loggedIn === false" [routerLink]="['/register']">Sign Up</button>
 </mat-toolbar>
