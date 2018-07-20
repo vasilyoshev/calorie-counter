@@ -1,3 +1,4 @@
+import { CalculatorService } from './calculator/calculator.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { TimePickerComponent } from './shared/time-picker/time-picker.component';
 import { CalendarComponent } from './shared/calendar/calendar.component';
@@ -104,6 +105,7 @@ import { environment } from '../environments/environment';
     SearchService,
     FoodService,
     DiaryService,
+    CalculatorService,
     AuthGuard,
     LoggedOutGuard,
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
