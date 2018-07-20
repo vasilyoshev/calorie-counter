@@ -15,23 +15,14 @@ import { Food } from './../shared/entities/food';
 export class SearchService {
 
   selectedFood: Food;
-
-  results: Array<Food>;
   searchQuery: string;
+  results: Array<Food>;
 
   constructor(private http: HttpClient) { }
 
   search(queries: Observable<any>): Observable<any> {
     return queries.pipe(
       switchMap(query => this.searchEntries(query.term, query.pageSize, query.offset))
-    );
-  }
-
-  searchSuggestions(queries: Observable<string>): Observable<any> {
-    return queries.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-      switchMap(query => this.searchEntries(query, 5, 0))
     );
   }
 

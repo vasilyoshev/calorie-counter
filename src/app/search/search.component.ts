@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { finalize } from 'rxjs/internal/operators/finalize';
-import { Subject } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { FoodService } from './../food/food.service';
@@ -21,8 +20,6 @@ export class SearchComponent implements OnInit {
 
   searchForm: FormGroup;
   results: Array<Food>;
-  searchTerm$ = new Subject<string>();
-  @Output() quickAdd = new EventEmitter<string>();
   @Output() submit = new EventEmitter<string>();
 
   constructor(
@@ -32,12 +29,7 @@ export class SearchComponent implements OnInit {
     private router: Router,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService
-  ) {
-    this.searchService.searchSuggestions(this.searchTerm$)
-      .subscribe((res: any) => {
-        this.results = res.results;
-      });
-  }
+  ) { }
 
   ngOnInit() {
     this.searchForm = this.fb.group({
@@ -64,9 +56,6 @@ export class SearchComponent implements OnInit {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(res => {
         const dialogRef = this.dialog.open(AddFoodDialogComponent, { data: res });
-        dialogRef.afterClosed().subscribe(() => {
-          this.quickAdd.emit();
-        });
       });
   }
 }
