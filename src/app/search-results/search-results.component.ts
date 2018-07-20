@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
 import { Component, OnInit, ViewChild } from '@angular/core';
 
@@ -27,7 +28,8 @@ export class SearchResultsComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private router: Router
   ) {
     this.pageSize = 25;
     this.offset = 0;
@@ -78,5 +80,10 @@ export class SearchResultsComponent implements OnInit {
         pageSize: this.pageSize
       });
     }
+  }
+
+  goToFood(food: Food) {
+    this.searchService.selectedFood = food;
+    this.router.navigate(['/food', food.name]);
   }
 }
