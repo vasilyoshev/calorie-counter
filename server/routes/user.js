@@ -255,12 +255,10 @@ router.post('/set-goal', authMiddleware, (req, res) => {
         User.addGoal(newGoal, user, (err, user) => {
             if (err) {
                 return res.status(400).json({
-                    success: false,
                     message: 'Failed to add goal'
                 });
             } else {
                 return res.json({
-                    success: true,
                     message: 'Goal added',
                     goal: user.goals[user.goals.length - 1]
                 });

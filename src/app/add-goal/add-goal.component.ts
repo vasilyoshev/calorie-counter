@@ -2,8 +2,12 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
+import { finalize } from 'rxjs/internal/operators/finalize';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 import { ProfileService } from './../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
+import { MatSnackBar } from '../../../node_modules/@angular/material';
 
 @Component({
   selector: 'app-add-goal',
@@ -20,7 +24,9 @@ export class AddGoalComponent implements OnInit {
   constructor(
     public addGoalService: AddGoalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -42,14 +48,15 @@ export class AddGoalComponent implements OnInit {
       fat: form.value.formArray[1].fat
     };
 
+    this.spinner.show();
     this.addGoalService.setDailyGoal(dailyGoal)
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe((data: any) => {
-        if (data.success) {
-          this.profileService.user.goal = data.goal;
-          this.router.navigate(['']);
-        } else {
-          alert('Something went wrong add goal.');
-        }
+        this.profileService.user.goal = data.goal;
+        this.router.navigate(['']);
+        this.snackBar.open('Goal added!', 'OK', { duration: 5000 });
+      }, (err: any) => {
+        alert(err.message);
       });
   }
 

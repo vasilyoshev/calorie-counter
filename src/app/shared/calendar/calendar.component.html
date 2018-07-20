@@ -1,5 +1,10 @@
 <mat-form-field id="date-form-field">
-  <input matInput [matDatepicker]="picker" (dateChange)="dateChange.emit($event.value)" placeholder="{{dayName}}" [formControl]="dateFormControl">
+  <input matInput #datePicker
+    [matDatepicker]="picker"
+    (dateChange)="dateChange.emit($event.value)"
+    placeholder="{{dayName}}"
+    [formControl]="dateFormControl"
+  >
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker disabled="false" color="primary" #picker touchUi></mat-datepicker>
 </mat-form-field>

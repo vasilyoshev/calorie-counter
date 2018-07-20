@@ -38,13 +38,7 @@ export class DiaryComponent implements OnInit {
     }
     this.date = this.diaryService.currentDate;
 
-    if (!this.diaryService.summary || !this.diaryService.meals) {
-      this.spinner.show();
-      this.getDay(new Date());
-    } else {
-      this.summary = this.diaryService.summary;
-      this.meals = this.diaryService.meals;
-    }
+    this.getDay(new Date());
   }
 
   getDay(date: any) {

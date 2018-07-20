@@ -11,7 +11,7 @@ import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
   MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
   MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule,
-  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatPaginatorModule
+  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -95,6 +95,7 @@ import { environment } from '../environments/environment';
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

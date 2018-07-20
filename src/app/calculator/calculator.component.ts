@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -32,7 +32,8 @@ export class CalculatorComponent implements OnInit {
     private calculatorService: CalculatorService,
     private addGoalService: AddGoalService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -100,12 +101,11 @@ export class CalculatorComponent implements OnInit {
 
     this.addGoalService.setDailyGoal(dailyGoal)
       .subscribe((data: any) => {
-        if (data.success) {
-          this.profileService.user.goal = data.goal;
-          this.router.navigate(['']);
-        } else {
-          alert('Something went wrong in add goal.');
-        }
+        this.profileService.user.goal = data.goal;
+        this.router.navigate(['']);
+        this.snackBar.open('Goal added!', 'OK', { duration: 5000 });
+      }, (err: any) => {
+        this.snackBar.open('Something went wrong.', 'OK');
       });
   }
 }
