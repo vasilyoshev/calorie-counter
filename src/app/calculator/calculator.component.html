@@ -7,32 +7,30 @@
       <mat-form-field appearance="outline">
         <mat-label>Age</mat-label>
         <input matInput formControlName="age">
-        <mat-error *ngIf="calculatorForm.get('age').hasError('required')">
-          Age is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('age').hasError('required')">Age is required</mat-error>
+        <mat-error *ngIf="calculatorForm.get('age').hasError('pattern')">Age should be numeric</mat-error>
+        <mat-error *ngIf="calculatorForm.get('age').hasError('min') || calculatorForm.get('age').hasError('max')">Age is invalid</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-select placeholder="Gender" formControlName="gender">
           <mat-option value="male">Male</mat-option>
           <mat-option value="female">Female</mat-option>
         </mat-select>
-        <mat-error *ngIf="calculatorForm.get('gender').hasError('required')">
-          Gender is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('gender').hasError('required')">Gender is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Weight (kg)</mat-label>
         <input matInput formControlName="weight">
-        <mat-error *ngIf="calculatorForm.get('weight').hasError('required')">
-          Weight is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('weight').hasError('required')">Weight is required</mat-error>
+        <mat-error *ngIf="calculatorForm.get('weight').hasError('pattern')">Weight should be numeric</mat-error>
+        <mat-error *ngIf="calculatorForm.get('weight').hasError('min') || calculatorForm.get('weight').hasError('max')">Weight is invalid</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Height (cm)</mat-label>
         <input matInput formControlName="height">
-        <mat-error *ngIf="calculatorForm.get('height').hasError('required')">
-          Height is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('height').hasError('required')">Height is required</mat-error>
+        <mat-error *ngIf="calculatorForm.get('height').hasError('pattern')">Height should be numeric</mat-error>
+        <mat-error *ngIf="calculatorForm.get('height').hasError('min') || calculatorForm.get('height').hasError('max')">Height is invalid</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-select placeholder="Activity level" formControlName="activity">
@@ -41,9 +39,7 @@
           <mat-option value="moderate">Moderate activity</mat-option>
           <mat-option value="high">Very Active</mat-option>
         </mat-select>
-        <mat-error *ngIf="calculatorForm.get('activity').hasError('required')">
-          Activity level is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('activity').hasError('required')">Activity level is required</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-select placeholder="Goal" formControlName="goal">
@@ -51,9 +47,7 @@
           <mat-option value="maintain">Maintain weight</mat-option>
           <mat-option value="gain">Gain weight</mat-option>
         </mat-select>
-        <mat-error *ngIf="calculatorForm.get('goal').hasError('required')">
-          Goal is required
-        </mat-error>
+        <mat-error *ngIf="calculatorForm.get('goal').hasError('required')">Goal is required</mat-error>
       </mat-form-field>
       <button mat-raised-button type="submit" class="submit" color="primary">
         Calculate
@@ -66,7 +60,6 @@
   <mat-card-header>
     {{goalCalories}} calories per day
   </mat-card-header>
-
   <mat-card-content>
     <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="macro">

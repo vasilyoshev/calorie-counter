@@ -37,10 +37,10 @@ export class CalculatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculatorForm = this.fb.group({
-      age: ['', [Validators.required]],
+      age: ['', [Validators.required, Validators.min(5), Validators.max(120), Validators.pattern(/^\d+$/)]],
       gender: ['', [Validators.required]],
-      weight: ['', [Validators.required]],
-      height: ['', [Validators.required]],
+      weight: ['', [Validators.required, Validators.min(20), Validators.max(500), Validators.pattern(/^\d+$/)]],
+      height: ['', [Validators.required, Validators.min(50), Validators.max(300), Validators.pattern(/^\d+$/)]],
       activity: ['', [Validators.required]],
       goal: ['', [Validators.required]]
     });
