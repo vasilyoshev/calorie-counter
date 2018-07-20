@@ -16,7 +16,7 @@
             <mat-error *ngIf="formArray?.get([0]).get('calories').hasError('max')">Calories are too high</mat-error>
           </mat-form-field>
           <div>
-            <button type="button" mat-raised-button color="accent" matStepperNext (click)="calcDefaultMacros()">Next</button>
+            <button type="button" mat-raised-button color="primary" matStepperNext>Next</button>
           </div>
         </mat-card-content>
         <mat-card-footer class="footer">

@@ -25,6 +25,7 @@ export class AddGoalComponent implements OnInit {
 
   ngOnInit() {
     this.addGoalForm = this.addGoalService.getFormGroup();
+    this.calcDefaultMacros();
   }
 
   onSubmit(form: FormGroup) {
