@@ -39,7 +39,7 @@ export class DiaryComponent implements OnInit {
     this.getDay(new Date());
   }
 
-  getDay(date: Date): void {
+  getDay(date: Date | number): void {
     this.spinner.show();
     if (!(date instanceof Date)) {
       date = new Date(date);
@@ -51,9 +51,11 @@ export class DiaryComponent implements OnInit {
         this.meals = this.diaryService.meals;
 
         let newDate = new Date(this.date);
-        newDate = new Date(newDate.setDate(date.getDate()));
-        newDate = new Date(newDate.setMonth(date.getMonth()));
-        newDate = new Date(newDate.setFullYear(date.getFullYear()));
+        if (date instanceof Date) { // to avoid ts error
+          newDate = new Date(newDate.setDate(date.getDate()));
+          newDate = new Date(newDate.setMonth(date.getMonth()));
+          newDate = new Date(newDate.setFullYear(date.getFullYear()));
+        }
 
         this.date = newDate;
         this.diaryService.currentDate = this.date;
