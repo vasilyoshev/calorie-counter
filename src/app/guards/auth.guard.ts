@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
         private loginService: LoginService
     ) { }
 
-    canActivate() {
+    canActivate(): boolean {
         if (!this.loginService.loggedIn) { // loggedIn on refresh always false
             this.router.navigate(['']);
             return false;

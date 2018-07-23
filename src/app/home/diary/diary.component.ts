@@ -6,6 +6,8 @@ import { finalize } from 'rxjs/internal/operators/finalize';
 
 import { ProfileService } from './../../profile/profile.service';
 import { DiaryService } from './diary.service';
+import { DiaryTableData } from './../../shared/entities/diary-table-data';
+import { Meal } from './../../shared/entities/meal';
 
 @Component({
   selector: 'app-diary',
@@ -15,12 +17,8 @@ import { DiaryService } from './diary.service';
 export class DiaryComponent implements OnInit {
 
   hasGoal: boolean;
-  summary: any;
-  meals: Array<any>;
-  breakfast: any;
-  lunch: any;
-  dinner: any;
-  snack: any;
+  summary: Array<DiaryTableData>;
+  meals: Array<Meal>;
   date: Date;
   dateFormControl: FormControl;
 
@@ -30,7 +28,7 @@ export class DiaryComponent implements OnInit {
     private profileService: ProfileService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
 
     if (!this.diaryService.currentDate) {
@@ -41,12 +39,11 @@ export class DiaryComponent implements OnInit {
     this.getDay(new Date());
   }
 
-  getDay(date: any) {
+  getDay(date: Date): void {
     this.spinner.show();
     if (!(date instanceof Date)) {
       date = new Date(date);
     }
-    // this.dateFormControl.setValue(date);
     this.diaryService.getDay(date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {

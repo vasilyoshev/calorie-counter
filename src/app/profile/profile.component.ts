@@ -15,14 +15,14 @@ import { ProfileService } from './profile.service';
 export class ProfileComponent implements OnInit {
 
   mealTypes: Array<string>;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  readonly separatorKeysCodes: Array<number> = [ENTER, COMMA];
 
   constructor(
     public profileService: ProfileService,
     private spinner: NgxSpinnerService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.mealTypes = this.profileService.user.mealTypes;
   }
 
@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  removeType(type: any): void {
+  removeType(type: string): void {
     this.spinner.show();
     const index = this.mealTypes.indexOf(type);
 

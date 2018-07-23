@@ -31,13 +31,13 @@ export class SearchComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.searchForm = this.fb.group({
       query: ['']
     });
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup): void {
     if (form.value.query) {
       this.searchService.searchQuery = form.value.query;
       this.router.navigate(['search', form.value.query]);
@@ -45,12 +45,10 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  onAddFood(food: Food) {
+  onAddFood(food: Food): void {
     this.spinner.show();
     this.foodService.getFood(food.ndbno)
       .pipe(finalize(() => this.spinner.hide()))
-      .subscribe(res => {
-        const dialogRef = this.dialog.open(AddFoodDialogComponent, { data: res });
-      });
+      .subscribe(res => { this.dialog.open(AddFoodDialogComponent, { data: res }); });
   }
 }

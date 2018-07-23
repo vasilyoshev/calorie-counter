@@ -1,8 +1,8 @@
-export class Goal {
-    username: string;
+export class DiaryTableData {
+    name: string;
+    quantity: number;
     calories: number;
     protein: number;
     carbs: number;
     fat: number;
-    date: Date;
 }

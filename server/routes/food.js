@@ -17,7 +17,7 @@ router.post('/getFood', authMiddleware, (req, res, next) => {
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             body = JSON.parse(body);
-            if (body.notfound !== 1) {
+            if (body.notfound !== 1 && !body.foods[0].error) {
                 const food = {
                     name: body.foods[0].food.desc.name,
                     calories: body.foods[0].food.nutrients[1].value,

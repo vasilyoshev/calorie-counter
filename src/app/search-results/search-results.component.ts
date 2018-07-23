@@ -23,7 +23,7 @@ export class SearchResultsComponent implements OnInit {
   searchQuery$ = new Subject<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<Food>;
   displayedColumns = ['name', 'group'];
 
   constructor(
@@ -35,7 +35,7 @@ export class SearchResultsComponent implements OnInit {
     this.offset = 0;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.spinner.show(); // possible bug TODO
     this.dataSource = new MatTableDataSource(this.results);
     this.dataSource.paginator = this.paginator;
@@ -61,7 +61,7 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
-  onPaginatorChange(event: PageEvent) {
+  onPaginatorChange(event: PageEvent): void {
     this.spinner.show();
     this.offset = this.pageSize * event.pageIndex;
     this.pageSize = event.pageSize;
@@ -72,7 +72,7 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
-  onSearch(query: any) {
+  onSearch(query: any): void {
     if (!(query instanceof Event)) { // fix bug where event is fired twice TODO
       this.searchQuery$.next({
         term: query,
@@ -82,7 +82,7 @@ export class SearchResultsComponent implements OnInit {
     }
   }
 
-  goToFood(food: Food) {
+  goToFood(food: Food): void {
     this.searchService.selectedFood = food;
     this.router.navigate(['/food', food.name]);
   }

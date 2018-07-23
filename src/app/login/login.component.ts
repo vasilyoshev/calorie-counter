@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup): void {
     if (!form.valid) {
       return;
     }
@@ -47,10 +47,9 @@ export class LoginComponent implements OnInit {
     user.password = form.value.password;
     user.remember = this.shouldRemember;
 
-    this.loginService.login(user).subscribe((data: any) => {
+    this.loginService.login(user).subscribe(() => {
       this.spinner.show();
       this.loginService.loggedIn = true;
-      this.profileService.user = data.user;
       this.profileService.getProfile()
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe(() => {

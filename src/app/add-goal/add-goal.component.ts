@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { Goal } from './../shared/entities/goal';
 import { ProfileService } from './../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
 import { MatSnackBar } from '../../../node_modules/@angular/material';
@@ -29,24 +30,23 @@ export class AddGoalComponent implements OnInit {
     private snackBar: MatSnackBar
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.addGoalForm = this.addGoalService.getFormGroup();
     this.calcDefaultMacros();
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup): void {
     this.addGoalForm.updateValueAndValidity();
     if (!form.valid) {
       return;
     }
 
-    const dailyGoal = {
-      username: this.profileService.user.username,
-      calories: Number(form.value.formArray[0].calories),
-      protein: form.value.formArray[1].protein,
-      carbs: form.value.formArray[1].carbs,
-      fat: form.value.formArray[1].fat
-    };
+    const dailyGoal = new Goal();
+    dailyGoal.username = this.profileService.user.username;
+    dailyGoal.calories = Number(form.value.formArray[0].calories);
+    dailyGoal.protein = form.value.formArray[1].protein;
+    dailyGoal.carbs = form.value.formArray[1].carbs;
+    dailyGoal.fat = form.value.formArray[1].fat;
 
     this.spinner.show();
     this.addGoalService.setDailyGoal(dailyGoal)
@@ -60,18 +60,18 @@ export class AddGoalComponent implements OnInit {
       });
   }
 
-  formatLabel(value: number | null) {
+  formatLabel(value: number | null): string {
     return value ? value + '%' : 0 + '%';
   }
 
-  calcDefaultMacros() {
+  calcDefaultMacros(): void {
     this.addGoalService.calcDefaultMacros();
     this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
     this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
     this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
   }
 
-  setProteinCals(event: any) {
+  setProteinCals(event: any): void {
     if (event.target.value) {
       this.addGoalService.setProteinCals(event);
       this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
@@ -80,7 +80,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setCarbsCals(event: any) {
+  setCarbsCals(event: any): void {
     if (event.target.value) {
       this.addGoalService.setCarbsCals(event);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
@@ -88,7 +88,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setFatCals(event: any) {
+  setFatCals(event: any): void {
     if (event.target.value) {
       this.addGoalService.setFatCals(event);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
@@ -96,7 +96,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setProteinGrams(event: any) {
+  setProteinGrams(event: any): void {
     if (event.target.value) {
       this.addGoalService.setProteinGrams(event);
       this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
@@ -105,7 +105,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setCarbsGrams(event: any) {
+  setCarbsGrams(event: any): void {
     if (event.target.value) {
       this.addGoalService.setCarbsGrams(event);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
@@ -113,7 +113,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setFatGrams(event: any) {
+  setFatGrams(event: any): void {
     if (event.target.value) {
       this.addGoalService.setFatGrams(event);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
@@ -121,26 +121,26 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  setProteinPercent(event: any) {
+  setProteinPercent(event: any): void {
     this.addGoalService.setProteinPercent(event);
     this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
     this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
     this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
   }
 
-  setCarbsPercent(event: any) {
+  setCarbsPercent(event: any): void {
     this.addGoalService.setCarbsPercent(event);
     this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
     this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
   }
 
-  setFatPercent(event: any) {
+  setFatPercent(event: any): void {
     this.addGoalService.setFatPercent(event);
     this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
     this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
   }
 
-  formatProteinOnBlur(event: any) {
+  formatProteinOnBlur(event: any): void {
     if (!event.target.value) {
       this.addGoalService.formatProteinOnBlur(event);
       this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
@@ -149,7 +149,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  formatCarbsOnBlur(event: any) {
+  formatCarbsOnBlur(event: any): void {
     if (!event.target.value) {
       this.addGoalService.formatCarbsOnBlur(event);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
@@ -157,7 +157,7 @@ export class AddGoalComponent implements OnInit {
     }
   }
 
-  formatFatOnBlur(event: any) {
+  formatFatOnBlur(event: any): void {
     if (!event.target.value) {
       this.addGoalService.formatFatOnBlur(event);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);

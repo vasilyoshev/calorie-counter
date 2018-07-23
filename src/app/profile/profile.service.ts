@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs';
 
 import { User } from './../shared/entities/user';
 
@@ -14,16 +15,16 @@ export class ProfileService {
 
   constructor(private http: HttpClient) { }
 
-  getProfile() {
+  getProfile(): Observable<any> {
     return this.http.get('user/profile', { withCredentials: true })
       .pipe(
-        map((user: any) => {
+        map((user: User) => {
           this.user = user;
         })
       );
   }
 
-  setMealTypes(types: Array<string>) {
+  setMealTypes(types: Array<string>): Observable<any> {
     return this.http.post('user/set-meal-types', { mealTypes: types }, { withCredentials: true });
   }
 }

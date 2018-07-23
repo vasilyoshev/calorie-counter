@@ -1,3 +1,4 @@
+import { Goal } from './../shared/entities/goal';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from './../profile/profile.service';
 import { AddGoalService } from './../add-goal/add-goal.service';
 import { CalculatorService } from './calculator.service';
+import { MacroData } from './macro-data';
 
 @Component({
   selector: 'app-calculator',
@@ -16,8 +18,8 @@ export class CalculatorComponent implements OnInit {
 
   calculatorForm: FormGroup;
 
-  dataSource: MatTableDataSource<any>;
-  data: Array<any>;
+  dataSource: MatTableDataSource<MacroData>;
+  data: Array<MacroData>;
   displayedColumns = ['macro', 'calories', 'grams', 'percent'];
 
   ree: number;
@@ -63,7 +65,7 @@ export class CalculatorComponent implements OnInit {
     this.fatCals = Math.round(0.25 * this.tdee);
     this.carbsCals = Math.round(this.goalCalories - this.proteinCals - this.fatCals);
 
-    this.data = [];
+    this.data = new Array<MacroData>();
     this.data.push({
       macro: 'Protein',
       calories: this.proteinCals,
@@ -90,14 +92,13 @@ export class CalculatorComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.data);
   }
 
-  setGoal() {
-    const dailyGoal = {
-      username: this.profileService.user.username,
-      calories: this.goalCalories,
-      protein: this.proteinCals,
-      carbs: this.carbsCals,
-      fat: this.fatCals
-    };
+  setGoal(): void {
+    const dailyGoal = new Goal();
+    dailyGoal.username = this.profileService.user.username;
+    dailyGoal.calories = this.goalCalories;
+    dailyGoal.protein = this.proteinCals;
+    dailyGoal.carbs = this.carbsCals;
+    dailyGoal.fat = this.fatCals;
 
     this.addGoalService.setDailyGoal(dailyGoal)
       .subscribe((data: any) => {

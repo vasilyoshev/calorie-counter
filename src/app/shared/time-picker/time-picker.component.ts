@@ -30,11 +30,11 @@ export class TimePickerComponent implements OnInit {
     this.minute = date.getMinutes().toString();
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.emitTime();
   }
 
-  emitTime() {
+  emitTime(): void {
     this.timeChange.emit({
       hour: +this.hour,
       minute: +this.minute

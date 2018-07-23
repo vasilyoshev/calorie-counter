@@ -28,7 +28,7 @@ export class CalculatorService {
     }
   }
 
-  getGoalCalories(tdee: number, goal: string) {
+  getGoalCalories(tdee: number, goal: string): number {
     switch (goal) {
       case 'lose':
         return tdee - (tdee * 0.20);

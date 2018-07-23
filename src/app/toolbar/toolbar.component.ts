@@ -17,7 +17,7 @@ export class ToolbarComponent {
     public profileService: ProfileService
   ) { }
 
-  onLogout() {
+  onLogout(): void {
     this.loginService.logout().subscribe(() => {
       this.loginService.loggedIn = false;
       this.profileService.user = null;

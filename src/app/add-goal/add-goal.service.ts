@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, Validators, AbstractControl, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { Goal } from './../shared/entities/goal';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +31,11 @@ export class AddGoalService {
     this.calories = 2000;
   }
 
-  setDailyGoal(dailyGoal: any) {
+  setDailyGoal(dailyGoal: Goal): Observable<any> {
     return this.http.post('user/set-goal', dailyGoal, { withCredentials: true });
   }
 
-  calcDefaultMacros() {
+  calcDefaultMacros(): void {
     this.calories = +this.calories;
     this.proteinCals = Math.round(4 / 10 * this.calories);
     this.carbsCals = Math.round(4 / 10 * this.calories);
@@ -44,7 +48,7 @@ export class AddGoalService {
     this.fatPercent = Math.round(this.fatCals / this.calories * 100);
   }
 
-  setProteinCals(event: any) {
+  setProteinCals(event: any): void {
     const cals = event.target.value;
     if (/^\d+$/.test(cals)) {
       if (cals > this.calories) {
@@ -65,7 +69,7 @@ export class AddGoalService {
     }
   }
 
-  setCarbsCals(event: any) {
+  setCarbsCals(event: any): void {
     const cals = event.target.value;
     if (/^\d+$/.test(cals)) {
       if (cals > this.calories - this.proteinCals) {
@@ -82,7 +86,7 @@ export class AddGoalService {
     }
   }
 
-  setFatCals(event: any) {
+  setFatCals(event: any): void {
     const cals = event.target.value;
     if (/^\d+$/.test(cals)) {
       if (cals > this.calories - this.proteinCals) {
@@ -99,7 +103,7 @@ export class AddGoalService {
     }
   }
 
-  setProteinGrams(event: any) {
+  setProteinGrams(event: any): void {
     const grams = event.target.value;
     if (/^\d+$/.test(grams)) {
       if (grams * 4 > this.calories) {
@@ -120,7 +124,7 @@ export class AddGoalService {
     }
   }
 
-  setCarbsGrams(event: any) {
+  setCarbsGrams(event: any): void {
     const grams = event.target.value;
     if (/^\d+$/.test(grams)) {
       if (grams * 4 > this.calories - this.proteinCals) {
@@ -137,7 +141,7 @@ export class AddGoalService {
     }
   }
 
-  setFatGrams(event: any) {
+  setFatGrams(event: any): void {
     const grams = event.target.value;
     if (/^\d+$/.test(grams)) {
       if (grams * 9 > this.calories - this.proteinCals) {
@@ -154,7 +158,7 @@ export class AddGoalService {
     }
   }
 
-  setProteinPercent(event: any) {
+  setProteinPercent(event: any): void {
     this.proteinPercent = event.value;
     this.proteinCals = Math.round(this.proteinPercent / 100 * this.calories);
     this.proteinGrams = Math.round(this.proteinCals / 4);
@@ -168,7 +172,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  setCarbsPercent(event: any) {
+  setCarbsPercent(event: any): void {
     if (event.value > 100 - this.proteinPercent) {
       this.carbsPercent = 100 - this.proteinPercent;
     } else {
@@ -182,7 +186,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  setFatPercent(event: any) {
+  setFatPercent(event: any): void {
     if (event.value > 100 - this.proteinPercent) {
       this.fatPercent = 100 - this.proteinPercent;
     } else {
@@ -196,7 +200,7 @@ export class AddGoalService {
     this.carbsPercent = this.carbsCals / this.calories * 100;
   }
 
-  formatProteinOnBlur(event: any) {
+  formatProteinOnBlur(event: any): void {
     this.proteinCals = 0;
     this.proteinGrams = 0;
     this.proteinPercent = 0;
@@ -210,7 +214,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatCarbsOnBlur(event: any) {
+  formatCarbsOnBlur(event: any): void {
     this.carbsCals = 0;
     this.carbsGrams = 0;
     this.carbsPercent = 0;
@@ -220,7 +224,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatFatOnBlur(event: any) {
+  formatFatOnBlur(event: any): void {
     this.fatCals = 0;
     this.fatGrams = 0;
     this.fatPercent = 0;
@@ -230,7 +234,7 @@ export class AddGoalService {
     this.carbsPercent = this.carbsCals / this.calories * 100;
   }
 
-  getFormGroup() {
+  getFormGroup(): FormGroup {
     return this.fb.group({
       formArray: this.fb.array([
         this.fb.group({

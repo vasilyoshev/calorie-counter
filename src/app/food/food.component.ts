@@ -25,14 +25,11 @@ export class FoodComponent implements OnInit {
     private dialog: MatDialog
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.spinner.show();
     this.foodService.getFood(this.searchService.selectedFood.ndbno)
       .pipe(finalize(() => this.spinner.hide()))
-      .subscribe((food: any) => {
-        if (food.error) {
-          console.log('does not exist');
-        }
+      .subscribe((food: Food) => {
         this.food = food;
       },
         (err) => {
@@ -40,7 +37,7 @@ export class FoodComponent implements OnInit {
         });
   }
 
-  openDialog() {
+  openDialog(): void {
     if (this.food) {
       this.dialog.open(AddFoodDialogComponent, { data: this.food });
     } // TODO handle this if

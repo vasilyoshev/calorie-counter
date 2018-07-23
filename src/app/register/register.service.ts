@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
@@ -18,7 +18,7 @@ export class RegisterService {
         return this.http.post('user/register', user);
     }
 
-    getFormGroup() {
+    getFormGroup(): FormGroup {
         return this.fb.group({
             fname: ['', [Validators.required, Validators.minLength(1)]],
             lname: ['', [Validators.required, Validators.minLength(1)]],

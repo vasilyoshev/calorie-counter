@@ -11,7 +11,7 @@ export class LoggedOutGuard implements CanActivate {
         private loginService: LoginService
     ) { }
 
-    canActivate() {
+    canActivate(): boolean {
         if (this.loginService.loggedIn === false) { // loggedIn on refresh always false
             return true;
         }

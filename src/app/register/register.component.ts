@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.registerService.getFormGroup();
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup): void {
     if (!form.valid) {
       return;
     }
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
     user.email = form.value.email;
     user.password = form.value.password;
 
-    this.registerService.registerUser(user).subscribe((data: any) => {
+    this.registerService.registerUser(user).subscribe(() => {
       this.router.navigate(['login']);
     }, (err: any) => {
       if (err.error.emailUsed || err.error.usernameUsed) {

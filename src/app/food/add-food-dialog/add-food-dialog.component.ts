@@ -6,6 +6,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { Food } from './../../shared/entities/food';
 import { DiaryService } from './../../home/diary/diary.service';
 import { ProfileService } from './../../profile/profile.service';
 import { FoodService } from './../food.service';
@@ -25,7 +26,7 @@ export class AddFoodDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<AddFoodDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private food: any,
+    @Inject(MAT_DIALOG_DATA) private food: Food,
     private fb: FormBuilder,
     private foodService: FoodService,
     private profileService: ProfileService,
@@ -35,7 +36,7 @@ export class AddFoodDialogComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.date = this.diaryService.currentDate;
     this.mealTypes = this.profileService.user.mealTypes;
     this.addFoodForm = this.fb.group({
@@ -49,7 +50,7 @@ export class AddFoodDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onSubmit(form: FormGroup) {
+  onSubmit(form: FormGroup): void {
     let meal = form.value.meal;
     if (form.value.meal === 'Other') {
       this.addFoodForm.setControl('other', new FormControl(form.value.other, Validators.required));
@@ -76,7 +77,7 @@ export class AddFoodDialogComponent implements OnInit {
       });
   }
 
-  changeTime(hour: number, minute: number) {
+  changeTime(hour: number, minute: number): void {
     this.date = new Date(this.date.setHours(hour));
     this.date = new Date(this.date.setMinutes(minute));
   }

@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./alert.component.scss']
 })
 export class AlertComponent {
-
   constructor() { }
 }

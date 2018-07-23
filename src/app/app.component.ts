@@ -12,7 +12,6 @@ import { ProfileService } from './profile/profile.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
 
   constructor(
     private loginService: LoginService,
