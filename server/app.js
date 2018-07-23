@@ -37,9 +37,9 @@ let sessionObj = {
     unset: 'destroy',
     cookie: { maxAge: 1800000 } // 30 minutes
 };
-if (app.get('env') === 'production') {
-    sessionObj.cookie.secure = true; // serve secure cookies
-}
+// if (app.get('env') === 'production') {
+//     sessionObj.cookie.secure = true; // serve secure cookies
+// }
 app.use(session(sessionObj));
 
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
