@@ -30,18 +30,16 @@ app.use(cors(corsOptions));
 
 // Session middleware
 let sessionObj = {
-    store: new FileStore({ secret: 'keyboard cat' }),
+    store: new FileStore({ secret: 'keyboard cat', reapInterval: -1 }),
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
     unset: 'destroy',
-    // rolling: true,
     cookie: { maxAge: 1800000 } // 30 minutes
 };
-// if (app.get('env') === 'production') {
-//     sessionObj.cookie.secure = true; // serve secure cookies
-//     sessionObj.cookie.maxAge = 1800000; // 30 minutes
-// }
+if (app.get('env') === 'production') {
+    sessionObj.cookie.secure = true; // serve secure cookies
+}
 app.use(session(sessionObj));
 
 // Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
