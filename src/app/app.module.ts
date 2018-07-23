@@ -1,25 +1,27 @@
-import { CalculatorService } from './calculator/calculator.service';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { TimePickerComponent } from './shared/time-picker/time-picker.component';
-import { CalendarComponent } from './shared/calendar/calendar.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {
-  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
-  MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
-  MatAutocompleteModule, MatIconModule, MatTableModule, MatListModule, MatExpansionModule,
-  MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
+  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule,
+  MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule, MatIconModule, MatTableModule,
+  MatListModule, MatExpansionModule, MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule,
+  MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { CalculatorService } from './calculator/calculator.service';
+import { CalculatorComponent } from './calculator/calculator.component';
+import { SearchService } from './search/search.service';
+import { SearchComponent } from './search/search.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { TimePickerComponent } from './shared/time-picker/time-picker.component';
+import { CalendarComponent } from './shared/calendar/calendar.component';
 import { MacrosTableComponent } from './home/diary/macros-table/macros-table.component';
 import { AddGoalService } from './add-goal/add-goal.service';
 import { DiaryService } from './home/diary/diary.service';
-import { SearchService } from './search/search.service';
 import { AddGoalComponent } from './add-goal/add-goal.component';
 import { DiaryComponent } from './home/diary/diary.component';
 import { AddFoodDialogComponent } from './food/add-food-dialog/add-food-dialog.component';
@@ -39,9 +41,7 @@ import { SessionInterceptor } from './interceptors/session.interceptor';
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
 import { AlertComponent } from './shared/alert/alert.component';
-import { CalculatorComponent } from './calculator/calculator.component';
 import { FoodComponent } from './food/food.component';
-import { SearchComponent } from './search/search.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -83,7 +83,6 @@ import { environment } from '../environments/environment';
     MatSliderModule,
     MatDividerModule,
     MatStepperModule,
-    MatAutocompleteModule,
     MatIconModule,
     MatTableModule,
     MatListModule,

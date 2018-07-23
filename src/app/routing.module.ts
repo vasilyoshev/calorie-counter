@@ -1,8 +1,8 @@
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { AddGoalComponent } from './add-goal/add-goal.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { AddGoalComponent } from './add-goal/add-goal.component';
 import { FoodComponent } from './food/food.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';

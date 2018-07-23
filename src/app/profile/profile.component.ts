@@ -1,12 +1,11 @@
-import { finalize } from 'rxjs/internal/operators/finalize';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
 
 import { ProfileService } from './profile.service';
-import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-profile',

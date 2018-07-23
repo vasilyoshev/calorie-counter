@@ -45,11 +45,6 @@ export class SearchComponent implements OnInit {
     }
   }
 
-  goToFood(food: Food) {
-    this.searchService.selectedFood = food;
-    this.router.navigate(['/food', food.name]);
-  }
-
   onAddFood(food: Food) {
     this.spinner.show();
     this.foodService.getFood(food.ndbno)
