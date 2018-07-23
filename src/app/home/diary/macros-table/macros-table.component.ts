@@ -11,7 +11,7 @@ export class MacrosTableComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<any>;
   @Input() data: any;
   displayedColumns = ['name', 'calories', 'protein', 'carbs', 'fat'];
-  @Input() quantity: Boolean;
+  @Input() quantity: boolean;
 
   constructor() {
   }

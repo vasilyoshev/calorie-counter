@@ -9,11 +9,11 @@ export class TimePickerComponent implements OnInit {
 
   @Output() timeChange = new EventEmitter<any>();
 
-  hour: String;
-  minute: String;
+  hour: string;
+  minute: string;
 
-  hours: Array<Number>;
-  minutes: Array<Number>;
+  hours: Array<number>;
+  minutes: Array<number>;
 
   constructor() {
     this.hours = [];
