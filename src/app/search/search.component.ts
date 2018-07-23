@@ -27,7 +27,7 @@ export class SearchComponent implements OnInit {
     private foodService: FoodService,
     private fb: FormBuilder,
     private router: Router,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private spinner: NgxSpinnerService
   ) { }
 

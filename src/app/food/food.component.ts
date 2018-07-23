@@ -19,10 +19,10 @@ export class FoodComponent implements OnInit {
   food: Food;
 
   constructor(
-    public foodService: FoodService,
+    private foodService: FoodService,
     private searchService: SearchService,
     private spinner: NgxSpinnerService,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {

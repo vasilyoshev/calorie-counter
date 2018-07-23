@@ -24,8 +24,8 @@ export class AddFoodDialogComponent implements OnInit {
   date: Date;
 
   constructor(
-    public dialogRef: MatDialogRef<AddFoodDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public food: any,
+    private dialogRef: MatDialogRef<AddFoodDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private food: any,
     private fb: FormBuilder,
     private foodService: FoodService,
     private profileService: ProfileService,

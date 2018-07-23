@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/internal/operators/map';
 
-import { ProfileService } from './../../profile/profile.service';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -14,11 +12,7 @@ export class DiaryService {
   meals: any;
   currentDate: Date;
 
-  constructor(
-    public profileService: ProfileService,
-    private http: HttpClient
-  ) {
-  }
+  constructor(private http: HttpClient) { }
 
   getDay(date: any) {
     return this.http.post('user/get-day', { date: date }, { withCredentials: true })
