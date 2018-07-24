@@ -1,4 +1,3 @@
-const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet')
 const FileStore = require('session-file-store')(session);
@@ -8,6 +7,9 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const compression = require('compression');
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 8080;
 
 require('./models/food');
 require('./models/goal');
@@ -16,8 +18,7 @@ require('./models/user');
 const user = require('./routes/user');
 const food = require('./routes/food');
 
-const app = express();
-const port = process.env.PORT || 8080;
+// Helmet middleware
 app.use(helmet());
 
 // CORS middleware
@@ -37,20 +38,18 @@ let sessionObj = {
     unset: 'destroy',
     cookie: { maxAge: 1800000 } // 30 minutes
 };
-// if (app.get('env') === 'production') {
-//     sessionObj.cookie.secure = true; // serve secure cookies
-// }
 app.use(session(sessionObj));
 
-// Body parser middleware to give Express the ability to read JSON payloads from the HTTP request body
+// Body parser middleware
 app.use(bodyParser.json());
 
-// Compress all routes
+// Middleware to compress all routes
 app.use(compression());
 
 // Serves static files from FE build
 app.use(express.static(path.join(__dirname, '../dist')));
 
+// Use these routes
 app.use('/user', user);
 app.use('/food', food);
 
@@ -64,11 +63,6 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on('error', (err) => {
     console.log('Database error: ' + err);
 });
-
-// app.get('*', (req, res) => {
-//     console.log(__dirname);
-//     res.sendFile(path.join(__dirname, '../dist/index.html'));
-// });
 
 // Start server
 app.listen(port, () => {

@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
@@ -22,7 +24,9 @@ export class FoodComponent implements OnInit {
     private foodService: FoodService,
     private searchService: SearchService,
     private spinner: NgxSpinnerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,8 +36,9 @@ export class FoodComponent implements OnInit {
       .subscribe((food: Food) => {
         this.food = food;
       },
-        (err) => {
-          alert('food component' + err); // TODO
+        (err: HttpErrorResponse) => {
+          this.router.navigate(['']);
+          this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
         });
   }
 

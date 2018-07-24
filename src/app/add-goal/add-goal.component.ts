@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -8,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Goal } from './../shared/entities/goal';
 import { ProfileService } from './../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
-import { MatSnackBar } from '../../../node_modules/@angular/material';
 
 @Component({
   selector: 'app-add-goal',

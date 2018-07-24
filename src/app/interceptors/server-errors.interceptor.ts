@@ -7,6 +7,6 @@ import { retry } from '../../../node_modules/rxjs/internal/operators/retry';
 @Injectable()
 export class ServerErrorsInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req).pipe(retry(5));
+        return next.handle(req).pipe(retry(2));
     }
 }

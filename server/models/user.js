@@ -41,17 +41,17 @@ const UserSchema = Schema({
 
 const User = module.exports = mongoose.model('User', UserSchema);
 
-module.exports.getUserById = function (id, callback) {
+module.exports.getUserById = (id, callback) => {
     User.findById(id, callback);
 };
 
-module.exports.getUserByUsername = function (username, callback) {
+module.exports.getUserByUsername = (username, callback) => {
     const query = { username: username };
     User.findOne(query, callback)
         .populate({ path: 'meals.foods._id', model: 'Food' });
 };
 
-module.exports.addUser = function (newUser, callback) {
+module.exports.addUser = (newUser, callback) => {
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) {
@@ -63,7 +63,7 @@ module.exports.addUser = function (newUser, callback) {
     });
 };
 
-module.exports.comparePassword = function (candidatePassword, hash, callback) {
+module.exports.comparePassword = (candidatePassword, hash, callback) => {
     bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
         if (err) {
             throw err;
@@ -73,8 +73,8 @@ module.exports.comparePassword = function (candidatePassword, hash, callback) {
     });
 };
 
-module.exports.addGoal = function (newGoal, user, callback) {
-    var currentGoalDate = user.goals.length ? user.goals[user.goals.length - 1].date.setHours(0, 0, 0, 0) : null;
+module.exports.addGoal = (newGoal, user, callback) => {
+    let currentGoalDate = user.goals.length ? user.goals[user.goals.length - 1].date.setHours(0, 0, 0, 0) : null;
     if (currentGoalDate === new Date().setHours(0, 0, 0, 0)) {
         user.goals.pull(user.goals[user.goals.length - 1]);
     }

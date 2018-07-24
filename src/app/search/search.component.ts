@@ -44,11 +44,4 @@ export class SearchComponent implements OnInit {
       this.submit.emit(form.value.query);
     }
   }
-
-  onAddFood(food: Food): void {
-    this.spinner.show();
-    this.foodService.getFood(food.ndbno)
-      .pipe(finalize(() => this.spinner.hide()))
-      .subscribe(res => { this.dialog.open(AddFoodDialogComponent, { data: res }); });
-  }
 }
