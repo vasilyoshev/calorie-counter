@@ -41,9 +41,9 @@ export class SearchResultsComponent implements OnInit {
     this.spinner.show();
     this.dataSource = new MatTableDataSource(this.results);
     this.dataSource.paginator = this.paginator;
-    this.query = this.searchService.searchQuery;
     this.searchService.search(this.searchQuery$)
       .subscribe((res: any) => {
+        this.query = this.searchService.searchQuery;
         this.results = res.results;
         this.totalResults = res.total;
         this.dataSource.data = this.results;

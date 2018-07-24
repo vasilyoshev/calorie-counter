@@ -1,11 +1,11 @@
 <mat-card>
   <mat-card-content>
-    <mat-card-header>Search results for {{ query }}</mat-card-header>
-    <app-search (submit)="onSearch($event)"></app-search>
+    <mat-card-header>Search results</mat-card-header>
+    <app-search (submit)="onSearch($event)" [placeholder]="query"></app-search>
   </mat-card-content>
 </mat-card>
 
-<mat-card *ngIf="results">
+<mat-card *ngIf="results?.length">
   <mat-card-content>
     <table mat-table [dataSource]="dataSource" *ngIf="results">
       <ng-container matColumnDef="name">
@@ -26,4 +26,8 @@
       (page)="onPaginatorChange($event)"
     ></mat-paginator>
   </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="results?.length === 0">
+  <mat-card-header>No results for {{query}}.</mat-card-header>
 </mat-card>
