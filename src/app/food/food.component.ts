@@ -43,8 +43,6 @@ export class FoodComponent implements OnInit {
   }
 
   openDialog(): void {
-    if (this.food) {
-      this.dialog.open(AddFoodDialogComponent, { data: this.food });
-    } // TODO handle this if
+    this.dialog.open(AddFoodDialogComponent, { data: this.food });
   }
 }
