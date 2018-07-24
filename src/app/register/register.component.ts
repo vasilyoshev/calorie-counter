@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
@@ -16,7 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +39,8 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.registerUser(user).subscribe(() => {
       this.router.navigate(['login']);
-    }, (err: any) => {
+      this.snackBar.open('Registration successful!', 'OK', { duration: 5000 });
+    }, (err: HttpErrorResponse) => {
       if (err.error.emailUsed || err.error.usernameUsed) {
         if (err.error.emailUsed) {
           this.registerForm.controls['email'].setErrors({ 'taken': true });
@@ -45,7 +49,7 @@ export class RegisterComponent implements OnInit {
           this.registerForm.controls['username'].setErrors({ 'taken': true });
         }
       } else {
-        alert('Something went wrong in register component.');
+        this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
       }
     });
   }

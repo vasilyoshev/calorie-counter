@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
@@ -69,11 +70,17 @@ export class AddFoodDialogComponent implements OnInit {
       .subscribe(() => {
         if (form.value.meal === 'Other') {
           this.mealTypes.push(meal);
-          this.profileService.setMealTypes(this.mealTypes).subscribe();
+          this.profileService.setMealTypes(this.mealTypes).subscribe((res: any) => {
+            this.snackBar.open(res.message, 'OK', { duration: 5000 });
+          }, (err: HttpErrorResponse) => {
+            this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+          });
         }
         this.dialogRef.close();
         this.router.navigate(['']);
         this.snackBar.open('Food added to diary!', 'OK', { duration: 5000 });
+      }, (err: HttpErrorResponse) => {
+        this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
       });
   }
 

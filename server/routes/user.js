@@ -20,7 +20,6 @@ router.post('/register', (req, res) => {
             if (user.length) isEmailUsed = true;
             if (isUsernameUsed || isEmailUsed) {
                 return res.status(400).json({
-                    success: false,
                     usernameUsed: isUsernameUsed,
                     emailUsed: isEmailUsed
                 });
@@ -37,8 +36,7 @@ router.post('/register', (req, res) => {
             User.addUser(newUser, (err, user) => {
                 if (err) {
                     res.status(400).json({
-                        success: false,
-                        message: 'Failed to register user'
+                        message: 'Failed to register user.'
                     });
                 } else {
                     fs.readFile('pass.txt', 'utf8', function (err, data) {
@@ -69,8 +67,7 @@ router.post('/register', (req, res) => {
                         });
 
                         res.json({
-                            success: true,
-                            message: 'User registered'
+                            message: 'User registered.'
                         });
                     });
                 }
@@ -79,7 +76,7 @@ router.post('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    req.session.username ? res.status(200).send({ loggedIn: true }) : res.status(200).send({ loggedIn: false });
+    req.session.username ? res.json({ loggedIn: true }) : res.json({ loggedIn: false });
 });
 
 router.post('/login', (req, res) => {
@@ -88,19 +85,25 @@ router.post('/login', (req, res) => {
 
     User.getUserByUsername(username, (err, user) => {
         if (err) {
-            throw err;
+            return res.status(500).json({
+                message: 'Failed to log in.'
+            });
         }
 
         if (!user) {
             return res.status(400).json({
                 success: false,
-                message: 'Authentication failed.'
+                message: 'Username or password is wrong.'
             });
         }
 
         User.comparePassword(password, user.password, (err, isMatch) => {
             if (err) {
-                throw err;
+                if (err) {
+                    return res.status(500).json({
+                        message: 'Failed to log in.'
+                    });
+                }
             }
             if (isMatch) {
                 let userRes = {
@@ -115,13 +118,13 @@ router.post('/login', (req, res) => {
                 if (req.body.remember) {
                     req.session.cookie.maxAge = null;
                 }
-                res.status(200).send({
-                    success: true
+                res.json({
+                    message: 'Logged in successfully.'
                 });
             } else {
                 return res.status(400).json({
                     success: false,
-                    message: 'Authentication failed.'
+                    message: 'Username or password is wrong.'
                 });
             }
         });
@@ -130,11 +133,16 @@ router.post('/login', (req, res) => {
 
 router.get('/logout', (req, res, next) => {
     req.session = null;
-    res.json({ success: true });
+    res.json({ message: 'Logged out successfully.' });
 });
 
 router.get('/profile', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Failed to get profile.'
+            });
+        }
         res.json({
             id: user.id,
             fname: user.fname,
@@ -151,9 +159,8 @@ router.post('/addFood', authMiddleware, (req, res) => {
 
     Food.getFoodByName(req.body.food.name, (err, food) => {
         if (err) {
-            return res.status(400).json({
-                success: false,
-                message: 'Could not get food'
+            return res.status(500).json({
+                message: 'An error occured while adding food.'
             });
         }
 
@@ -167,9 +174,8 @@ router.post('/addFood', authMiddleware, (req, res) => {
             });
             Food.createFood(food, (err, food) => {
                 if (err) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'Failed to add food'
+                    return res.status(500).json({
+                        message: 'An error occured while adding food.'
                     });
                 }
             });
@@ -192,14 +198,12 @@ router.post('/addFood', authMiddleware, (req, res) => {
                     if (meal.type === req.body.type) {
                         User.addFood(food, req.body.quantity, i, user, (err, user) => {
                             if (err) {
-                                return res.status(400).json({
-                                    success: false,
-                                    message: 'Failed to add food'
+                                return res.status(500).json({
+                                    message: 'An error occured while adding food.'
                                 });
                             } else {
                                 return res.json({
-                                    success: true,
-                                    message: 'Food added'
+                                    message: 'Food added.'
                                 });
                             }
                         });
@@ -219,14 +223,12 @@ router.post('/addFood', authMiddleware, (req, res) => {
 
             User.addMeal(meal, user, (err, user) => {
                 if (err) {
-                    return res.status(400).json({
-                        success: false,
-                        message: 'Failed to add meal'
+                    return res.status(500).json({
+                        message: 'An error occured while adding meal.'
                     });
                 } else {
                     return res.json({
-                        success: true,
-                        message: 'Meal added'
+                        message: 'Meal added.'
                     });
                 }
             });
@@ -237,9 +239,8 @@ router.post('/addFood', authMiddleware, (req, res) => {
 router.post('/set-goal', authMiddleware, (req, res) => {
     User.getUserByUsername(req.body.username, (err, user) => {
         if (err) {
-            return res.status(400).json({
-                success: false,
-                message: 'Failed to get user'
+            return res.status(500).json({
+                message: 'Failed to get user.'
             });
         }
 
@@ -252,12 +253,12 @@ router.post('/set-goal', authMiddleware, (req, res) => {
 
         User.addGoal(newGoal, user, (err, user) => {
             if (err) {
-                return res.status(400).json({
-                    message: 'Failed to add goal'
+                return res.status(500).json({
+                    message: 'Failed to add goal.'
                 });
             } else {
                 return res.json({
-                    message: 'Goal added',
+                    message: 'Goal added.',
                     goal: user.goals[user.goals.length - 1]
                 });
             }
@@ -268,9 +269,8 @@ router.post('/set-goal', authMiddleware, (req, res) => {
 router.post('/get-day', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         if (err) {
-            return res.status(400).json({
-                success: false,
-                message: 'Failed to get user'
+            return res.status(500).json({
+                message: 'Failed to get day.'
             });
         }
 
@@ -353,16 +353,20 @@ router.post('/get-day', authMiddleware, (req, res) => {
 
 router.post('/set-meal-types', authMiddleware, (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Failed to set meal types.'
+            });
+        }
         user.mealTypes = req.body.mealTypes;
         user.save((err, user) => {
             if (err) {
-                res.status(400).json({
-                    success: false,
-                    message: 'Falied to set meal types'
+                res.status(500).json({
+                    message: 'Falied to set meal types.'
                 });
             } else {
                 res.json({
-                    success: true
+                    message: 'Meal types updated.'
                 });
             }
         });

@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -16,22 +17,23 @@ export class AppComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private profileService: ProfileService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.spinner.show();
     this.loginService.isLoggedIn()
       .subscribe(res => {
-        if (res) {
+        if (res.loggedIn) {
           this.profileService.getProfile()
             .pipe(finalize(() => this.spinner.hide()))
             .subscribe();
         } else {
           this.spinner.hide();
         }
-      }, (err) => {
-        alert('app component err ' + err); // TODO
+      }, () => {
+        this.snackBar.open('Something went wrong!', 'OK', { duration: 5000 });
       });
   }
 }

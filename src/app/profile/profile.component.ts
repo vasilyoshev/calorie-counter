@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatSnackBar } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
@@ -19,7 +21,8 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     public profileService: ProfileService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +38,11 @@ export class ProfileComponent implements OnInit {
       this.spinner.show();
       this.mealTypes.push(value);
       this.profileService.setMealTypes(this.mealTypes)
-        .pipe(finalize(() => this.spinner.hide())).subscribe();
+        .pipe(finalize(() => this.spinner.hide())).subscribe((res: any) => {
+          this.snackBar.open(res.message, 'OK', { duration: 5000 });
+        }, (err: HttpErrorResponse) => {
+          this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+        });
     }
 
     // Reset the input value
@@ -51,7 +58,11 @@ export class ProfileComponent implements OnInit {
     if (index >= 0) {
       this.mealTypes.splice(index, 1);
       this.profileService.setMealTypes(this.mealTypes)
-        .pipe(finalize(() => this.spinner.hide())).subscribe();
+        .pipe(finalize(() => this.spinner.hide())).subscribe((res: any) => {
+          this.snackBar.open(res.message, 'OK', { duration: 5000 });
+        }, (err: HttpErrorResponse) => {
+          this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+        });
     }
   }
 }

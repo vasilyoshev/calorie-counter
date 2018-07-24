@@ -1,3 +1,5 @@
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -25,7 +27,8 @@ export class LoginComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private snackBar: MatSnackBar
   ) {
     this.wrongCredentials = false;
     this.shouldRemember = false;
@@ -54,12 +57,10 @@ export class LoginComponent implements OnInit {
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe(() => {
           this.router.navigate(['']);
-        }, (err) => {
-          console.log(err);
         });
-    }, (err: any) => {
+    }, (err: HttpErrorResponse) => {
       this.loginService.loggedIn = false;
-      this.wrongCredentials = true;
+      this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
     });
   }
 }

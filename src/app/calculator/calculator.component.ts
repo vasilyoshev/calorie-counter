@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Goal } from './../shared/entities/goal';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
@@ -104,9 +105,9 @@ export class CalculatorComponent implements OnInit {
       .subscribe((data: any) => {
         this.profileService.user.goal = data.goal;
         this.router.navigate(['']);
-        this.snackBar.open('Goal added!', 'OK', { duration: 5000 });
-      }, (err: any) => {
-        this.snackBar.open('Something went wrong.', 'OK');
+        this.snackBar.open(data.message, 'OK', { duration: 5000 });
+      }, (err: HttpErrorResponse) => {
+        this.snackBar.open(err.error.message, 'OK');
       });
   }
 }

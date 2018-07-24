@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
 import { Observable, throwError, of } from 'rxjs';
 import { retryWhen, mergeMap } from 'rxjs/operators';
 
+/**
+ * Retry server errors (status code 500) 5 times before continuing.
+ */
 @Injectable()
 export class ServerErrorsInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

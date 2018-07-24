@@ -71,7 +71,7 @@ router.post('/search', authMiddleware, (req, res) => {
             }
         } else {
             res.status(500).json({
-                message: 'An error has occured.'
+                message: 'An error occured.'
             })
         }
     })

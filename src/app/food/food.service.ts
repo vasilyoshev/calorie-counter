@@ -24,7 +24,6 @@ export class FoodService {
   }
 
   addToDiary(food: Food, quantity: number, type: string, date: Date): Observable<any> {
-    // const date = new Date();
     return this.http.post('user/addFood', { food: food, quantity: quantity, type: type, date: date }, { withCredentials: true });
   }
 }

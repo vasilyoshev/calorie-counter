@@ -59,8 +59,6 @@ export class DiaryComponent implements OnInit {
 
         this.date = newDate;
         this.diaryService.currentDate = this.date;
-      }, (err) => {
-        // TODO handle expired session
       });
   }
 }
