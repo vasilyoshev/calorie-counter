@@ -109,9 +109,9 @@ import { environment } from '../environments/environment';
     CalculatorService,
     AuthGuard,
     LoggedOutGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }
   ],
   entryComponents: [
     AddFoodDialogComponent

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { tap, map, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { LoginService } from './../login/login.service';
 
@@ -21,8 +21,7 @@ export class SessionInterceptor implements HttpInterceptor {
         return next
             .handle(req).pipe(
                 catchError((response: HttpEvent<any>) => {
-                    if (response instanceof HttpErrorResponse && response.error
-                        && response.error.message === 'You must be logged in.') {
+                    if (response instanceof HttpErrorResponse && response.status === 403) {
                         this.loginService.loggedIn = false;
                         this.router.navigate(['']); // TODO add session expired screen
                         this.snackBar.open('You must be logged in!', 'OK', { duration: 5000 });
