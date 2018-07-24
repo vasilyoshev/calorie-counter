@@ -12,6 +12,7 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+import { ServerErrorsInterceptor } from './interceptors/server-errors.interceptor';
 import { CalculatorService } from './calculator/calculator.service';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { SearchService } from './search/search.service';
@@ -108,6 +109,7 @@ import { environment } from '../environments/environment';
     CalculatorService,
     AuthGuard,
     LoggedOutGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true }
   ],
