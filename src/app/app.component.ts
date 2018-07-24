@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
         }
       }, () => {
         this.snackBar.open('Something went wrong!', 'OK', { duration: 5000 });
+        this.spinner.hide();
       });
   }
 }
