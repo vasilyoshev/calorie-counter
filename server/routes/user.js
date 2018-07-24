@@ -9,24 +9,24 @@ const Food = require('../models/food');
 const router = express.Router();
 
 router.post('/register', (req, res) => {
-    let usernameUsed;
-    let emailUsed;
-    User.find({ username: req.body.username }, (err, user) => {
-        if (user.length) usernameUsed = true;
-
-        User.find({ email: req.body.email }, (err, user) => {
-            if (user.length) emailUsed = true;
-            else emailUsed = false;
-
-            if (usernameUsed || emailUsed) {
+    let isUsernameUsed = false;
+    let isEmailUsed = false;
+    let newUser;
+    User.find({ username: req.body.username }).exec()
+        .then((user) => {
+            if (user.length) isUsernameUsed = true;
+            return User.find({ email: req.body.email }).exec()
+        }).then((user) => {
+            if (user.length) isEmailUsed = true;
+            if (isUsernameUsed || isEmailUsed) {
                 return res.status(400).json({
                     success: false,
-                    usernameUsed: usernameUsed,
-                    emailUsed: emailUsed
+                    usernameUsed: isUsernameUsed,
+                    emailUsed: isEmailUsed
                 });
             }
 
-            let newUser = new User({
+            newUser = new User({
                 fname: req.body.fname,
                 lname: req.body.lname,
                 email: req.body.email,
@@ -34,7 +34,6 @@ router.post('/register', (req, res) => {
                 password: req.body.password,
                 role: "user"
             });
-
             User.addUser(newUser, (err, user) => {
                 if (err) {
                     res.status(400).json({
@@ -77,7 +76,6 @@ router.post('/register', (req, res) => {
                 }
             });
         });
-    });
 });
 
 router.get('/login', (req, res) => {
