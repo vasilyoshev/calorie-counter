@@ -1,4 +1,4 @@
-<app-add-goal *ngIf="!hasGoal"></app-add-goal>
+<app-add-goal *ngIf="!hasGoal" (addGoal)="hasGoal = true"></app-add-goal>
 
 <mat-card>
   <mat-card-header class="card-header">

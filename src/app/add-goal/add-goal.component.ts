@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,6 +19,7 @@ import { AddGoalService } from './add-goal.service';
 export class AddGoalComponent implements OnInit {
 
   addGoalForm: FormGroup;
+  @Output() addGoal = new EventEmitter();
 
   /** Returns a FormArray with the name 'formArray'. */
   get formArray(): AbstractControl | null { return this.addGoalForm.get('formArray'); }
@@ -56,6 +57,7 @@ export class AddGoalComponent implements OnInit {
         this.profileService.user.goal = data.goal;
         this.router.navigate(['']);
         this.snackBar.open(data.message, 'OK', { duration: 5000 });
+        this.addGoal.emit();
       }, (err: HttpErrorResponse) => {
         this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
       });
