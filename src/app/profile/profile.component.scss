@@ -14,4 +14,6 @@ mat-form-field {
 
 .info {
     font-weight: 600;
+    overflow-wrap: break-word;
+    overflow: auto;
 }
