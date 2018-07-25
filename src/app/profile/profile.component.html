@@ -1,24 +1,61 @@
 <mat-card>
+  <mat-card-header>
+    About
+  </mat-card-header>
   <mat-card-content>
-    <mat-list role="list">
-      <mat-list-item role="listitem">Name: {{profileService.user?.fname + " " + profileService.user?.lname}}</mat-list-item>
-      <mat-list-item role="listitem">Username: {{profileService.user?.username}}</mat-list-item>
-      <mat-list-item role="listitem">Email: {{profileService.user?.email}}</mat-list-item>
-      <mat-list-item role="listitem">
-        Goal: {{profileService.user.goal.calories}} calories, {{profileService.user.goal.protein}} protein, {{profileService.user.goal.carbs}}
-        carbs, {{profileService.user.goal.fat}} fat
-      </mat-list-item>
-    </mat-list>
+    <div class="info-container">
+      <span>Name</span>
+      <span class="info">{{profileService.user?.fname + " " + profileService.user?.lname}}</span>
+    </div>
+    <mat-divider [inset]="true"></mat-divider>
+    <div class="info-container">
+      <span>Username</span>
+      <span class="info">{{profileService.user?.username}}</span>
+    </div>
+    <mat-divider [inset]="true"></mat-divider>
+    <div class="info-container">
+      <span>Email</span>
+      <span class="info">{{profileService.user?.email}}</span>
+    </div>
   </mat-card-content>
 </mat-card>
 
 <mat-card>
+  <mat-card-header>
+    Goal
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="calories">
+        <th mat-header-cell *matHeaderCellDef>Calories</th>
+        <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+      </ng-container>
+      <ng-container matColumnDef="protein">
+        <th mat-header-cell *matHeaderCellDef>Protein</th>
+        <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
+      </ng-container>
+      <ng-container matColumnDef="carbs">
+        <th mat-header-cell *matHeaderCellDef>Carbs</th>
+        <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
+      </ng-container>
+      <ng-container matColumnDef="fat">
+        <th mat-header-cell *matHeaderCellDef>Fat</th>
+        <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+    <mat-card-header>
+        Meal Types
+      </mat-card-header>
   <mat-card-content>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Add meal type"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="addType($event)">
+      <input matInput placeholder="Add meal type" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="addType($event)">
     </mat-form-field>
     <mat-chip-list #chipList>
       <mat-chip *ngFor="let mealType of mealTypes" [selectable]="selectable" [removable]="true" (removed)="removeType(mealType)">

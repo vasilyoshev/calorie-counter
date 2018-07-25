@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import {
   MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule,
   MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule, MatIconModule, MatTableModule,
-  MatListModule, MatExpansionModule, MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule,
+  MatExpansionModule, MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule,
   MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
 } from '@angular/material';
 
@@ -84,7 +84,6 @@ import { environment } from '../environments/environment';
     MatStepperModule,
     MatIconModule,
     MatTableModule,
-    MatListModule,
     MatExpansionModule,
     MatGridListModule,
     MatDialogModule,

@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatTableDataSource } from '@angular/material';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
@@ -19,6 +19,9 @@ export class ProfileComponent implements OnInit {
   mealTypes: Array<string>;
   readonly separatorKeysCodes: Array<number> = [ENTER, COMMA];
 
+  dataSource: MatTableDataSource<any>;
+  displayedColumns = ['calories', 'protein', 'carbs', 'fat'];
+
   constructor(
     public profileService: ProfileService,
     private spinner: NgxSpinnerService,
@@ -27,6 +30,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.mealTypes = this.profileService.user.mealTypes;
+    this.dataSource = new MatTableDataSource([{
+      calories: this.profileService.user.goal.calories,
+      protein: this.profileService.user.goal.protein,
+      carbs: this.profileService.user.goal.carbs,
+      fat: this.profileService.user.goal.fat
+    }]);
   }
 
   addType(event: MatChipInputEvent): void {

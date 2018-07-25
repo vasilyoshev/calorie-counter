@@ -5,3 +5,13 @@ mat-card-title {
 mat-form-field {
     width: 100%;
 }
+
+.info-container {
+    margin: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    font-weight: 600;
+}
