@@ -73,13 +73,11 @@ export class SearchResultsComponent implements OnInit {
   }
 
   onSearch(query: any): void {
-    if (!(query instanceof Event)) { // fix bug where event is fired twice TODO
-      this.searchQuery$.next({
-        term: query,
-        offset: this.offset,
-        pageSize: this.pageSize
-      });
-    }
+    this.searchQuery$.next({
+      term: query,
+      offset: this.offset,
+      pageSize: this.pageSize
+    });
   }
 
   goToFood(food: Food): void {

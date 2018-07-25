@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
 
   searchForm: FormGroup;
   results: Array<Food>;
-  @Output() submit = new EventEmitter<string>();
+  @Output() search = new EventEmitter<string>();
   @Input() placeholder: string;
 
   constructor(
@@ -33,7 +33,7 @@ export class SearchComponent implements OnInit {
     if (form.value.query) {
       this.searchService.searchQuery = form.value.query;
       this.router.navigate(['search', form.value.query]);
-      this.submit.emit(form.value.query);
+      this.search.emit(form.value.query);
     }
   }
 }
