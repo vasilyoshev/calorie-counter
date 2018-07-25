@@ -23,19 +23,21 @@ export class ProfileComponent implements OnInit {
   displayedColumns = ['calories', 'protein', 'carbs', 'fat'];
 
   constructor(
-    public profileService: ProfileService,
+    private profileService: ProfileService,
     private spinner: NgxSpinnerService,
     private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     this.mealTypes = this.profileService.user.mealTypes;
-    this.dataSource = new MatTableDataSource([{
-      calories: this.profileService.user.goal.calories,
-      protein: this.profileService.user.goal.protein,
-      carbs: this.profileService.user.goal.carbs,
-      fat: this.profileService.user.goal.fat
-    }]);
+    if (this.profileService.user.goal.calories) {
+      this.dataSource = new MatTableDataSource([{
+        calories: this.profileService.user.goal.calories,
+        protein: this.profileService.user.goal.protein,
+        carbs: this.profileService.user.goal.carbs,
+        fat: this.profileService.user.goal.fat
+      }]);
+    }
   }
 
   addType(event: MatChipInputEvent): void {
