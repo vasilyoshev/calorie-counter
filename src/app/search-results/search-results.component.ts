@@ -20,7 +20,6 @@ export class SearchResultsComponent implements OnInit {
   results: Array<Food>;
   pageSize: number;
   totalResults: number;
-  offset: number;
   searchQuery$ = new Subject<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -34,13 +33,13 @@ export class SearchResultsComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {
     this.pageSize = 25;
-    this.offset = 0;
   }
 
   ngOnInit(): void {
     this.spinner.show();
-    this.dataSource = new MatTableDataSource(this.results);
+    this.dataSource = new MatTableDataSource();
     this.dataSource.paginator = this.paginator;
+    this.query = this.searchService.searchQuery;
     this.searchService.search(this.searchQuery$)
       .subscribe((res: any) => {
         this.query = this.searchService.searchQuery;
@@ -56,26 +55,28 @@ export class SearchResultsComponent implements OnInit {
 
     this.searchQuery$.next({
       term: this.query,
-      offset: this.offset,
+      offset: 0,
       pageSize: this.pageSize
     });
   }
 
   onPaginatorChange(event: PageEvent): void {
     this.spinner.show();
-    this.offset = this.pageSize * event.pageIndex;
     this.pageSize = event.pageSize;
     this.searchQuery$.next({
       term: this.query,
-      offset: this.offset,
+      offset: this.pageSize * event.pageIndex,
       pageSize: this.pageSize
     });
   }
 
   onSearch(query: any): void {
+    if (this.paginator) { // when searching after previous no results page
+      this.paginator.pageIndex = 0;
+    }
     this.searchQuery$.next({
       term: query,
-      offset: this.offset,
+      offset: 0,
       pageSize: this.pageSize
     });
   }
