@@ -1,0 +1,15 @@
+.info-container {
+    margin: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info {
+    font-weight: 600;
+    overflow-wrap: break-word;
+    overflow: auto;
+}
+
+button {
+    width: 100%;
+}

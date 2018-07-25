@@ -4,10 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import {
-  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatMenuModule,
-  MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule, MatIconModule, MatTableModule,
-  MatExpansionModule, MatGridListModule, MatDialogModule, MatSelectModule, MatChipsModule,
-  MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
+  MatToolbarModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule,
+  MatMenuModule, MatCheckboxModule, MatSliderModule, MatDividerModule, MatStepperModule,
+  MatIconModule, MatTableModule, MatExpansionModule, MatDialogModule, MatSelectModule,
+  MatChipsModule, MatDatepickerModule, MatNativeDateModule, MatPaginatorModule, MatSnackBarModule
 } from '@angular/material';
 
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -85,7 +85,6 @@ import { environment } from '../environments/environment';
     MatIconModule,
     MatTableModule,
     MatExpansionModule,
-    MatGridListModule,
     MatDialogModule,
     MatSelectModule,
     MatChipsModule,
