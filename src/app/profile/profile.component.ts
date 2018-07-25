@@ -16,11 +16,16 @@ import { ProfileService } from './profile.service';
 })
 export class ProfileComponent implements OnInit {
 
-  mealTypes: Array<string>;
-  readonly separatorKeysCodes: Array<number> = [ENTER, COMMA];
+  name: string;
+  username: string;
+  email: string;
 
   dataSource: MatTableDataSource<any>;
   displayedColumns = ['calories', 'protein', 'carbs', 'fat'];
+
+  mealTypes: Array<string>;
+  readonly separatorKeysCodes: Array<number> = [ENTER, COMMA];
+
 
   constructor(
     private profileService: ProfileService,
@@ -29,6 +34,10 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.name = this.profileService.user.fname + ' ' + this.profileService.user.lname;
+    this.username = this.profileService.user.username;
+    this.email = this.profileService.user.email;
+
     this.mealTypes = this.profileService.user.mealTypes;
     if (this.profileService.user.goal.calories) {
       this.dataSource = new MatTableDataSource([{
