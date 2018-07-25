@@ -1,4 +1,4 @@
-<div>
+<div class="time-container">
   <mat-form-field appearance="outline">
     <mat-select placeholder="Hour" [(value)]="hour" (selectionChange)="emitTime()">
       <mat-option *ngFor="let hr of hours" value="{{hr}}">

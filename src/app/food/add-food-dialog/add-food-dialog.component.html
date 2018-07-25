@@ -6,7 +6,7 @@
       Quantity is required
     </mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-select placeholder="Meal" [(value)]="selectedMeal" formControlName="meal" (selectionChange)="otherSelected = selectedMeal === 'Other'">
       <mat-option *ngFor="let mealType of mealTypes" value="{{mealType}}">{{mealType}}</mat-option>
       <mat-option value="Other">Other</mat-option>
@@ -16,7 +16,9 @@
     <input matInput placeholder="Add meal type" formControlName="other">
     <mat-error *ngIf="addFoodForm.get('other')?.hasError('required')">This field is required</mat-error>
   </mat-form-field>
-  <app-calendar [date]="date" (dateChange)="date = $event"></app-calendar>
-  <app-time-picker (timeChange)="changeTime($event.hour, $event.minute)"></app-time-picker>
+  <div class="date-time-container">
+    <app-calendar [date]="date" (dateChange)="date = $event"></app-calendar>
+    <app-time-picker (timeChange)="changeTime($event.hour, $event.minute)"></app-time-picker>
+  </div>
   <button mat-raised-button type="submit" class="submit" color="primary">Add Food</button>
 </form>
