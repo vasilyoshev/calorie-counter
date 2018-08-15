@@ -106,13 +106,6 @@ router.post('/login', (req, res) => {
                 }
             }
             if (isMatch) {
-                let userRes = {
-                    id: user._id,
-                    name: user.fname + " " + user.lname,
-                    username: user.username,
-                    email: user.email,
-                    goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
-                }
                 req.session.username = user.username;
                 if (req.body.remember) {
                     req.session.cookie.maxAge = null;
@@ -130,7 +123,7 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.get('/logout', (req, res, next) => {
+router.get('/logout', (req, res) => {
     req.session = null;
     res.json({ message: 'Logged out successfully.' });
 });
