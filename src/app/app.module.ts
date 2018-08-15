@@ -44,6 +44,7 @@ import { LoginService } from './login/login.service';
 import { FoodComponent } from './food/food.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ScrollToDirective } from './shared/scroll-to.directive';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { environment } from '../environments/environment';
     AddFoodDialogComponent,
     CalendarComponent,
     TimePickerComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    ScrollToDirective
   ],
   imports: [
     BrowserModule,
