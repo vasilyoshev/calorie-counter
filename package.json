@@ -8,7 +8,7 @@
     "start": "node server/app",
     "ng": "ng",
     "build": "ng build --prod",
-    "test": "ng test && mocha",
+    "test": "ng test && mocha server/**/*.js -R nyan --exit",
     "test-client": "ng test",
     "test-server": "mocha server/**/*.js -R nyan --exit",
     "test-server-coverage": "istanbul cover node_modules/mocha/bin/_mocha server/**/*.js -- -R nyan --exit",

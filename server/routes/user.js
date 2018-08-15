@@ -114,7 +114,6 @@ router.post('/login', (req, res) => {
                     goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
                 }
                 req.session.username = user.username;
-                req.session.views = 1;
                 if (req.body.remember) {
                     req.session.cookie.maxAge = null;
                 }
