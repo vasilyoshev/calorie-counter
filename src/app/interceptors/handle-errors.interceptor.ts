@@ -44,7 +44,7 @@ export class HandleErrorsInterceptor implements HttpInterceptor {
                     });
                     break;
                 default:
-                    this.snackBar.open('Something went wrong.', 'OK', { duration: 5000 });
+                    this.snackBar.open(err.status, 'OK', { duration: 5000 });
             }
             // rethrow error to be handled by other interceptors or components in spacific cases
             return throwError(err);
