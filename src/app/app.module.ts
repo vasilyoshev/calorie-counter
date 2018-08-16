@@ -38,7 +38,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoggedOutGuard } from './guards/logged-out.guard';
 import { BaseUrlInterceptor } from './interceptors/base-url.interceptor';
-import { SessionInterceptor } from './interceptors/session.interceptor';
 import { RegisterService } from './register/register.service';
 import { LoginService } from './login/login.service';
 import { FoodComponent } from './food/food.component';
@@ -108,7 +107,6 @@ import { HandleErrorsInterceptor } from './interceptors/handle-errors.intercepto
     CalculatorService,
     AuthGuard,
     LoggedOutGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: HandleErrorsInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: RetryErrorsInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }

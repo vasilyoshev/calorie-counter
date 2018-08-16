@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -58,9 +57,8 @@ export class LoginComponent implements OnInit {
         .subscribe(() => {
           this.router.navigate(['']);
         });
-    }, (err: HttpErrorResponse) => {
+    }, () => {
       this.loginService.loggedIn = false;
-      this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
     });
   }
 }

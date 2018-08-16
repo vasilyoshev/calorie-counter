@@ -41,15 +41,11 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['login']);
       this.snackBar.open('Registration successful!', 'OK', { duration: 5000 });
     }, (err: HttpErrorResponse) => {
-      if (err.error.emailUsed || err.error.usernameUsed) {
-        if (err.error.emailUsed) {
-          this.registerForm.controls['email'].setErrors({ 'taken': true });
-        }
-        if (err.error.usernameUsed) {
-          this.registerForm.controls['username'].setErrors({ 'taken': true });
-        }
-      } else {
-        this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+      if (err.error.emailUsed) {
+        this.registerForm.controls['email'].setErrors({ 'taken': true });
+      }
+      if (err.error.usernameUsed) {
+        this.registerForm.controls['username'].setErrors({ 'taken': true });
       }
     });
   }

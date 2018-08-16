@@ -21,7 +21,8 @@ router.post('/register', (req, res) => {
             if (isUsernameUsed || isEmailUsed) {
                 return res.status(400).json({
                     usernameUsed: isUsernameUsed,
-                    emailUsed: isEmailUsed
+                    emailUsed: isEmailUsed,
+                    message: 'Username/e-mail is taken.'
                 });
             }
 
@@ -92,7 +93,6 @@ router.post('/login', (req, res) => {
 
         if (!user) {
             return res.status(400).json({
-                success: false,
                 message: 'Username or password is wrong.'
             });
         }
@@ -115,7 +115,6 @@ router.post('/login', (req, res) => {
                 });
             } else {
                 return res.status(400).json({
-                    success: false,
                     message: 'Username or password is wrong.'
                 });
             }

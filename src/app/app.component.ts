@@ -1,5 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -19,7 +17,6 @@ export class AppComponent implements OnInit {
     private loginService: LoginService,
     private profileService: ProfileService,
     private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {

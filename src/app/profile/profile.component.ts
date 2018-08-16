@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -58,11 +57,8 @@ export class ProfileComponent implements OnInit {
       this.spinner.show();
       this.mealTypes.push(value);
       this.profileService.setMealTypes(this.mealTypes)
-        .pipe(finalize(() => this.spinner.hide())).subscribe((res: any) => {
-          this.snackBar.open(res.message, 'OK', { duration: 5000 });
-        }, (err: HttpErrorResponse) => {
-          this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
-        });
+        .pipe(finalize(() => this.spinner.hide()))
+        .subscribe((res: any) => this.snackBar.open(res.message, 'OK', { duration: 5000 }));
     }
 
     // Reset the input value
@@ -80,8 +76,6 @@ export class ProfileComponent implements OnInit {
       this.profileService.setMealTypes(this.mealTypes)
         .pipe(finalize(() => this.spinner.hide())).subscribe((res: any) => {
           this.snackBar.open(res.message, 'OK', { duration: 5000 });
-        }, (err: HttpErrorResponse) => {
-          this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
         });
     }
   }

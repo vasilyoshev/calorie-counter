@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl } from '@angular/forms';
@@ -58,8 +57,6 @@ export class AddGoalComponent implements OnInit {
         this.router.navigate(['']);
         this.snackBar.open(data.message, 'OK', { duration: 5000 });
         this.addGoal.emit();
-      }, (err: HttpErrorResponse) => {
-        this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
       });
   }
 
