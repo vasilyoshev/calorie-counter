@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { map } from 'rxjs/internal/operators/map';
 import { tap } from 'rxjs/internal/operators/tap';
-import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 import { User } from '../shared/entities/user';
 
@@ -26,17 +27,25 @@ export class ProfileService {
   }
 
   addMealType(type: string): Observable<any> {
-    return this.setMealTypes().pipe(tap(() => {
-      this.user.mealTypes.push(type);
-    }));
-  }
-
-  removeMealType(type: string): Observable<any> {
-    return this.setMealTypes().pipe(tap(() => {
+    this.user.mealTypes.push(type);
+    return this.setMealTypes().pipe(catchError((err: any) => {
       const index = this.user.mealTypes.indexOf(type);
       if (index >= 0) {
         this.user.mealTypes.splice(index, 1);
       }
+      return throwError(err);
+    }));
+  }
+
+  removeMealType(type: string): Observable<any> {
+    const index = this.user.mealTypes.indexOf(type);
+    if (index >= 0) {
+      this.user.mealTypes.splice(index, 1);
+    }
+
+    return this.setMealTypes().pipe(catchError((err: any) => {
+      this.user.mealTypes.push(type);
+      return throwError(err);
     }));
   }
 

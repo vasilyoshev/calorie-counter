@@ -68,8 +68,7 @@ export class AddFoodDialogComponent implements OnInit {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         if (form.value.meal === 'Other') {
-          this.mealTypes.push(meal);
-          this.profileService.setMealTypes(this.mealTypes).subscribe((res: any) => {
+          this.profileService.addMealType(meal).subscribe((res: any) => {
             this.snackBar.open(res.message, 'OK', { duration: 5000 });
           });
         }
