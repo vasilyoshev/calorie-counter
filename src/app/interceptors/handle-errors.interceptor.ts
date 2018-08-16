@@ -25,23 +25,28 @@ export class HandleErrorsInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(catchError((err) => {
             this.spinner.hide();
-            if (err.status === 500) {
-                this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
-            } else if (err.status === 504) {
-                const snackRef = this.snackBar.open('You are offline.', 'Retry');
-                snackRef.onAction().subscribe(() => location.reload());
-            } else if (err.status === 403) {
-                this.loginService.loggedIn = false;
-                this.router.navigate(['']);
-                const snackRef = this.snackBar.open('Your session has expired!', 'OK');
-                // Dismiss snackbar on navigation
-                const routerSub = this.router.events.subscribe(() => {
-                    snackRef.dismiss();
-                    routerSub.unsubscribe();
-                });
-            } else {
-                this.snackBar.open('Something went wrong.', 'OK', { duration: 5000 });
+            switch (err.status) {
+                case 500:
+                    this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+                    break;
+                case 504:
+                    const offlineSnackRef = this.snackBar.open('You are offline.', 'Retry');
+                    offlineSnackRef.onAction().subscribe(() => location.reload());
+                    break;
+                case 403:
+                    this.loginService.loggedIn = false;
+                    this.router.navigate(['']);
+                    const sessionSnackRef = this.snackBar.open('Your session has expired!', 'OK');
+                    // Dismiss snackbar on navigation
+                    const routerSub = this.router.events.subscribe(() => {
+                        sessionSnackRef.dismiss();
+                        routerSub.unsubscribe();
+                    });
+                    break;
+                default:
+                    this.snackBar.open('Something went wrong.', 'OK', { duration: 5000 });
             }
+            // rethrow error to be handled by other interceptors or components in spacific cases
             return throwError(err);
         }));
     }
