@@ -4,10 +4,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs/internal/operators/finalize';
 
-import { ProfileService } from './../../profile/profile.service';
+import { ProfileService } from '../../profile/profile.service';
 import { DiaryService } from './diary.service';
-import { DiaryTableData } from './../../shared/entities/diary-table-data';
-import { Meal } from './../../shared/entities/meal';
+import { DiaryTableData } from '../../shared/entities/diary-table-data';
+import { Meal } from '../../shared/entities/meal';
 
 @Component({
   selector: 'app-diary',
@@ -30,12 +30,9 @@ export class DiaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.hasGoal = Object.keys(this.profileService.user.goal).length !== 0;
-
-    if (!this.diaryService.currentDate) {
-      this.diaryService.currentDate = new Date();
-    }
     this.date = this.diaryService.currentDate;
-
+    this.summary = this.diaryService.summary;
+    this.meals = this.diaryService.meals;
     this.getDay(new Date());
   }
 
@@ -51,14 +48,12 @@ export class DiaryComponent implements OnInit {
         this.meals = this.diaryService.meals;
 
         let newDate = new Date(this.date);
-        if (date instanceof Date) { // to avoid ts error
+        if (date instanceof Date) { // to avoid ts error "does not exist on type 'number'"
           newDate = new Date(newDate.setDate(date.getDate()));
           newDate = new Date(newDate.setMonth(date.getMonth()));
           newDate = new Date(newDate.setFullYear(date.getFullYear()));
         }
-
-        this.date = newDate;
-        this.diaryService.currentDate = this.date;
+        this.diaryService.currentDate = this.date = newDate;
       });
   }
 }

@@ -12,7 +12,7 @@ import {
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
-import { ServerErrorsInterceptor } from './interceptors/server-errors.interceptor';
+import { RetryErrorsInterceptor } from './interceptors/retry-errors.interceptor';
 import { CalculatorService } from './calculator/calculator.service';
 import { CalculatorComponent } from './calculator/calculator.component';
 import { SearchService } from './search/search.service';
@@ -45,6 +45,7 @@ import { FoodComponent } from './food/food.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ScrollToDirective } from './shared/scroll-to.directive';
+import { HandleErrorsInterceptor } from './interceptors/handle-errors.interceptor';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { ScrollToDirective } from './shared/scroll-to.directive';
     AuthGuard,
     LoggedOutGuard,
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorsInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HandleErrorsInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: RetryErrorsInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true }
   ],
   entryComponents: [

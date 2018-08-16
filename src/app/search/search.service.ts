@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
 import { map } from 'rxjs/internal/operators/map';
 
-import { Food } from './../shared/entities/food';
-import { SearchResult } from './../shared/entities/SearchResult';
+import { Food } from '../shared/entities/food';
+import { SearchResult } from '../shared/entities/SearchResult';
 
 @Injectable({
   providedIn: 'root'

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 
@@ -23,6 +24,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.spinner.show();
+    this.checkIfLoggedIn();
+  }
+
+  checkIfLoggedIn() {
     this.loginService.isLoggedIn()
       .subscribe(res => {
         if (res) {
@@ -32,12 +37,6 @@ export class AppComponent implements OnInit {
         } else {
           this.spinner.hide();
         }
-      }, () => {
-        this.snackBar.open('Something went wrong!', 'OK', {
-          duration: 5000,
-          horizontalPosition: 'start'
-        });
-        this.spinner.hide();
       });
   }
 }

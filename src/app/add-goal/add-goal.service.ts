@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Goal } from './../shared/entities/goal';
+import { Goal } from '../shared/entities/goal';
 
 @Injectable({
   providedIn: 'root'

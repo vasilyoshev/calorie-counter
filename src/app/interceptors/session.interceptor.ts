@@ -6,7 +6,7 @@ import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { LoginService } from './../login/login.service';
+import { LoginService } from '../login/login.service';
 
 @Injectable()
 export class SessionInterceptor implements HttpInterceptor {

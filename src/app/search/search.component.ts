@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import { SearchService } from './search.service';
-import { Food } from './../shared/entities/food';
+import { Food } from '../shared/entities/food';
 
 @Component({
   selector: 'app-search',

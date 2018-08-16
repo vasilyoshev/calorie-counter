@@ -7,8 +7,8 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { Goal } from './../shared/entities/goal';
-import { ProfileService } from './../profile/profile.service';
+import { Goal } from '../shared/entities/goal';
+import { ProfileService } from '../profile/profile.service';
 import { AddGoalService } from './add-goal.service';
 
 @Component({

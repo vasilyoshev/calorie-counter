@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Goal } from './../shared/entities/goal';
+import { Goal } from '../shared/entities/goal';
 import { Router } from '@angular/router';
 import { MatTableDataSource, MatSnackBar } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService } from './../profile/profile.service';
-import { AddGoalService } from './../add-goal/add-goal.service';
+import { ProfileService } from '../profile/profile.service';
+import { AddGoalService } from '../add-goal/add-goal.service';
 import { CalculatorService } from './calculator.service';
 import { MacroData } from './macro-data';
 

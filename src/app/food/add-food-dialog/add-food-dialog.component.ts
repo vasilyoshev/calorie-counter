@@ -7,10 +7,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { Food } from './../../shared/entities/food';
-import { DiaryService } from './../../home/diary/diary.service';
-import { ProfileService } from './../../profile/profile.service';
-import { FoodService } from './../food.service';
+import { Food } from '../../shared/entities/food';
+import { DiaryService } from '../../home/diary/diary.service';
+import { ProfileService } from '../../profile/profile.service';
+import { FoodService } from '../food.service';
 
 @Component({
   selector: 'app-add-food-dialog',

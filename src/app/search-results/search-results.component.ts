@@ -6,8 +6,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { Food } from './../shared/entities/food';
-import { SearchService } from './../search/search.service';
+import { Food } from '../shared/entities/food';
+import { SearchService } from '../search/search.service';
 
 @Component({
   selector: 'app-search-results',

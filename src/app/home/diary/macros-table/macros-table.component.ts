@@ -1,7 +1,7 @@
 import { MatTableDataSource, MatTable } from '@angular/material';
 import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 
-import { DiaryTableData } from './../../../shared/entities/diary-table-data';
+import { DiaryTableData } from '../../../shared/entities/diary-table-data';
 
 @Component({
   selector: 'app-macros-table',

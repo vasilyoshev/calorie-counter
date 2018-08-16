@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
 
-import { User } from './../shared/entities/user';
+import { User } from '../shared/entities/user';
 
 @Injectable({
   providedIn: 'root'

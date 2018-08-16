@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/internal/operators/map';
 import { Observable } from 'rxjs';
 
-import { Food } from './../shared/entities/food';
+import { Food } from '../shared/entities/food';
 
 @Injectable({
   providedIn: 'root'

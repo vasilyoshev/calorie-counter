@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-import { ProfileService } from './../profile/profile.service';
-import { LoginService } from './../login/login.service';
+import { ProfileService } from '../profile/profile.service';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-home',
