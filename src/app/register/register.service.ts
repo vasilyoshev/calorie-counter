@@ -24,8 +24,10 @@ export class RegisterService {
             lname: ['', [Validators.required, Validators.minLength(1)]],
             username: ['', [Validators.required, Validators.minLength(3)]],
             email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required]],
-            confirmPassword: ['', [Validators.required]],
-        }, { validator: ValidatePassMatch });
+            passwords: this.fb.group({
+                password: ['', [Validators.required]],
+                confirmPassword: ['', [Validators.required]]
+            }, { validator: ValidatePassMatch })
+        });
     }
 }

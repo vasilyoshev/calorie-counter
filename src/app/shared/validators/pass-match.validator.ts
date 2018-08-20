@@ -1,4 +1,4 @@
-import { FormGroup, ValidationErrors } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 export function ValidatePassMatch(group: FormGroup) {
     const pass = group.controls.password.value;

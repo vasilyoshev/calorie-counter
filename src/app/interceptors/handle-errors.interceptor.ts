@@ -33,6 +33,9 @@ export class HandleErrorsInterceptor implements HttpInterceptor {
                     const offlineSnackRef = this.snackBar.open('You are offline.', 'Retry');
                     offlineSnackRef.onAction().subscribe(() => location.reload());
                     break;
+                case 400:
+                    this.snackBar.open(err.error.message, 'OK', { duration: 5000 });
+                    break;
                 case 403:
                     this.loginService.loggedIn = false;
                     this.router.navigate(['']);
@@ -44,7 +47,7 @@ export class HandleErrorsInterceptor implements HttpInterceptor {
                     });
                     break;
                 default:
-                    this.snackBar.open(err.status, 'OK', { duration: 5000 });
+                    this.snackBar.open('Something went wrong.', 'OK', { duration: 5000 });
             }
             // rethrow error to be handled by other interceptors or components in spacific cases
             return throwError(err);

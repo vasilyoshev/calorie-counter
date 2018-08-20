@@ -49,16 +49,18 @@ export class LoginComponent implements OnInit {
     user.password = form.value.password;
     user.remember = this.shouldRemember;
 
-    this.loginService.login(user).subscribe(() => {
-      this.spinner.show();
-      this.loginService.loggedIn = true;
-      this.profileService.getProfile()
-        .pipe(finalize(() => this.spinner.hide()))
-        .subscribe(() => {
-          this.router.navigate(['']);
-        });
-    }, () => {
-      this.loginService.loggedIn = false;
-    });
+    this.spinner.show();
+    this.loginService.login(user)
+      .subscribe(() => {
+        this.spinner.show();
+        this.loginService.loggedIn = true;
+        this.profileService.getProfile()
+          .pipe(finalize(() => this.spinner.hide()))
+          .subscribe(() => {
+            this.router.navigate(['']);
+          });
+      }, () => {
+        this.loginService.loggedIn = false;
+      });
   }
 }
