@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { FoodService } from './food.service';
@@ -5,7 +6,10 @@ import { FoodService } from './food.service';
 describe('FoodService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [FoodService]
+      providers: [FoodService],
+      imports: [
+        HttpClientModule
+      ]
     });
   });
 
