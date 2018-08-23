@@ -1,6 +1,10 @@
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule, MatDividerModule, MatDialogModule } from '@angular/material';
 
 import { FoodComponent } from './food.component';
+import { SearchService } from './../search/search.service';
 
 describe('FoodComponent', () => {
   let component: FoodComponent;
@@ -8,7 +12,17 @@ describe('FoodComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FoodComponent ]
+      declarations: [ FoodComponent ],
+      imports: [
+        RouterTestingModule,
+        MatCardModule,
+        MatDividerModule,
+        HttpClientModule,
+        MatDialogModule
+      ],
+      providers: [
+        SearchService
+      ]
     })
     .compileComponents();
   }));
@@ -16,6 +30,8 @@ describe('FoodComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FoodComponent);
     component = fixture.componentInstance;
+    const searchService = TestBed.get(SearchService);
+    searchService.selectedFood = { ndbno: 1234 };
     fixture.detectChanges();
   });
 
