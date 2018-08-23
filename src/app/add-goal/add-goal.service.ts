@@ -27,7 +27,8 @@ export class AddGoalService {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient) {
+    private http: HttpClient
+  ) {
     this.calories = 2000;
   }
 

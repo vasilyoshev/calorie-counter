@@ -1,3 +1,5 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AddGoalService } from './add-goal.service';
@@ -5,7 +7,11 @@ import { AddGoalService } from './add-goal.service';
 describe('AddGoalService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AddGoalService]
+      providers: [AddGoalService],
+      imports: [
+        ReactiveFormsModule,
+        HttpClientModule
+      ]
     });
   });
 
