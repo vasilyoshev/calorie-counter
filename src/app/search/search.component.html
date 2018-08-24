@@ -1,7 +1,7 @@
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit(searchForm)">
+<form [formGroup]="searchForm" (ngSubmit)="submit(searchForm)">
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Search food database</mat-label>
     <input matInput formControlName="query" value="{{placeholder}}">
-    <mat-icon color="primary" matSuffix id="search-icon" (click)="onSubmit(searchForm)">search</mat-icon>
+    <mat-icon color="primary" matSuffix id="search-icon" (click)="submit(searchForm)">search</mat-icon>
   </mat-form-field>
 </form>

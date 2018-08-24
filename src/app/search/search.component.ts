@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup): void {
+  submit(form: FormGroup): void {
     if (form.value.query) {
       this.searchService.searchQuery = form.value.query;
       this.router.navigate(['search', form.value.query]);

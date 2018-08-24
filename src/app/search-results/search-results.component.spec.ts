@@ -110,7 +110,8 @@ describe('SearchResultsComponent', () => {
 
   it('should navigate to food correctly', () => {
     // GIVEN
-    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate');
+    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate')
+      .mockImplementation(() => { });
     const food = new Food();
     food.name = 'kiwi';
 
