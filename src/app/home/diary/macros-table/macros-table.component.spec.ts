@@ -1,3 +1,4 @@
+import { MatTableModule } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MacrosTableComponent } from './macros-table.component';
@@ -8,7 +9,10 @@ describe('MacrosTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MacrosTableComponent ]
+      declarations: [ MacrosTableComponent ],
+      imports: [
+        MatTableModule
+      ]
     })
     .compileComponents();
   }));
