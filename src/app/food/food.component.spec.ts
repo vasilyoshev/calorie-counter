@@ -30,8 +30,7 @@ describe('FoodComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FoodComponent);
     component = fixture.componentInstance;
-    const searchService = TestBed.get(SearchService);
-    searchService.selectedFood = { ndbno: 1234 };
+    TestBed.get(SearchService).selectedFood = { ndbno: 1234 };
     fixture.detectChanges();
   });
 

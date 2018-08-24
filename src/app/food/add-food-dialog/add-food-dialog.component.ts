@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { finalize } from 'rxjs/internal/operators/finalize';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -32,7 +32,6 @@ export class AddFoodDialogComponent implements OnInit {
     private profileService: ProfileService,
     private spinner: NgxSpinnerService,
     private diaryService: DiaryService,
-    private snackBar: MatSnackBar,
     private router: Router
   ) { }
 
