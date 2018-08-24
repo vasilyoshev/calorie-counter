@@ -1,49 +1,29 @@
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { TestBed, async } from '@angular/core/testing';
 
 import { ValidatePassMatch } from './pass-match.validator';
 
 describe('TimePickerComponent', () => {
-    let component: StubComponent;
-    let fixture: ComponentFixture<StubComponent>;
-
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [StubComponent],
-            imports: [ReactiveFormsModule]
-        }).compileComponents();
+        TestBed.configureTestingModule({ providers: [FormBuilder] })
+            .compileComponents();
     }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(StubComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
+    it('should return notsame if passwords do not match', () => {
+        const fb = TestBed.get(FormBuilder);
+        const result = ValidatePassMatch(fb.group({
+            password: ['test1', [Validators.required]],
+            confirmPassword: ['test', [Validators.required]]
+        }, { validator: ValidatePassMatch }));
+        expect(result).toEqual({ notsame: true });
     });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
+    it('should return null if passwords match', () => {
+        const fb = TestBed.get(FormBuilder);
+        const result = ValidatePassMatch(fb.group({
+            password: ['test', [Validators.required]],
+            confirmPassword: ['test', [Validators.required]]
+        }, { validator: ValidatePassMatch }));
+        expect(result).toEqual(null);
     });
 });
-
-@Component({
-    template: '<form [formGroup]="formGroup">' +
-        '<input name="pass">' +
-        '<input name="confirmPass">' +
-        '</form>'
-})
-class StubComponent {
-    pass = 'pass';
-    confirmPass = 'pass';
-    formGroup: FormGroup;
-
-    constructor(private fb: FormBuilder) {
-        this.formGroup = this.fb.group({
-            password: ['', [Validators.required]],
-            confirmPassword: ['', [Validators.required]]
-        }, { validator: ValidatePassMatch });
-    }
-
-
-
-}
