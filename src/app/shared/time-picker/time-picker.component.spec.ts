@@ -1,4 +1,6 @@
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSelectModule } from '@angular/material';
 
 import { TimePickerComponent } from './time-picker.component';
 
@@ -8,9 +10,13 @@ describe('TimePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimePickerComponent ]
+      declarations: [TimePickerComponent],
+      imports: [
+        MatSelectModule,
+        NoopAnimationsModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

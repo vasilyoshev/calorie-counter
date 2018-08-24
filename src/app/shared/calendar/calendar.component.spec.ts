@@ -1,4 +1,7 @@
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatInputModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 import { CalendarComponent } from './calendar.component';
 
@@ -8,9 +11,16 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [CalendarComponent],
+      imports: [
+        MatNativeDateModule,
+        NoopAnimationsModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatDatepickerModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
