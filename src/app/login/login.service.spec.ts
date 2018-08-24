@@ -7,9 +7,7 @@ describe('DiaryService', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [LoginService],
-            imports: [
-                HttpClientModule
-            ]
+            imports: [HttpClientModule]
         });
     });
 

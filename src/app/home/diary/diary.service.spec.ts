@@ -3,13 +3,11 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { DiaryService } from './diary.service';
 
-describe('DiaryService', () => { 
+describe('DiaryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [DiaryService],
-      imports: [
-        HttpClientModule
-      ]
+      imports: [HttpClientModule]
     });
   });
 
