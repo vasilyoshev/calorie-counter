@@ -42,9 +42,10 @@ describe('ToolbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to home on successful logout', async(() => {
+  it('should call navigate to home on successful logout', async(() => {
     // GIVEN
-    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate');
+    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate')
+      .mockImplementation(() => { });
     jest.spyOn(TestBed.get(LoginService), 'logout')
       .mockImplementation(() => of(true));
 

@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.registerService.getFormGroup();
   }
 
-  onSubmit(form: FormGroup): void {
+  submit(form: FormGroup): void {
     if (!form.valid) {
       return;
     }

@@ -68,7 +68,8 @@ describe('SearchResultsComponent', () => {
 
   it('should hide spinner and navigate to root on search failure', () => {
     // GIVEN
-    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate');
+    const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate')
+      .mockImplementation(() => { });
     const spinnerSpy = jest.spyOn(TestBed.get(NgxSpinnerService), 'hide');
     jest.spyOn(TestBed.get(SearchService), 'search')
       .mockImplementation(() => throwError(of()));
@@ -108,7 +109,7 @@ describe('SearchResultsComponent', () => {
     expect(component.paginator.pageIndex).toEqual(0);
   });
 
-  it('should navigate to food correctly', () => {
+  it('should call navigate to food correctly', () => {
     // GIVEN
     const routerSpy = jest.spyOn(TestBed.get(Router), 'navigate')
       .mockImplementation(() => { });
