@@ -32,4 +32,36 @@ describe('CalendarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set day name to Today for new Date', () => {
+    // WHEN
+    component.date = new Date();
+
+    // THEN
+    expect(component.dayName).toBe('Today');
+  });
+
+  it('should set day name to Tomorrow for tomorrow date', () => {
+    // WHEN
+    component.date = new Date(new Date().setDate(new Date().getDate() + 1));
+
+    // THEN
+    expect(component.dayName).toBe('Tomorrow');
+  });
+
+  it('should set day name to Yesterday for yesterday date', () => {
+    // WHEN
+    component.date = new Date(new Date().setDate(new Date().getDate() - 1));
+
+    // THEN
+    expect(component.dayName).toBe('Yesterday');
+  });
+
+  it('should set day name to empty string for other date date', () => {
+    // WHEN
+    component.date = new Date(new Date().setDate(new Date().getDate() - 2));
+
+    // THEN
+    expect(component.dayName).toBe('');
+  });
 });
