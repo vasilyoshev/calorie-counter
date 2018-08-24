@@ -4,8 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  MatCardModule, MatStepperModule, MatFormFieldModule,
-  MatSliderModule, MatDividerModule, MatSnackBarModule, MatInputModule
+  MatCardModule, MatStepperModule, MatSliderModule,
+  MatDividerModule, MatSnackBarModule, MatInputModule
 } from '@angular/material';
 
 import { AddGoalComponent } from './add-goal.component';
@@ -24,7 +24,6 @@ describe('AddGoalComponent', () => {
         MatCardModule,
         MatStepperModule,
         MatCardModule,
-        MatFormFieldModule,
         MatSliderModule,
         MatDividerModule,
         MatSnackBarModule,

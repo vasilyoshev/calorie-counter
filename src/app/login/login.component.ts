@@ -26,8 +26,7 @@ export class LoginComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     private fb: FormBuilder,
-    private spinner: NgxSpinnerService,
-    private snackBar: MatSnackBar
+    private spinner: NgxSpinnerService
   ) {
     this.wrongCredentials = false;
     this.shouldRemember = false;
