@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
-  MatSelectModule, MatInputModule, MatDatepickerModule,
-  MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatNativeDateModule
+  MatSelectModule, MatInputModule, MatDatepickerModule, MatDialogModule,
+  MatDialogRef, MAT_DIALOG_DATA, MatNativeDateModule, MatSnackBarModule
 } from '@angular/material';
 
 import { AddFoodDialogComponent } from './add-food-dialog.component';
@@ -33,7 +33,8 @@ describe('AddFoodDialogComponent', () => {
         MatDialogModule,
         HttpClientModule,
         MatNativeDateModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        MatSnackBarModule
       ],
       providers: [
         ProfileService,
