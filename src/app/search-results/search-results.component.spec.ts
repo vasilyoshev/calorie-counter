@@ -1,6 +1,12 @@
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SearchResultsComponent } from './search-results.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule, MatIconModule, MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+
+import { SearchComponent } from './../search/search.component';
 
 describe('SearchResultsComponent', () => {
   let component: SearchResultsComponent;
@@ -8,9 +14,23 @@ describe('SearchResultsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SearchResultsComponent ]
+      declarations: [
+        SearchResultsComponent,
+        SearchComponent
+      ],
+      imports: [
+        MatPaginatorModule,
+        NoopAnimationsModule,
+        MatIconModule,
+        MatTableModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        RouterTestingModule,
+        MatCardModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
