@@ -10,20 +10,26 @@ describe('TimePickerComponent', () => {
     }));
 
     it('should return notsame if passwords do not match', () => {
+        // GIVEN
         const fb = TestBed.get(FormBuilder);
+        // WHEN
         const result = ValidatePassMatch(fb.group({
             password: ['test1', [Validators.required]],
             confirmPassword: ['test', [Validators.required]]
         }, { validator: ValidatePassMatch }));
+        // THEN
         expect(result).toEqual({ notsame: true });
     });
 
     it('should return null if passwords match', () => {
+        // GIVEN
         const fb = TestBed.get(FormBuilder);
+        // WHEN
         const result = ValidatePassMatch(fb.group({
             password: ['test', [Validators.required]],
             confirmPassword: ['test', [Validators.required]]
         }, { validator: ValidatePassMatch }));
+        // THEN
         expect(result).toEqual(null);
     });
 });
