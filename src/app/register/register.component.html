@@ -9,9 +9,6 @@
         <mat-error *ngIf="registerForm.get('fname').hasError('required')">
           First name is required
         </mat-error>
-        <mat-error *ngIf="registerForm.get('fname').hasError('minlength')">
-          Minimum length is 1 character
-        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -19,9 +16,6 @@
         <input matInput formControlName="lname">
         <mat-error *ngIf="registerForm.get('lname').hasError('required')">
           Last name is required
-        </mat-error>
-        <mat-error *ngIf="registerForm.get('lname').hasError('minlength')">
-          Minimum length is 1 character
         </mat-error>
       </mat-form-field>
 
