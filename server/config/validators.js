@@ -1,13 +1,38 @@
-import { check } from 'express-validator/check';
+import Joi from 'joi';
 
 const validators = {};
 
-validators.register = [
-    check('fname').isLength({ min: 1 }),
-    check('lname').isLength({ min: 1 }),
-    check('username').isLength({ min: 3 }),
-    check('email').isEmail(),
-    check('password').isLength({ min: 1 })
-];
+validators.register = {
+    body: {
+        fname: Joi.string(),
+        lname: Joi.string(),
+        username: Joi.string().min(3),
+        email: Joi.string().email(),
+        password: Joi.string()
+    }
+};
+
+validators.login = {
+    body: {
+        username: Joi.string(),
+        password: Joi.string(),
+        remember: Joi.bool()
+    }
+};
+
+validators.addFood = {
+    body: {
+        food: {
+            name: Joi.string(),
+            calories: Joi.number(),
+            protein: Joi.number(),
+            carbs: Joi.number(),
+            fat: Joi.number(),
+        },
+        quantity: Joi.number(),
+        type: Joi.string(),
+        date: Joi.date()
+    }
+};
 
 export default validators;

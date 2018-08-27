@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import fs from 'fs';
-import { validationResult } from 'express-validator/check';
 
 import User from '../models/user.model';
 import Goal from '../models/goal.model';
@@ -19,11 +18,6 @@ const controller = {};
  * @property {string} req.body.password
  */
 controller.register = (req, res) => {
-    const validationErrors = validationResult(req);
-    if (!validationErrors.isEmpty()) {
-        return res.status(422).json({ errors: validationErrors.array() });
-    }
-
     let isUsernameUsed = false;
     let isEmailUsed = false;
     let newUser;

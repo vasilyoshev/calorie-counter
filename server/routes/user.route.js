@@ -1,18 +1,19 @@
 import authMiddleware from '../config/auth-middleware';
 import userController from '../controllers/user.controller';
 import validators from '../config/validators';
+import validate from 'express-validation';
 import express from 'express';
 const router = express.Router();
 
 router.route('/register')
     /** POST /user/register - Register user */
-    .post(validators.register, userController.register);
+    .post(validate(validators.register), userController.register);
 
 router.route('/login')
     /** GET /user/login - Check if logged in */
     .get(userController.isLoggedIn)
     /** POST /user/login - Log in */
-    .post(userController.login);
+    .post(validate(validators.login), userController.login);
 
 router.route('/logout')
     /** GET /user/logout - Log out user */
@@ -24,7 +25,7 @@ router.route('/profile')
 
 router.route('/add-food')
     /** POST /user/add-food - Add food to user diary */
-    .post(authMiddleware, userController.addFood);
+    .post(validate(validators.addFood), authMiddleware, userController.addFood);
 
 router.route('/set-goal')
     .post(authMiddleware, userController.setGoal);

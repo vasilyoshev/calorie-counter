@@ -18,6 +18,12 @@ import './models/user.model';
 import userRoutes from './routes/user.route';
 import foodRoutes from './routes/food.route';
 
+import ev from 'express-validation';
+ev.options({
+    status: 422,
+    statusText: 'Unprocessable Entity'
+});
+
 // Helmet middleware
 app.use(helmet());
 
