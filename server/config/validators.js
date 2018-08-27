@@ -22,16 +22,52 @@ validators.login = {
 
 validators.addFood = {
     body: {
-        food: {
+        food: Joi.object({
             name: Joi.string(),
             calories: Joi.number(),
             protein: Joi.number(),
             carbs: Joi.number(),
-            fat: Joi.number(),
-        },
+            fat: Joi.number()
+        }),
         quantity: Joi.number(),
         type: Joi.string(),
         date: Joi.date()
+    }
+};
+
+validators.setGoal = {
+    body: {
+        username: Joi.string(),
+        calories: Joi.number(),
+        protein: Joi.number(),
+        carbs: Joi.number(),
+        fat: Joi.number()
+    }
+};
+
+validators.getDay = {
+    body: {
+        date: Joi.date()
+    }
+};
+
+validators.setMealTypes = {
+    body: {
+        mealTypes: Joi.array().items(Joi.string())
+    }
+};
+
+validators.getFood = {
+    body: {
+        ndbno: Joi.number()
+    }
+};
+
+validators.search = {
+    body: {
+        term: Joi.string(),
+        max: Joi.number(),
+        offset: Joi.number()
     }
 };
 

@@ -1,8 +1,10 @@
+import validate from 'express-validation';
+import express from 'express';
+
 import authMiddleware from '../config/auth-middleware';
 import userController from '../controllers/user.controller';
 import validators from '../config/validators';
-import validate from 'express-validation';
-import express from 'express';
+
 const router = express.Router();
 
 router.route('/register')
@@ -28,14 +30,14 @@ router.route('/add-food')
     .post(validate(validators.addFood), authMiddleware, userController.addFood);
 
 router.route('/set-goal')
-    .post(authMiddleware, userController.setGoal);
+    .post(validate(validators.setGoal), authMiddleware, userController.setGoal);
 
 router.route('/get-day')
     /** POST /user/get-day - Get diary for specific day */
-    .post(authMiddleware, userController.getDay);
+    .post(validate(validators.getDay), authMiddleware, userController.getDay);
 
 router.route('/set-meal-types')
     /** POST /user/set-meal-types - Set preferred user meal types */
-    .post(authMiddleware, userController.setMealTypes);
+    .post(validate(validators.setMealTypes), authMiddleware, userController.setMealTypes);
 
 export default router;
