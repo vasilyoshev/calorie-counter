@@ -1,22 +1,22 @@
-const session = require('express-session');
-const helmet = require('helmet')
+import session from 'express-session';
+import helmet from 'helmet';
+import mongoose from 'mongoose';
+import { database } from './config/database';
+import { join } from 'path';
+import { json } from 'body-parser';
+import cors from 'cors';
+import compression from 'compression';
+import express from 'express';
 const FileStore = require('session-file-store')(session);
-const mongoose = require('mongoose');
-const configDb = require('./config/database');
-const path = require('path');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const compression = require('compression');
-const express = require('express');
 const app = express();
 const port = process.env.PORT || 8080;
 
-require('./models/food');
-require('./models/goal');
-require('./models/meal');
-require('./models/user');
-const user = require('./routes/user');
-const food = require('./routes/food');
+import './models/food.model';
+import './models/goal.model';
+import './models/meal.model';
+import './models/user.model';
+import userRoutes from './routes/user.route';
+import foodRoutes from './routes/food.route';
 
 // Helmet middleware
 app.use(helmet());
@@ -41,23 +41,23 @@ let sessionObj = {
 app.use(session(sessionObj));
 
 // Body parser middleware
-app.use(bodyParser.json());
+app.use(json());
 
 // Middleware to compress all routes
 app.use(compression());
 
 // Serves static files from FE build
-app.use(express.static(path.join(__dirname, '../dist')));
+app.use(express.static(join(__dirname, '../dist')));
 
 // Use these routes
-app.use('/user', user);
-app.use('/food', food);
+app.use('/user', userRoutes);
+app.use('/food', foodRoutes);
 
 // Connect to Database
-mongoose.connect(configDb.database);
+mongoose.connect(database);
 // On connection
 mongoose.connection.on('connected', () => {
-    console.log('Connected to database ' + configDb.database);
+    console.log('Connected to database ' + database);
 });
 // On error
 mongoose.connection.on('error', (err) => {

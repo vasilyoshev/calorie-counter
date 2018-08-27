@@ -1,21 +1,30 @@
-const nodemailer = require('nodemailer');
-const fs = require('fs');
-const express = require('express');
-const authMiddleware = require('../config/auth-middleware')
-const User = require('../models/user');
-const Goal = require('../models/goal');
-const Meal = require('../models/meal');
-const Food = require('../models/food');
-const router = express.Router();
+import nodemailer from 'nodemailer';
+import fs from 'fs';
 
-router.post('/register', (req, res) => {
+import User from '../models/user.model';
+import Goal from '../models/goal.model';
+import Meal from '../models/meal.model';
+import Food from '../models/food.model';
+
+const controller = {};
+
+/**
+ * Register user.
+ * 
+ * @property {string} req.body.username
+ * @property {string} req.body.email
+ * @property {string} req.body.fname
+ * @property {string} req.body.lname
+ * @property {string} req.body.password
+ */
+controller.register = (req, res) => {
     let isUsernameUsed = false;
     let isEmailUsed = false;
     let newUser;
     User.find({ username: req.body.username }).exec()
         .then((user) => {
             if (user.length) isUsernameUsed = true;
-            return User.find({ email: req.body.email }).exec()
+            return User.find({ email: req.body.email }).exec();
         }).then((user) => {
             if (user.length) isEmailUsed = true;
             if (isUsernameUsed || isEmailUsed) {
@@ -32,18 +41,15 @@ router.post('/register', (req, res) => {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
-                role: "user"
+                role: 'user'
             });
-            User.addUser(newUser, (err, user) => {
+            User.addUser(newUser, (err) => {
                 if (err) {
                     res.status(400).json({
                         message: 'Failed to register user.'
                     });
                 } else {
                     fs.readFile('pass.txt', 'utf8', function (err, data) {
-                        if (err) {
-                            return console.log(err);
-                        }
                         let transporter = nodemailer.createTransport({
                             service: 'gmail',
                             auth: {
@@ -59,13 +65,7 @@ router.post('/register', (req, res) => {
                             text: req.body.fname + ', thank you for registering! Enjoy tracking calories.'
                         };
 
-                        transporter.sendMail(mailOptions, function (error, info) {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log('Email sent: ' + info.response);
-                            }
-                        });
+                        transporter.sendMail(mailOptions);
 
                         res.json({
                             message: 'User registered.'
@@ -74,13 +74,23 @@ router.post('/register', (req, res) => {
                 }
             });
         });
-});
+};
 
-router.get('/login', (req, res) => {
+/**
+ * Check if user is logged in.
+ */
+controller.isLoggedIn = (req, res) => {
     req.session.username ? res.json({ loggedIn: true }) : res.json({ loggedIn: false });
-});
+};
 
-router.post('/login', (req, res) => {
+/**
+ * Log in with credentials.
+ * 
+ * @property {string} req.body.username
+ * @property {string} req.body.password
+ * @property {string} req.body.remember - if session should be remembered
+ */
+controller.login = (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
@@ -120,14 +130,20 @@ router.post('/login', (req, res) => {
             }
         });
     });
-});
+};
 
-router.get('/logout', (req, res) => {
+/**
+ * Log user out.
+ */
+controller.logout = (req, res) => {
     req.session = null;
     res.json({ message: 'Logged out successfully.' });
-});
+};
 
-router.get('/profile', authMiddleware, (req, res) => {
+/**
+ * Get user profile.
+ */
+controller.profile = (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         if (err) {
             return res.status(500).json({
@@ -144,10 +160,17 @@ router.get('/profile', authMiddleware, (req, res) => {
             goal: user.goals.length ? user.goals[user.goals.length - 1] : {}
         });
     });
-});
+};
 
-router.post('/addFood', authMiddleware, (req, res) => {
-
+/**
+ * Add food to user diary.
+ * 
+ * @property {Food} req.body.food
+ * @property {number} req.body.quantity
+ * @property {Date} req.body.date
+ * @property {string} req.body.type - meal type the food belongs to
+ */
+controller.addFood = (req, res) => {
     Food.getFoodByName(req.body.food.name, (err, food) => {
         if (err) {
             return res.status(500).json({
@@ -163,7 +186,7 @@ router.post('/addFood', authMiddleware, (req, res) => {
                 carbs: req.body.food.carbs,
                 fat: req.body.food.fat
             });
-            Food.createFood(food, (err, food) => {
+            Food.createFood(food, (err) => {
                 if (err) {
                     return res.status(500).json({
                         message: 'An error occured while adding food.'
@@ -187,7 +210,7 @@ router.post('/addFood', authMiddleware, (req, res) => {
                     if (meal.date < startOfDay) break;
 
                     if (meal.type === req.body.type) {
-                        User.addFood(food, req.body.quantity, i, user, (err, user) => {
+                        User.addFood(food, req.body.quantity, i, user, (err) => {
                             if (err) {
                                 return res.status(500).json({
                                     message: 'An error occured while adding food.'
@@ -212,7 +235,7 @@ router.post('/addFood', authMiddleware, (req, res) => {
                 date: new Date(req.body.date)
             });
 
-            User.addMeal(meal, user, (err, user) => {
+            User.addMeal(meal, user, (err) => {
                 if (err) {
                     return res.status(500).json({
                         message: 'An error occured while adding meal.'
@@ -225,9 +248,18 @@ router.post('/addFood', authMiddleware, (req, res) => {
             });
         });
     });
-});
+};
 
-router.post('/set-goal', authMiddleware, (req, res) => {
+/**
+ * Set user goal.
+ * 
+ * @property {string} req.body.username
+ * @property {number} req.body.calories
+ * @property {number} req.body.protein
+ * @property {number} req.body.carbs
+ * @property {number} req.body.fat
+ */
+controller.setGoal = (req, res) => {
     User.getUserByUsername(req.body.username, (err, user) => {
         if (err) {
             return res.status(500).json({
@@ -255,9 +287,14 @@ router.post('/set-goal', authMiddleware, (req, res) => {
             }
         });
     });
-});
+};
 
-router.post('/get-day', authMiddleware, (req, res) => {
+/**
+ * Get specified day.
+ * 
+ * @property {Date} req.body.date
+ */
+controller.getDay = (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         if (err) {
             return res.status(500).json({
@@ -340,9 +377,14 @@ router.post('/get-day', authMiddleware, (req, res) => {
             meals: meals
         })
     });
-});
+};
 
-router.post('/set-meal-types', authMiddleware, (req, res) => {
+/**
+ * Set user meal types.
+ * 
+ * @property {Array<string>} req.body.mealTypes
+ */
+controller.setMealTypes = (req, res) => {
     User.getUserByUsername(req.session.username, (err, user) => {
         if (err) {
             return res.status(500).json({
@@ -350,7 +392,7 @@ router.post('/set-meal-types', authMiddleware, (req, res) => {
             });
         }
         user.mealTypes = req.body.mealTypes;
-        user.save((err, user) => {
+        user.save((err) => {
             if (err) {
                 res.status(500).json({
                     message: 'Falied to set meal types.'
@@ -362,6 +404,6 @@ router.post('/set-meal-types', authMiddleware, (req, res) => {
             }
         });
     });
-});
+};
 
-module.exports = router;
+export default controller;

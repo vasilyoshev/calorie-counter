@@ -1,9 +1,13 @@
-const express = require('express');
-const request = require('request');
-const authMiddleware = require('../config/auth-middleware')
-const router = express.Router();
+import request from 'request';
 
-router.post('/getFood', authMiddleware, (req, res) => {
+const controller = {};
+
+/**
+ * Get food by it's USDA id number.
+ * 
+ * @property {Array<string>} req.body.ndbno - USDA id of the food.
+ */
+controller.getFood = (req, res) => {
     let options = {
         url: 'https://api.nal.usda.gov/ndb/V2/reports',
         method: 'GET',
@@ -12,7 +16,7 @@ router.post('/getFood', authMiddleware, (req, res) => {
             'ndbno': req.body.ndbno,
             'type': 'f'
         }
-    }
+    };
 
     request(options, (error, response, body) => {
         if (!error && response.statusCode === 200) {
@@ -24,7 +28,7 @@ router.post('/getFood', authMiddleware, (req, res) => {
                     protein: body.foods[0].food.nutrients[3].value,
                     carbs: body.foods[0].food.nutrients[6].value,
                     fat: body.foods[0].food.nutrients[4].value
-                }
+                };
                 res.json({
                     food: food
                 });
@@ -38,10 +42,16 @@ router.post('/getFood', authMiddleware, (req, res) => {
                 message: 'An error occured.'
             });
         }
-    })
-});
+    });
+};
 
-router.post('/search', authMiddleware, (req, res) => {
+/**
+ * 
+ * @property {Array<string>} req.body.term - Query to be searched for.
+ * @property {Array<string>} req.body.max - Maximum number of results to return.
+ * @property {Array<string>} req.body.offset - Index from which to start the return list from results.
+ */
+controller.search = (req, res) => {
     let options = {
         url: 'https://api.nal.usda.gov/ndb/search',
         method: 'GET',
@@ -53,7 +63,7 @@ router.post('/search', authMiddleware, (req, res) => {
             'sort': 'r',
             'offset': req.body.offset || 0
         }
-    }
+    };
 
     request(options, (error, response, body) => {
         if (!error && response.statusCode === 200) {
@@ -72,9 +82,9 @@ router.post('/search', authMiddleware, (req, res) => {
         } else {
             res.status(500).json({
                 message: 'An error occured.'
-            })
+            });
         }
-    })
-});
+    });
+};
 
-module.exports = router;
+export default controller;

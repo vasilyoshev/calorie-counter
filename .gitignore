@@ -5,3 +5,4 @@ package-lock.json
 .vscode/
 pass.txt
 coverage/
+build/

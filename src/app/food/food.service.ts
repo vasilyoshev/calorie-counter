@@ -15,7 +15,7 @@ export class FoodService {
 
   getFood(ndbno: number): Observable<any> {
     return this.http
-      .post('food/getFood', { ndbno: ndbno }, { withCredentials: true })
+      .post('food/get-food', { ndbno: ndbno }, { withCredentials: true })
       .pipe(
         map((res: any) => {
           return res.food;
@@ -24,6 +24,6 @@ export class FoodService {
   }
 
   addToDiary(food: Food, quantity: number, type: string, date: Date): Observable<any> {
-    return this.http.post('user/addFood', { food: food, quantity: quantity, type: type, date: date }, { withCredentials: true });
+    return this.http.post('user/add-food', { food: food, quantity: quantity, type: type, date: date }, { withCredentials: true });
   }
 }
