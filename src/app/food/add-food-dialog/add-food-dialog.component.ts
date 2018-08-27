@@ -64,7 +64,7 @@ export class AddFoodDialogComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.foodService.addToDiary(this.food, form.value.quantity, meal, this.date)
+    this.foodService.addToDiary(this.food, +form.value.quantity, meal, this.date)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         if (form.value.meal === 'Other') {
