@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 import { database } from './config/database';
 import { join } from 'path';
-import { json } from 'body-parser';
+import bodyParser from 'body-parser';
 import cors from 'cors';
 import compression from 'compression';
 import express from 'express';
@@ -41,7 +41,7 @@ let sessionObj = {
 app.use(session(sessionObj));
 
 // Body parser middleware
-app.use(json());
+app.use(bodyParser.json());
 
 // Middleware to compress all routes
 app.use(compression());
