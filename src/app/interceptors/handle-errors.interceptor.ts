@@ -46,6 +46,9 @@ export class HandleErrorsInterceptor implements HttpInterceptor {
                         routerSub.unsubscribe();
                     });
                     break;
+                case 422:
+                    this.snackBar.open('Input is invalid.', 'OK', { duration: 5000 });
+                    break;
                 default:
                     this.snackBar.open('Something went wrong.', 'OK', { duration: 5000 });
             }
