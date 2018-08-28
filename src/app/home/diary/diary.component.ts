@@ -36,24 +36,16 @@ export class DiaryComponent implements OnInit {
     this.getDay(new Date());
   }
 
-  getDay(date: Date | number): void {
+  getDay(date: Date): void {
+    const convertedDate = new Date(date);
+
     this.spinner.show();
-    if (!(date instanceof Date)) {
-      date = new Date(date);
-    }
-    this.diaryService.getDay(date)
+    this.diaryService.getDay(convertedDate)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         this.summary = this.diaryService.summary;
         this.meals = this.diaryService.meals;
-
-        let newDate = new Date(this.date);
-        if (date instanceof Date) { // to avoid ts error "does not exist on type 'number'"
-          newDate = new Date(newDate.setDate(date.getDate()));
-          newDate = new Date(newDate.setMonth(date.getMonth()));
-          newDate = new Date(newDate.setFullYear(date.getFullYear()));
-        }
-        this.diaryService.currentDate = this.date = newDate;
+        this.date = this.diaryService.currentDate;
       });
   }
 }

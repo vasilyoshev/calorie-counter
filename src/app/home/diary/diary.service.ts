@@ -29,6 +29,11 @@ export class DiaryService {
             const mealDate = new Date(this.meals[i].date);
             this.meals[i].time = mealDate.getHours() + ':' + mealDate.getMinutes();
           }
+          let newDate = new Date();
+            newDate = new Date(newDate.setDate(date.getDate()));
+            newDate = new Date(newDate.setMonth(date.getMonth()));
+            newDate = new Date(newDate.setFullYear(date.getFullYear()));
+          this.currentDate = newDate;
         })
       );
   }
