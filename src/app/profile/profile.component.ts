@@ -48,19 +48,15 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  addType(event: MatChipInputEvent): void {
-    const mealType = event.value;
+  addType(chipInputEvent: MatChipInputEvent): void {
+    const mealType = chipInputEvent.value;
     if (mealType) {
       this.spinner.show();
       this.profileService.addMealType(mealType)
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe((res: any) => this.snackBar.open(res.message, 'OK', { duration: 5000 }));
-    }
 
-    // Reset the input value
-    const input = event.input;
-    if (input) {
-      input.value = '';
+      chipInputEvent.input.value = '';
     }
   }
 
