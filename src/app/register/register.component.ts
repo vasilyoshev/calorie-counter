@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs/internal/operators/finalize';
+
 import { RegisterService } from './register.service';
 import { User } from '../shared/entities/user';
 
@@ -19,7 +22,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private registerService: RegisterService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
@@ -37,16 +41,19 @@ export class RegisterComponent implements OnInit {
     user.email = form.value.email;
     user.password = form.value.passwords.password;
 
-    this.registerService.registerUser(user).subscribe(() => {
-      this.router.navigate(['login']);
-      this.snackBar.open('Registration successful!', 'OK', { duration: 5000 });
-    }, (err: HttpErrorResponse) => {
-      if (err.error.emailUsed) {
-        this.registerForm.controls['email'].setErrors({ 'taken': true });
-      }
-      if (err.error.usernameUsed) {
-        this.registerForm.controls['username'].setErrors({ 'taken': true });
-      }
-    });
+    this.spinner.show();
+    this.registerService.registerUser(user)
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(() => {
+        this.router.navigate(['login']);
+        this.snackBar.open('Registration successful!', 'OK', { duration: 5000 });
+      }, (err: HttpErrorResponse) => {
+        if (err.error.emailUsed) {
+          this.registerForm.controls['email'].setErrors({ 'taken': true });
+        }
+        if (err.error.usernameUsed) {
+          this.registerForm.controls['username'].setErrors({ 'taken': true });
+        }
+      });
   }
 }
