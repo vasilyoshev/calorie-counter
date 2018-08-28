@@ -38,15 +38,12 @@ export class ProfileService {
   }
 
   removeMealType(type: string): Observable<any> {
-    const index = this.user.mealTypes.indexOf(type);
-    if (index >= 0) {
-      this.user.mealTypes.splice(index, 1);
+    this.user.mealTypes.splice(this.user.mealTypes.indexOf(type), 1);
 
-      return this.setMealTypes().pipe(catchError((err: any) => {
-        this.user.mealTypes.push(type);
-        return throwError(err);
-      }));
-    }
+    return this.setMealTypes().pipe(catchError((err: any) => {
+      this.user.mealTypes.push(type);
+      return throwError(err);
+    }));
   }
 
   setMealTypes(): Observable<any> {
