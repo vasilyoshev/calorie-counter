@@ -68,14 +68,16 @@ describe('RegisterComponent', () => {
       .mockImplementation(() => of(true));
     const fb = TestBed.get(FormBuilder);
     const formGroup = fb.group({
-      fname: ['Name', [Validators.required]]
+      passwords: fb.group({
+        password: ['pass', [Validators.required]]
+      })
     });
 
     // WHEN
     component.submit(formGroup);
 
     // THEN
-    expect(registerSpy).toHaveBeenCalledTimes(1);
+    expect(registerSpy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith(['login']);
   });
 
@@ -85,14 +87,16 @@ describe('RegisterComponent', () => {
       .mockImplementation(() => throwError({ error: { usernameUsed: true } }));
     const fb = TestBed.get(FormBuilder);
     const formGroup = fb.group({
-      username: ['Name']
+      passwords: fb.group({
+        password: ['pass', [Validators.required]]
+      })
     });
 
     // WHEN
     component.submit(formGroup);
 
     // THEN
-    expect(registerSpy).toHaveBeenCalledTimes(1);
+    expect(registerSpy).toHaveBeenCalled();
     expect(component.registerForm.controls['username'].hasError('taken')).toBeTruthy();
   });
 
@@ -102,14 +106,16 @@ describe('RegisterComponent', () => {
       .mockImplementation(() => throwError({ error: { emailUsed: true } }));
     const fb = TestBed.get(FormBuilder);
     const formGroup = fb.group({
-      email: ['asd@asd.asd']
+      passwords: fb.group({
+        password: ['pass', [Validators.required]]
+      })
     });
 
     // WHEN
     component.submit(formGroup);
 
     // THEN
-    expect(registerSpy).toHaveBeenCalledTimes(1);
+    expect(registerSpy).toHaveBeenCalled();
     expect(component.registerForm.controls['email'].hasError('taken')).toBeTruthy();
   });
 });
