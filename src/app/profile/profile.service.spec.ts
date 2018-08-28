@@ -1,6 +1,6 @@
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 
 import { ProfileService } from './profile.service';
 import { of, throwError } from 'rxjs';
@@ -18,8 +18,8 @@ describe('ProfileService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should set user on getProfile()', inject([ProfileService, HttpClient, HttpTestingController],
-    (service: ProfileService, http: HttpClient, controller: HttpTestingController) => {
+  it('should set user on getProfile()', inject([ProfileService],
+    (service: ProfileService) => {
       // GIVEN
       const user = new User();
       const getProfileSpy = jest.spyOn(TestBed.get(HttpClient), 'get')
@@ -29,6 +29,7 @@ describe('ProfileService', () => {
       service.getProfile().subscribe();
 
       // THEN
+      expect(getProfileSpy).toHaveBeenCalled();
       expect(service.user).toEqual(user);
     }));
 
@@ -44,6 +45,7 @@ describe('ProfileService', () => {
       service.addMealType('Breakfast');
 
       // THEN
+      expect(setMealTypesSpy).toHaveBeenCalled();
       expect(service.user.mealTypes[0]).toEqual('Breakfast');
     }));
 
@@ -58,6 +60,7 @@ describe('ProfileService', () => {
     service.addMealType('Breakfast').subscribe();
 
     // THEN
+    expect(setMealTypesSpy).toHaveBeenCalled();
     expect(service.user.mealTypes.length).toEqual(0);
   }));
 
