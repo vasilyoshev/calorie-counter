@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup): void {
+  submit(form: FormGroup): void {
     if (!form.valid) {
       return;
     }
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
 
     this.spinner.show();
     this.loginService.login(user)
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(() => {
         this.spinner.show();
         this.loginService.loggedIn = true;

@@ -1,7 +1,7 @@
 <mat-card class="login">
   <mat-card-header>Log in</mat-card-header>
   <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+    <form [formGroup]="loginForm" (ngSubmit)="submit(loginForm)">
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
         <input matInput formControlName="username">
