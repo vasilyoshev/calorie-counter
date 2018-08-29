@@ -312,7 +312,7 @@ describe('AddGoalComponent', () => {
     component.formatProteinOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalled();
+    expect(setGoalSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should NOT call resetProtein if value is empty', () => {
@@ -324,7 +324,7 @@ describe('AddGoalComponent', () => {
     component.formatProteinOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalledTimes(0);
+    expect(setGoalSpy).toHaveBeenCalled();
   });
 
   it('should call resetCarbs if value is not empty', () => {
@@ -336,7 +336,7 @@ describe('AddGoalComponent', () => {
     component.formatCarbsOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalled();
+    expect(setGoalSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should NOT call resetCarbs if value is empty', () => {
@@ -348,7 +348,7 @@ describe('AddGoalComponent', () => {
     component.formatCarbsOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalledTimes(0);
+    expect(setGoalSpy).toHaveBeenCalled();
   });
 
   it('should call resetFat if value is not empty', () => {
@@ -360,7 +360,7 @@ describe('AddGoalComponent', () => {
     component.formatFatOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalled();
+    expect(setGoalSpy).toHaveBeenCalledTimes(0);
   });
 
   it('should NOT call resetFat if value is empty', () => {
@@ -372,6 +372,6 @@ describe('AddGoalComponent', () => {
     component.formatFatOnBlur(inputEvent);
 
     // THEN
-    expect(setGoalSpy).toHaveBeenCalledTimes(0);
+    expect(setGoalSpy).toHaveBeenCalled();
   });
 });
