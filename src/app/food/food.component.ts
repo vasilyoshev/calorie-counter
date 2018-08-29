@@ -33,8 +33,7 @@ export class FoodComponent implements OnInit {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe((food: Food) => {
         this.food = food;
-      },
-        () => {
+      }, () => {
           this.router.navigate(['']);
         });
   }
