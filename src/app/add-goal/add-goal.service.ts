@@ -201,7 +201,7 @@ export class AddGoalService {
     this.carbsPercent = this.carbsCals / this.calories * 100;
   }
 
-  formatProteinOnBlur(event: any): void {
+  resetProtein(event: any): void {
     this.proteinCals = 0;
     this.proteinGrams = 0;
     this.proteinPercent = 0;
@@ -215,7 +215,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatCarbsOnBlur(event: any): void {
+  resetCarbs(event: any): void {
     this.carbsCals = 0;
     this.carbsGrams = 0;
     this.carbsPercent = 0;
@@ -225,7 +225,7 @@ export class AddGoalService {
     this.fatPercent = this.fatCals / this.calories * 100;
   }
 
-  formatFatOnBlur(event: any): void {
+  resetFat(event: any): void {
     this.fatCals = 0;
     this.fatGrams = 0;
     this.fatPercent = 0;

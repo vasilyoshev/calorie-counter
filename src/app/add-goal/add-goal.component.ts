@@ -142,7 +142,7 @@ export class AddGoalComponent implements OnInit {
 
   formatProteinOnBlur(event: any): void {
     if (!event.target.value) {
-      this.addGoalService.formatProteinOnBlur(event);
+      this.addGoalService.resetProtein(event);
       this.formArray.get([1]).get('protein').setValue(this.addGoalService.proteinCals);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
@@ -151,7 +151,7 @@ export class AddGoalComponent implements OnInit {
 
   formatCarbsOnBlur(event: any): void {
     if (!event.target.value) {
-      this.addGoalService.formatCarbsOnBlur(event);
+      this.addGoalService.resetCarbs(event);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
     }
@@ -159,7 +159,7 @@ export class AddGoalComponent implements OnInit {
 
   formatFatOnBlur(event: any): void {
     if (!event.target.value) {
-      this.addGoalService.formatFatOnBlur(event);
+      this.addGoalService.resetFat(event);
       this.formArray.get([1]).get('fat').setValue(this.addGoalService.fatCals);
       this.formArray.get([1]).get('carbs').setValue(this.addGoalService.carbsCals);
     }
