@@ -322,7 +322,7 @@ controller.getDay = (req, res) => {
 
         let calories = 0, protein = 0, carbs = 0, fat = 0;
         for (let i = user.meals.length - 1; i >= 0; i--) {
-            let meal = user.meals[i]
+            let meal = user.meals[i];
 
             // if meal date is after desired day => go to next meal
             if (meal.date > endOfDay) continue;
