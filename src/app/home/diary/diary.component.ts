@@ -36,7 +36,7 @@ export class DiaryComponent implements OnInit {
     this.getDay(new Date());
   }
 
-  getDay(date: Date): void {
+  getDay(date: Date | number): void {
     const convertedDate = new Date(date);
 
     this.spinner.show();
