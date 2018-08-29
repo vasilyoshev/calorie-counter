@@ -50,7 +50,7 @@ export class AddFoodDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onSubmit(form: FormGroup): void {
+  submit(form: FormGroup): void {
     let meal = form.value.meal;
     if (meal === 'Other') {
       this.addFoodForm.setControl('other', new FormControl(form.value.other, Validators.required));

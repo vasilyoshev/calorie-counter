@@ -80,7 +80,7 @@ describe('AddFoodDialogComponent', () => {
       .mockImplementation(() => of({}));
 
     // WHEN
-    component.onSubmit(formGroup);
+    component.submit(formGroup);
 
     // THEN
     expect(showSpinnerSpy).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('AddFoodDialogComponent', () => {
       .mockImplementation(() => of({}));
 
     // WHEN
-    component.onSubmit(formGroup);
+    component.submit(formGroup);
 
     // THEN
     expect(showSpinnerSpy).toHaveBeenCalled();
@@ -132,7 +132,7 @@ describe('AddFoodDialogComponent', () => {
       .mockImplementation(() => of({}));
 
     // WHEN
-    component.onSubmit(formGroup);
+    component.submit(formGroup);
 
     // THEN
     expect(showSpinnerSpy).toHaveBeenCalledTimes(0);
@@ -158,7 +158,7 @@ describe('AddFoodDialogComponent', () => {
       .mockImplementation(() => of({}));
 
     // WHEN
-    component.onSubmit(formGroup);
+    component.submit(formGroup);
 
     // THEN
     expect(showSpinnerSpy).toHaveBeenCalledTimes(0);

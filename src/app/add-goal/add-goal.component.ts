@@ -36,7 +36,7 @@ export class AddGoalComponent implements OnInit {
     this.calcDefaultMacros();
   }
 
-  onSubmit(form: FormGroup): void {
+  submit(form: FormGroup): void {
     this.addGoalForm.updateValueAndValidity();
     if (!form.valid) {
       return;

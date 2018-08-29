@@ -1,4 +1,4 @@
-<form [formGroup]="addGoalForm" (ngSubmit)="onSubmit(addGoalForm)">
+<form [formGroup]="addGoalForm" (ngSubmit)="submit(addGoalForm)">
   <mat-horizontal-stepper formArrayName="formArray" [linear]="true" #stepper>
     <mat-step formGroupName="0" [stepControl]="formArray?.get([0])">
       <mat-card class="add-card">
