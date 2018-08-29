@@ -13,14 +13,9 @@ export class FoodService {
 
   constructor(private http: HttpClient) { }
 
-  getFood(ndbno: string): Observable<any> {
+  getFood(ndbno: string): Observable<Food> {
     return this.http
-      .post('food/get-food', { ndbno: ndbno }, { withCredentials: true })
-      .pipe(
-        map((res: any) => {
-          return res.food;
-        })
-      );
+      .post<Food>('food/get-food', { ndbno: ndbno }, { withCredentials: true });
   }
 
   addToDiary(food: Food, quantity: number, type: string, date: Date): Observable<any> {

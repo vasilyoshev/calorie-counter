@@ -22,15 +22,12 @@ controller.getFood = (req, res) => {
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body);
             if (body.notfound === 0) {
-                const food = {
+                res.json({
                     name: body.foods[0].food.desc.name,
                     calories: body.foods[0].food.nutrients[1].value,
                     protein: body.foods[0].food.nutrients[3].value,
                     carbs: body.foods[0].food.nutrients[6].value,
                     fat: body.foods[0].food.nutrients[4].value
-                };
-                res.json({
-                    food: food
                 });
             } else {
                 res.status(400).json({
