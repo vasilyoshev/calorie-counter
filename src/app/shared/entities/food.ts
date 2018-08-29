@@ -1,6 +1,6 @@
 export class Food {
     name: string;
-    ndbno: number;
+    ndbno: string;
     calories: number;
     protein: number;
     carbs: number;

@@ -13,7 +13,7 @@ export class FoodService {
 
   constructor(private http: HttpClient) { }
 
-  getFood(ndbno: number): Observable<any> {
+  getFood(ndbno: string): Observable<any> {
     return this.http
       .post('food/get-food', { ndbno: ndbno }, { withCredentials: true })
       .pipe(
