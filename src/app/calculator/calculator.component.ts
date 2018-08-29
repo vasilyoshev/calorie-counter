@@ -49,7 +49,7 @@ export class CalculatorComponent implements OnInit {
     });
   }
 
-  onSubmit(form: FormGroup) {
+  submit(form: FormGroup) {
     if (!form.valid) {
       return;
     }

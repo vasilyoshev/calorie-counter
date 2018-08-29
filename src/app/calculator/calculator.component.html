@@ -3,7 +3,7 @@
     Calculate your optimal macronutrient ratios
   </mat-card-header>
   <mat-card-content>
-    <form [formGroup]="calculatorForm" (ngSubmit)="onSubmit(calculatorForm)">
+    <form [formGroup]="calculatorForm" (ngSubmit)="submit(calculatorForm)">
       <mat-form-field appearance="outline">
         <mat-label>Age</mat-label>
         <input matInput formControlName="age">
