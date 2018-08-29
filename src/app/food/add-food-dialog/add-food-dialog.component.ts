@@ -52,7 +52,7 @@ export class AddFoodDialogComponent implements OnInit {
 
   onSubmit(form: FormGroup): void {
     let meal = form.value.meal;
-    if (form.value.meal === 'Other') {
+    if (meal === 'Other') {
       this.addFoodForm.setControl('other', new FormControl(form.value.other, Validators.required));
       meal = form.value.other;
     } else {
