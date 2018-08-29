@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
-import { map } from 'rxjs/internal/operators/map';
 
 import { Food } from '../shared/entities/food';
-import { SearchResult } from '../shared/entities/SearchResult';
+import { SearchResults } from '../shared/entities/SearchResults';
 
 @Injectable({
   providedIn: 'root'
@@ -19,19 +18,14 @@ export class SearchService {
 
   constructor(private http: HttpClient) { }
 
-  search(queries: Observable<any>): Observable<SearchResult> {
+  search(queries: Observable<any>): Observable<SearchResults> {
     return queries.pipe(
-      switchMap(query => this.searchEntries(query.term, query.pageSize, query.offset))
+      switchMap(query => {
+        return this.http.post<SearchResults>('food/search',
+          { term: query.term, max: query.pageSize, offset: query.offset },
+          { withCredentials: true }
+        );
+      })
     );
-  }
-
-  searchEntries(term: string, max: number, offset: number): Observable<SearchResult> {
-    return this.http
-      .post('food/search', { term: term, max: max, offset: offset }, { withCredentials: true })
-      .pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
   }
 }

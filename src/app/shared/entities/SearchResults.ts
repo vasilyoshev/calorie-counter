@@ -1,6 +1,6 @@
 import { Food } from './food';
 
-export class SearchResult {
-    query: string;
+export class SearchResults {
     results: Array<Food>;
+    total: number;
 }
