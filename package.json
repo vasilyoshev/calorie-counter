@@ -41,7 +41,6 @@
     "compression": "^1.7.2",
     "core-js": "^2.5.7",
     "cors": "2.8.4",
-    "csv-parser": "^1.12.1",
     "express": "4.16.3",
     "express-session": "^1.15.6",
     "express-validation": "^1.0.2",
@@ -53,6 +52,7 @@
     "nodemailer": "^4.6.8",
     "rxjs": "^6.2.0",
     "session-file-store": "^1.2.0",
+    "supertest": "^3.1.0",
     "zone.js": "^0.8.19"
   },
   "devDependencies": {
@@ -93,7 +93,7 @@
     "roots": [
       "<rootDir>/src/",
       "<rootDir>/server/",
-      "<rootDir>/test/"
+      "<rootDir>/server/tests/acceptance"
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/setup-jest.ts"
   },
