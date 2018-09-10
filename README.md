@@ -16,16 +16,17 @@ Give examples
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
+Clone the project:
 ```
 git clone https://github.com/draawn/calorie-counter.git
 ```
 
+Navigate to the project folder:
 ```
 cd calorie-counter
 ```
 
+Install using npm:
 ```
 npm install
 ```
