@@ -1,5 +1,5 @@
-import { MatTableDataSource, MatTable } from '@angular/material';
-import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { DiaryTableData } from '../../../shared/entities/diary-table-data';
 
@@ -10,10 +10,10 @@ import { DiaryTableData } from '../../../shared/entities/diary-table-data';
 })
 export class MacrosTableComponent implements OnInit, OnChanges {
 
-  dataSource: MatTableDataSource<DiaryTableData>;
   @Input() data: Array<DiaryTableData>;
-  displayedColumns = ['name', 'calories', 'protein', 'carbs', 'fat'];
   @Input() hasQuantity: boolean;
+  dataSource: MatTableDataSource<DiaryTableData>;
+  displayedColumns = ['name', 'calories', 'protein', 'carbs', 'fat'];
 
   constructor() {
   }
