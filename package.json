@@ -13,8 +13,7 @@
     "nodemon": "nodemon --delay 1500ms --exec babel-node server/app --presets=latest",
     "nodemon:debug": "nodemon --inspect --delay 1500ms --exec babel-node server/app --presets=latest",
     "ng": "ng",
-    "test": "jest src",
-    "test:integr": "jest test",
+    "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "lint": "ng lint",
@@ -50,10 +49,10 @@
     "mongoose": "5.1.1",
     "ngx-spinner": "^6.1.2",
     "nodemailer": "^4.6.8",
-    "rxjs": "^6.3.2",
+    "rxjs": "6.0.0",
     "session-file-store": "^1.2.0",
     "supertest": "^3.3.0",
-    "zone.js": "^0.8.19"
+    "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.5",
@@ -89,11 +88,12 @@
   },
   "homepage": "https://github.com/draawn/calorie-counter#readme",
   "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|angular2-ui-switch|ng-dynamic)"
+    ],
     "preset": "jest-preset-angular",
     "roots": [
-      "<rootDir>/src/",
-      "<rootDir>/server/",
-      "<rootDir>/server/tests/acceptance"
+      "<rootDir>/src/"
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/setup-jest.ts"
   },
