@@ -40,7 +40,7 @@ export class AddFoodDialogComponent implements OnInit {
     this.date = this.diaryService.currentDate;
     this.mealTypes = this.profileService.user.mealTypes;
     this.addFoodForm = this.fb.group({
-      quantity: ['100', [Validators.required]],
+      quantity: ['100', [Validators.required, Validators.pattern(/^\d+$/)]],
       meal: ['', [Validators.required]],
       other: [''],
     });

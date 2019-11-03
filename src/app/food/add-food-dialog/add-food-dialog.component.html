@@ -5,6 +5,9 @@
     <mat-error *ngIf="addFoodForm.get('quantity').hasError('required')">
       Quantity is required
     </mat-error>
+    <mat-error *ngIf="addFoodForm.get('quantity').hasError('pattern')">
+      Quantity should be numeric
+    </mat-error>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-select placeholder="Meal" [(value)]="selectedMeal" formControlName="meal" (selectionChange)="otherSelected = selectedMeal === 'Other'">
