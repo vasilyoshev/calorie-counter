@@ -42,7 +42,16 @@ export class SearchResultsComponent implements OnInit {
     this.searchService.search(this.searchQuery$)
       .subscribe((res: any) => {
         this.query = this.searchService.searchQuery;
-        this.results = res.results;
+        this.results = res.results.map(result => {
+          return {
+            name: result.lowercaseDescription,
+            ndbno: result.fdcId,
+            calories: result.foodNutrients.length && result.foodNutrients.find(nutrient => nutrient.nutrientName.toLowerCase().includes('energy')).value,
+            protein: result.foodNutrients.length && result.foodNutrients.find(nutrient => nutrient.nutrientName.toLowerCase().includes('protein')).value,
+            carbs: result.foodNutrients.length && result.foodNutrients.find(nutrient => nutrient.nutrientName.toLowerCase().includes('carbohydrate')).value,
+            fat: result.foodNutrients.length && result.foodNutrients.find(nutrient => nutrient.nutrientName.toLowerCase().includes('fat')).value
+          }
+        });
         this.totalResults = res.total;
         this.dataSource.data = this.results;
         this.spinner.hide();

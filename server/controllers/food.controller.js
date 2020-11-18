@@ -8,13 +8,12 @@ const controller = {};
  * @property {Array<string>} req.body.ndbno - USDA id of the food.
  */
 controller.getFood = (req, res) => {
+    console.log(req.body.ndbno);
     let options = {
-        url: 'https://api.nal.usda.gov/ndb/V2/reports',
+        url: `https://api.nal.usda.gov/fdc/v1/food/${req.body.ndbno}`,
         method: 'GET',
         qs: {
-            'api_key': '4ZJRDE57fjl6yCZbsKZa5ocNKLU3gLHuZkqvnioo',
-            'ndbno': req.body.ndbno,
-            'type': 'f'
+            'api_key': 'OKDH3hz2fZRJJorrsJbQbGD1LegtWX4zNhsVb4OL',
         }
     };
 
@@ -50,15 +49,13 @@ controller.getFood = (req, res) => {
  */
 controller.search = (req, res) => {
     let options = {
-        url: 'https://api.nal.usda.gov/ndb/search',
+        url: 'https://api.nal.usda.gov/fdc/v1/search',
         method: 'GET',
         qs: {
-            'max': req.body.max,
-            'api_key': '4ZJRDE57fjl6yCZbsKZa5ocNKLU3gLHuZkqvnioo',
-            'q': req.body.term,
-            'ds': 'Standard Reference',
-            'sort': 'r',
-            'offset': req.body.offset || 0
+            'pageSize': req.body.max,
+            'api_key': 'OKDH3hz2fZRJJorrsJbQbGD1LegtWX4zNhsVb4OL',
+            'query': req.body.term,
+            'pageNumber': req.body.offset || 0
         }
     };
 
@@ -67,8 +64,8 @@ controller.search = (req, res) => {
             body = JSON.parse(body);
             if (!body.errors) {
                 res.json({
-                    results: body.list.item,
-                    total: body.list.total
+                    results: body.foods,
+                    total: body.totalHits
                 });
             } else {
                 res.json({

@@ -59,7 +59,7 @@ validators.setMealTypes = {
 
 validators.getFood = {
     body: {
-        ndbno: Joi.string()
+        ndbno: Joi.number()
     }
 };
 
