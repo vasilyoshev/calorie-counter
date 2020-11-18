@@ -8,7 +8,6 @@ const controller = {};
  * @property {Array<string>} req.body.ndbno - USDA id of the food.
  */
 controller.getFood = (req, res) => {
-    console.log(req.body.ndbno);
     let options = {
         url: `https://api.nal.usda.gov/fdc/v1/food/${req.body.ndbno}`,
         method: 'GET',
@@ -20,19 +19,13 @@ controller.getFood = (req, res) => {
     request(options, (error, response, body) => {
         if (!error && response.statusCode === 200) {
             body = JSON.parse(body);
-            if (body.notfound === 0) {
-                res.json({
-                    name: body.foods[0].food.desc.name,
-                    calories: body.foods[0].food.nutrients[1].value,
-                    protein: body.foods[0].food.nutrients[3].value,
-                    carbs: body.foods[0].food.nutrients[6].value,
-                    fat: body.foods[0].food.nutrients[4].value
-                });
-            } else {
-                res.status(400).json({
-                    message: 'Food was not found.'
-                });
-            }
+            res.json({
+                name: body.description,
+                calories: body.foodNutrients.find((nutrient) => nutrient.nutrient.name.toLowerCase().includes('energy')).nutrient.number,
+                protein: body.foodNutrients.find((nutrient) => nutrient.nutrient.name.toLowerCase().includes('protein')).nutrient.number,
+                carbs: body.foodNutrients.find((nutrient) => nutrient.nutrient.name.toLowerCase().includes('carb')).nutrient.number,
+                fat: body.foodNutrients.find((nutrient) => nutrient.nutrient.name.toLowerCase().includes('fat')).nutrient.number
+            });
         } else {
             res.status(500).json({
                 message: 'An error occured.'
